@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_id: 1
+  to_id: 1
+  msg: MyString
+  time: 
+  read: false
+
+two:
+  from_id: 1
+  to_id: 1
+  msg: MyString
+  time: 
+  read: false

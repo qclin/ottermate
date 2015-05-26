@@ -11,7 +11,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526180903) do
+ActiveRecord::Schema.define(version: 20150526230825) do
+
+  create_table "chats", force: :cascade do |t|
+    t.integer  "from_id"
+    t.integer  "to_id"
+    t.string   "msg"
+    t.boolean  "read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "room_reviews", force: :cascade do |t|
+    t.integer  "room_id"
+    t.integer  "reviewer_id"
+    t.string   "review"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string   "description"
+    t.integer  "price"
+    t.string   "photo_url"
+    t.string   "neighborhood"
+    t.boolean  "petfriendly"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "owner_id"
+  end
+
+  create_table "user_endorsements", force: :cascade do |t|
+    t.integer  "endorser_id"
+    t.integer  "endorsee_id"
+    t.string   "skill"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -25,6 +61,9 @@ ActiveRecord::Schema.define(version: 20150526180903) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
+    t.string   "description"
+    t.float    "reliability"
+    t.string   "watsonfeed"
   end
 
 end
