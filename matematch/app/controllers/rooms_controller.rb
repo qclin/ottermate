@@ -18,15 +18,11 @@ class RoomsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
-    binding.pry
     @room = Room.new(room_params)
-
 
     if @room.save
       render json: @room, status: :created, location: @room
     else
-          binding.pry
-
       render json: @room.errors, status: :unprocessable_entity
     end
   end
