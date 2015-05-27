@@ -12,7 +12,6 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("PostRoomController", function($scope) {
-    $scope.posts = ["here","is","some","dummy","data"];
   })
 
   .config(function($stateProvider, $urlRouterProvider) {

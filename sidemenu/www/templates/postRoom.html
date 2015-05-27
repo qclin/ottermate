@@ -1,7 +1,17 @@
 <ion-view view-title="postroom" ng-controller="PostRoomController">
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="post in posts">{{post}}</ion-item>
+    	<label class="item item-input">
+    		<input type="text" ng-model="description" placeholder="description">
+    	</label>
+    	<label class="item item-input">
+    		<input type="number" ng-model="price" placeholder="price">
+    	</label>
+    	<label class="item item-input">
+    		<input type="text" ng-model="neighborhood" placeholder="neighborhood">
+    	</label>
+    	<br>
+    	<button class="button button-positive" on-tap="submit()">Submit</button>
     </ion-list>
   </ion-content>
 </ion-view>
