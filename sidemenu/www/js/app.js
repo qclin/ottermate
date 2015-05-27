@@ -41,7 +41,6 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("PostRoomController", function($scope) {
-    $scope.posts = ["here","is","some","dummy","data"];
   })
 
   .factory('authInterceptor', function($q, $window, $location) {
