@@ -1,6 +1,7 @@
-<ion-view view-title="chat history">
-  <ion-content>
-    <p>chat</p>
-    <p>blah blah</p>
+<ion-view view-title="chathistory" ng-controller="ChatsController">
+  <ion-content class="has-header padding">
+  <div ng-repeat="chat in chats">
+  {{chat.msg}}
+  </div>
   </ion-content>
 </ion-view>
