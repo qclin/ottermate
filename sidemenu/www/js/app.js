@@ -80,6 +80,7 @@ angular.module('ionicApp', ['ionic'])
   .controller("PostRoomController", function($scope, $state, $http) {
     $scope.room = {};
     $scope.postRoom = function() {
+    $scope.room.owner_id = 1;
       $http.post("http://localhost:3000/rooms", {room: $scope.room})
         .success(function (data,status) {
           $state.go("menu.profile");
