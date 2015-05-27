@@ -7,7 +7,17 @@ angular.module('ionicApp', ['ionic'])
 
   .controller("LoginController", function($scope,$state) {
     $scope.login = function() {
-      $state.go('menu.profile');
+      alert('hi?');
+      $http.post('/authenticate', {username:$scope.username, password:$scope.password})
+        .success(function (data,status,headers,config) {
+          $window.sessionStorage.token = data.token;
+          $state.go('menu.profile');
+        })
+        .error(function (data,status,headers,config) {
+          delete $window.sessionStorage.token;
+          alert(data);
+          // alert("Error: Unknown email/password combination");
+        });
     };
   })
 
@@ -15,7 +25,27 @@ angular.module('ionicApp', ['ionic'])
     $scope.posts = ["here","is","some","dummy","data"];
   })
 
-  .config(function($stateProvider, $urlRouterProvider) {
+  .factory('authInterceptor', function($q, $window, $location) {
+    return {
+      request: function(config) {
+        config.headers = config.headers || {};
+        if ($window.sessionStorage.token) {
+          config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+        }
+        return config;
+      },
+      response: function(response) {
+        if (response.status === 401) {
+          delete $window.sessionStorage.token;
+          $location.path('/login');
+        }
+        return response || $q.when(response);
+      }
+    };
+  })
+
+  .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+    $httpProvider.interceptors.push('authInterceptor');
     $urlRouterProvider.otherwise("/login");
 
     $stateProvider
