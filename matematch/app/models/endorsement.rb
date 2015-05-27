@@ -1,4 +1,4 @@
-class UserEndorsement < ActiveRecord::Base
+class Endorsement < ActiveRecord::Base
   belongs_to :endorser, :class => 'User', :foreign_key => 'endorser_id'
   belongs_to :endorsee, :class => 'User', :foreign_key => 'endorsee_id'
 

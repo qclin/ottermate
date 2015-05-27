@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150526230825) do
+ActiveRecord::Schema.define(version: 20150527174229) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "from_id"
@@ -22,10 +22,18 @@ ActiveRecord::Schema.define(version: 20150526230825) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "room_reviews", force: :cascade do |t|
+  create_table "endorsements", force: :cascade do |t|
+    t.integer  "endorser_id"
+    t.integer  "endorsee_id"
+    t.string   "skill"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
     t.integer  "room_id"
     t.integer  "reviewer_id"
-    t.string   "review"
+    t.string   "comment"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -41,23 +49,14 @@ ActiveRecord::Schema.define(version: 20150526230825) do
     t.integer  "owner_id"
   end
 
-  create_table "user_endorsements", force: :cascade do |t|
-    t.integer  "endorser_id"
-    t.integer  "endorsee_id"
-    t.string   "skill"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.integer  "price"
     t.string   "gender"
     t.boolean  "hasRoom"
     t.string   "personality"
     t.string   "occupation"
     t.string   "email"
-    t.integer  "phone"
+    t.string   "phone"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "password_digest"

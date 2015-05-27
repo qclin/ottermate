@@ -1,4 +1,4 @@
-class RoomReview < ActiveRecord::Base
+class Review < ActiveRecord::Base
   belongs_to :room 
   belongs_to :reviewer, :class => 'User', :foreign_key => 'reviewer_id'
 
