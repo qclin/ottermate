@@ -1,7 +1,14 @@
 <ion-view view-title="profile" ng-controller="ProfileController">
   <ion-content class="has-header padding">
   <div ng-repeat="user in users">
-  {{user.name}}
+  {{user.name}} <br />
+  {{user.gender}} <br />
+  {{user.hasRoom}} <br />
+  {{user.email}} <br />
+  {{user.phone}} <br />
+  {{user.password}} <br />
+  <br />
+  <br />
   </div>
   </ion-content>
 </ion-view>
