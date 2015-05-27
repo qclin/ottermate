@@ -170,7 +170,6 @@ angular.module('ionicApp', ['ionic'])
             templateUrl: "templates/searchMates.html"
           }
         }
-<<<<<<< HEAD
 
       })
 			.state("menu.searchRoom", {
@@ -180,19 +179,8 @@ angular.module('ionicApp', ['ionic'])
 						templateUrl: "templates/searchRoom.html"
 					}
 				}
+      })
 		})
-			.state("menu.searchmates", {
-				url: "/searchMates",
-				views: {
-					"menuContent": {
-						templateUrl: "templates/searchMates.html"
-					}
-				}
-		});
-  })
-=======
-      });
-    })
 
     // .state("menu.postRoom", {
     //     url: "/postRoom",
@@ -204,10 +192,3 @@ angular.module('ionicApp', ['ionic'])
     //     }
     //   });
     // })
-
-
-
-
-
-
->>>>>>> 5965f51992e2e6eceb420505dd60621a54055af0
