@@ -77,14 +77,27 @@ angular.module('ionicApp', ['ionic'])
     })
   })
 
- // .controller("PostRoomController", function($scope, $state, $http) {
- //    $http.get("http://localhost:3000/rooms.json").then(function(resp){
- //      $scope.rooms = resp.data
- //      console.log(resp.data)
- //    }, function(err) {
- //      console.error("ERR", err);
- //    })
- //  })
+ .controller("PostRoomController", function($scope, $state, $http) {
+    $scope.postRoom = function() {
+      alert($scope.description);
+      var data = {
+        room: {
+        description: $scope.description,
+        price: $scope.price,
+        photo_url: $scope.photo,
+        neighborhood: $scope.neighborhood
+      }
+      };
+      $http.post("http://localhost:3000/rooms",data)
+        .success(function (data,status) {
+          $state.go("menu.profile");
+        })
+        .error(function (data,status) {
+          // our post got rejected
+          alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
+        });
+    };
+  })
 
 
 
@@ -150,6 +163,15 @@ angular.module('ionicApp', ['ionic'])
           "menuContent": {
             controller: "ChatsController",
             templateUrl: "templates/chatHistory.html"
+          }
+        }
+      })
+       .state("menu.postRoom", {
+        url: "/postRoom",
+        views: {
+          "menuContent": {
+            controller: "PostRoomController",
+            templateUrl: "templates/postRoom.html"
           }
         }
       })
