@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :room_reviews, except: [:new, :edit]
   resources :rooms, except: [:new, :edit]
   resources :users, except: [:new, :edit]
+
+  get '/watson', to: 'watson#test'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
