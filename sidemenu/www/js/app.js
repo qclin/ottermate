@@ -43,6 +43,11 @@ angular.module('ionicApp', ['ionic'])
   .controller("PostRoomController", function($scope) {
   })
 
+	.controller("SearchRoomController", function($scope) {
+})
+
+	.controller("SearchMatesController", function($scope) {
+})
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
@@ -61,6 +66,7 @@ angular.module('ionicApp', ['ionic'])
       }
     };
   })
+
 
   .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');
@@ -107,5 +113,13 @@ angular.module('ionicApp', ['ionic'])
             templateUrl: "templates/postRoom.html"
           }
         }
-      });
+      })
+			.state("menu.searchRoom", {
+				url: "/searchRoom",
+				views: {
+					"menuContent": {
+						templateUrl: "templates/searchRoom.html"
+					}
+				}
+		});
   })
