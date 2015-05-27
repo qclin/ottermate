@@ -172,14 +172,3 @@ angular.module('ionicApp', ['ionic'])
         }
       });
  		})
-
-    // .state("menu.postRoom", {
-    //     url: "/postRoom",
-    //     views: {
-    //       "menuContent": {
-    //         controller: "PostRoomController",
-    //         templateUrl: "templates/postRoom.html"
-    //       }
-    //     }
-    //   });
-    // })
