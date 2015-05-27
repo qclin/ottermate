@@ -49,18 +49,14 @@
           <h2>Sign up here</h2>
           <div class="list">
             <label class="item item-input">
-            <input type="text" placeholder="Name">
+              <input type="text" placeholder="Name">
             </label>
-
             <label class="item item-input">
-            <input type="password" placeholder="Password">
+              <input type="password" placeholder="Password">
             </label>
-
             <label class="item item-input">
-            <input type="password" placeholder="Confirm Password">
+              <input type="password" placeholder="Confirm Password">
             </label>
-
-
             <label class="item item-input">
               <input type="email" name="email" placeholder="Email">
             </label>
@@ -70,48 +66,37 @@
             <label class="item item-input">
               <input type="text" name="occupation" placeholder="Occupation">
             </label>
-
             <label class="item item-checkbox">
               <input type="checkbox" name="hasRoom" value="yes"> 
-              <div class="item-content">
-              Have A Room?
-              </div>
-            </label>
-           
-
-
-
-
-            <label class="item item-radio">
-            <input type="radio" name="gender" value="male"> 
-            <div class="item-content">
-            Male
-            </div>
-            <i class="radio-icon ion-checkmark"></i>
+              <div class="item-content">Have A Room?</div>
             </label>
             <label class="item item-radio">
-            <input type="radio" name="gender" value="female"> 
-            <div class="item-content">
-            Female
-            </div>
-            <i class="radio-icon ion-checkmark"></i>
+              <input type="radio" name="gender" value="male"> 
+              <div class="item-content">Male</div>
+              <i class="radio-icon ion-checkmark"></i>
             </label>
-
-
-
-
-             
-
+            <label class="item item-radio">
+              <input type="radio" name="gender" value="female"> 
+              <div class="item-content">Female</div>
+              <i class="radio-icon ion-checkmark"></i>
+            </label>
         </ion-content>
       </ion-view>
     </script>
 
     <script type="text/ng-template" id="login.html">
       <ion-view title="Login">
-        <ion-content padding="true">
-           <h2>Using the app</h2>
-           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis architecto hic officia quasi excepturi sequi deleniti maiores consectetur veritatis sint?</p>
-        </ion-content>
+         <ion-header-bar><h1 class="title">Login</h1></ion-header-bar>
+         <ion-content>
+           <div class="list">
+            <label class="item item-input">
+              <input type="text" name="username" placeholder="Username">
+            </label>
+            <label class="item item-input">
+              <input type="password" name="password" placeholder="Password">
+            </label>
+           </div>
+         </ion-content>
       </ion-view>
     </script>
 
