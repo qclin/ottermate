@@ -9,7 +9,8 @@ class WatsonController < ApplicationController
 			:body => $exampletext.to_json,
 			:headers => { "Content-Type" => "application/json" },
 			:user => $secrets['watson']['credentials']['username'],
-			:password => $secrets['watson']['credentials']['password']
+			:password => $secrets['watson']['credentials']['password'],
+      :version => "v2"
 		)
 
 		render plain: res.inspect
