@@ -88,6 +88,11 @@ angular.module('ionicApp', ['ionic'])
 
 
 
+	.controller("SearchRoomController", function($scope) {
+})
+
+	.controller("SearchMatesController", function($scope) {
+})
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
@@ -106,6 +111,7 @@ angular.module('ionicApp', ['ionic'])
       }
     };
   })
+
 
   .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');
@@ -164,6 +170,27 @@ angular.module('ionicApp', ['ionic'])
             templateUrl: "templates/searchMates.html"
           }
         }
+<<<<<<< HEAD
+
+      })
+			.state("menu.searchRoom", {
+				url: "/searchRoom",
+				views: {
+					"menuContent": {
+						templateUrl: "templates/searchRoom.html"
+					}
+				}
+		})
+			.state("menu.searchmates", {
+				url: "/searchMates",
+				views: {
+					"menuContent": {
+						templateUrl: "templates/searchMates.html"
+					}
+				}
+		});
+  })
+=======
       });
     })
 
@@ -183,3 +210,4 @@ angular.module('ionicApp', ['ionic'])
 
 
 
+>>>>>>> 5965f51992e2e6eceb420505dd60621a54055af0
