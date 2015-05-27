@@ -1,10 +1,4 @@
 class UsersController < ApplicationController
-
-  include ActionController::MimeResponds
-  include ActionController::Helpers
-  include ActionController::Cookies
-  include ActionController::ImplicitRender
-
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
