@@ -43,39 +43,50 @@ angular.module('ionicApp', ['ionic'])
 
   .controller("ProfileController", function($scope, $http) {
     $http.get("http://localhost:3000/users.json").then(function(resp){
-      alert(resp)
-
+      $scope.users = resp.data
+      console.log(resp.data)
     }, function(err){
       console.error('ERR', err);
     })
-    
-      // .success(function(data) {
-      //   alert("data retrieved: "+data);
-      // })
-      // .error(function(data,status) {
-      //   alert("error"+data+status);
-      // });
   })
 
-
-
-  // .controller("ChatController", function($scope, $state, $http) {
-  //   $scope.chat = function() {
-  //     var convo = {
-  //       from_id: $scope.from_id,
-  //       to_id: $scope.to_id,
-  //       msg: $scope.msg,
-  //       read: $scope.read,
-  //     };
-  //     $http.post
-  //   }
-  // })
-
-
-
-
-  .controller("PostRoomController", function($scope) {
+  .controller("ChatsController", function($scope, $state, $http) {
+    $http.get("http://localhost:3000/chats.json").then(function(resp){
+      $scope.chats = resp.data
+      console.log(resp.data)
+    }, function(err) {
+      console.error("ERR", err);
+    })
   })
+  
+  .controller("SearchRoomsController", function($scope, $state, $http) {
+    $http.get("http://localhost:3000/rooms.json").then(function(resp){
+      $scope.rooms = resp.data
+      console.log(resp.data)
+    }, function(err) {
+      console.error("ERR", err);
+    })
+  })
+
+  .controller("SearchMatesController", function($scope, $state, $http) {
+    $http.get("http://localhost:3000/users.json").then(function(resp){
+      $scope.users = resp.data
+      console.log(resp.data)
+    }, function(err) {
+      console.error("ERR", err);
+    })
+  })
+
+ // .controller("PostRoomController", function($scope, $state, $http) {
+ //    $http.get("http://localhost:3000/rooms.json").then(function(resp){
+ //      $scope.rooms = resp.data
+ //      console.log(resp.data)
+ //    }, function(err) {
+ //      console.error("ERR", err);
+ //    })
+ //  })
+
+
 
 	.controller("SearchRoomController", function($scope) {
 })
@@ -117,17 +128,6 @@ angular.module('ionicApp', ['ionic'])
         templateUrl: "templates/signup.html"
       })
 
-//             .state('menu.profile', {
-//                 url: "/profile",
-//                 views: {
-//                     'menuContent'  :{
-//                         templateUrl: "templates/profile.html"
-//                     }
-//                 }
-//         });
-// })
-
-
       // states that include a sidemenu
       .state("menu", {
         url: "/menu",
@@ -139,6 +139,7 @@ angular.module('ionicApp', ['ionic'])
         url: "/profile",
         views: {
           "menuContent": {
+            controller: "ProfileController",
             templateUrl: "templates/profile.html"
           }
         }
@@ -147,17 +148,29 @@ angular.module('ionicApp', ['ionic'])
         url: "/chatHistory",
         views: {
           "menuContent": {
+            controller: "ChatsController",
             templateUrl: "templates/chatHistory.html"
           }
         }
       })
-      .state("menu.postRoom", {
-        url: "/postRoom",
+   .state("menu.searchRooms", {
+        url: "/searchRooms",
         views: {
           "menuContent": {
-            templateUrl: "templates/postRoom.html"
+            controller: "SearchRoomsController",
+            templateUrl: "templates/searchRooms.html"
           }
         }
+      })
+    .state("menu.searchMates", {
+        url: "/searchMates",
+        views: {
+          "menuContent": {
+            controller: "SearchMatesController",
+            templateUrl: "templates/searchMates.html"
+          }
+        }
+<<<<<<< HEAD
 
       })
 			.state("menu.searchRoom", {
@@ -177,3 +190,24 @@ angular.module('ionicApp', ['ionic'])
 				}
 		});
   })
+=======
+      });
+    })
+
+    // .state("menu.postRoom", {
+    //     url: "/postRoom",
+    //     views: {
+    //       "menuContent": {
+    //         controller: "PostRoomController",
+    //         templateUrl: "templates/postRoom.html"
+    //       }
+    //     }
+    //   });
+    // })
+
+
+
+
+
+
+>>>>>>> 5965f51992e2e6eceb420505dd60621a54055af0

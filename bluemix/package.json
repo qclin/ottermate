@@ -1,0 +1,14 @@
+{
+  "name": "bluemix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ibmbluemix": "^1.0.0-20150409-1328"
+  }
+}
