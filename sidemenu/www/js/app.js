@@ -25,21 +25,12 @@ angular.module('ionicApp', ['ionic'])
             });
     })
 
-    .config(function($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise("menu/profile");
-        
-        $stateProvider
-            .state('menu', {
-                url: "/menu",
-                abstract: true,
-                templateUrl: "templates/menu.html"
-        })
-            .state('menu.profile', {
-                url: "/profile",
-                views: {
-                    'menuContent'  :{
-                        templateUrl: "templates/profile.html"
-                    }
-                }
-        });
-})
+//             .state('menu.profile', {
+//                 url: "/profile",
+//                 views: {
+//                     'menuContent'  :{
+//                         templateUrl: "templates/profile.html"
+//                     }
+//                 }
+//         });
+// })
