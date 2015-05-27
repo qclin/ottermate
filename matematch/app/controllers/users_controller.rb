@@ -4,9 +4,10 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    # @users = User.all
 
-    render json: @users
+    # render json: @users
+    render json: {:name => "bill"}
   end
 
   # GET /users/1
