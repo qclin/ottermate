@@ -153,15 +153,15 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
-   .state("menu.searchRooms", {
-        url: "/searchRooms",
-        views: {
-          "menuContent": {
-            controller: "SearchRoomsController",
-            templateUrl: "templates/searchRooms.html"
-          }
-        }
-      })
+		.state("menu.postRoom", {
+				url: "/postRoom",
+				views: {
+					"menuContent": {
+						controller: "PostRoomsController",
+						templateUrl "templates/postRoom.html"
+					}
+				}
+		})
     .state("menu.searchMates", {
         url: "/searchMates",
         views: {
