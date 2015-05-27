@@ -7,17 +7,18 @@ angular.module('ionicApp', ['ionic'])
 
   .controller("LoginController", function($scope,$state) {
     $scope.login = function() {
+      $state.go("menu.profile");
       alert('hi?');
-      $http.post('/authenticate', {username:$scope.username, password:$scope.password})
-        .success(function (data,status,headers,config) {
-          $window.sessionStorage.token = data.token;
-          $state.go('menu.profile');
-        })
-        .error(function (data,status,headers,config) {
-          delete $window.sessionStorage.token;
-          alert(data);
-          // alert("Error: Unknown email/password combination");
-        });
+      // $http.post('/authenticate', {username:$scope.username, password:$scope.password})
+      //   .success(function (data,status,headers,config) {
+      //     $window.sessionStorage.token = data.token;
+      //     $state.go('menu.profile');
+      //   })
+      //   .error(function (data,status,headers,config) {
+      //     delete $window.sessionStorage.token;
+      //     alert(data);
+      //     // alert("Error: Unknown email/password combination");
+      //   });
     };
   })
 
@@ -35,10 +36,43 @@ angular.module('ionicApp', ['ionic'])
         })
         .error(function (data,status) {
           // our post got rejected
-          alert("bad post! "+JSON.stringify(data) + " status: "+status);
+          alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
         });
     };
   })
+
+  .controller("ProfileController", function($scope, $http) {
+    $http.get("http://localhost:3000/users.json").then(function(resp){
+      alert(resp)
+
+    }, function(err){
+      console.error('ERR', err);
+    })
+    
+      // .success(function(data) {
+      //   alert("data retrieved: "+data);
+      // })
+      // .error(function(data,status) {
+      //   alert("error"+data+status);
+      // });
+  })
+
+
+
+  // .controller("ChatController", function($scope, $state, $http) {
+  //   $scope.chat = function() {
+  //     var convo = {
+  //       from_id: $scope.from_id,
+  //       to_id: $scope.to_id,
+  //       msg: $scope.msg,
+  //       read: $scope.read,
+  //     };
+  //     $http.post
+  //   }
+  // })
+
+
+
 
   .controller("PostRoomController", function($scope) {
   })
@@ -83,6 +117,17 @@ angular.module('ionicApp', ['ionic'])
         templateUrl: "templates/signup.html"
       })
 
+//             .state('menu.profile', {
+//                 url: "/profile",
+//                 views: {
+//                     'menuContent'  :{
+//                         templateUrl: "templates/profile.html"
+//                     }
+//                 }
+//         });
+// })
+
+
       // states that include a sidemenu
       .state("menu", {
         url: "/menu",
@@ -113,12 +158,21 @@ angular.module('ionicApp', ['ionic'])
             templateUrl: "templates/postRoom.html"
           }
         }
+
       })
 			.state("menu.searchRoom", {
 				url: "/searchRoom",
 				views: {
 					"menuContent": {
 						templateUrl: "templates/searchRoom.html"
+					}
+				}
+		})
+			.state("menu.searchmates", {
+				url: "/searchMates",
+				views: {
+					"menuContent": {
+						templateUrl: "templates/searchMates.html"
 					}
 				}
 		});
