@@ -21,6 +21,25 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
+  .controller("SignUpController", function($scope, $state, $http) {
+    $scope.signup = function() {
+      var formdata = {
+        name: $scope.name,
+        password: $scope.password,
+        email: $scope.email,
+        phone: $scope.phone
+      };
+      $http.post("http://localhost:3000/users",formdata)
+        .success(function (data,status) {
+          $state.go("menu.profile");
+        })
+        .error(function (data,status) {
+          // our post got rejected
+          alert("bad post! "+JSON.stringify(data) + " status: "+status);
+        });
+    };
+  })
+
   .controller("PostRoomController", function($scope) {
     $scope.posts = ["here","is","some","dummy","data"];
   })
