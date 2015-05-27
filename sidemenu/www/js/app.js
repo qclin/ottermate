@@ -77,24 +77,16 @@ angular.module('ionicApp', ['ionic'])
     })
   })
 
- .controller("PostRoomController", function($scope, $state, $http) {
+  .controller("PostRoomController", function($scope, $state, $http) {
+    $scope.room = {};
     $scope.postRoom = function() {
-      alert($scope.description);
-      var data = {
-        room: {
-        description: $scope.description,
-        price: $scope.price,
-        photo_url: $scope.photo,
-        neighborhood: $scope.neighborhood
-      }
-      };
-      $http.post("http://localhost:3000/rooms",data)
+      $http.post("http://localhost:3000/rooms", {room: $scope.room})
         .success(function (data,status) {
           $state.go("menu.profile");
         })
         .error(function (data,status) {
           // our post got rejected
-          alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
+          console.log("bad post! "+ JSON.stringify(data) + " status: "+ status);
         });
     };
   })
@@ -102,10 +94,10 @@ angular.module('ionicApp', ['ionic'])
 
 
 	.controller("SearchRoomController", function($scope) {
-})
+  })
 
 	.controller("SearchMatesController", function($scope) {
-})
+  })
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
@@ -166,16 +158,15 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
-       .state("menu.postRoom", {
+      .state("menu.postRoom", {
         url: "/postRoom",
         views: {
           "menuContent": {
-            controller: "PostRoomController",
             templateUrl: "templates/postRoom.html"
           }
         }
       })
-   .state("menu.searchRooms", {
+      .state("menu.searchRooms", {
         url: "/searchRooms",
         views: {
           "menuContent": {
@@ -184,7 +175,7 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
-    .state("menu.searchMates", {
+      .state("menu.searchMates", {
         url: "/searchMates",
         views: {
           "menuContent": {
