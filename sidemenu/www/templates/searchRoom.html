@@ -5,7 +5,7 @@
 				<div class="input-label">
 					Neighborhoods
 				</div>
-				<select>
+				<select >
 					<option>Brooklyn</option>
 					<option>The Bronx</option>
 					<option>Manhattan</option>
@@ -13,8 +13,14 @@
 					<option>Queens</option>
 				</select>
 			</label>
+			<label class="item item-input">
+        <input type="text" placeholder="neighborhood" ng-model = "search.neighborhood">
+      </label>
+
+
+
 			<label class="item item-input item-select">
-				<div class="input-label">
+				<div class="input-label" ng-model = "search.size">
 					Size
 				</div>
 				<select>
@@ -22,12 +28,12 @@
 				</select>
 			</label>
 			<label class="item">
-				<div class="input-label">
+				<div class="input-label" >
 					Min
 				</div>
 				<div class="range range-assertive">
 					<i class="icon ion-ios7-sunny-outline"></i>
-					<input type="range" min="{{user.min}}" max="{{user.max}}" value="{{user.value}}" step="100" ng-model="user.value">
+					<input type="range" min="{{user.min}}" max="{{user.max}}" value="{{user.value}}" step="100" ng-model = "search.price_min">
 				</div>
 			</label>
 			<label class="item">
@@ -36,20 +42,12 @@
 				</div>
 				<div class="range range-assertive">
 					<i class="icon ion-ios7-sunny-outline"></i>
-					<input type="range" min="{{user.min}}" max="{{user.max}}" value="{{user.value}}" step="100" ng-model="user.value">
+					<input type="range" min="{{user.min}}" max="{{user.max}}" value="{{user.value}}" step="100"  ng-model = "search.price_max">
 				</div>
 			</label>
-			<label class="item item-input item-select">
-				<div class="input-label">
-					Number Of People
-				</div>
-				<select>
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-				</select>
-			</label>
+
+		
+			<button class="button button-positive" on-tap="searchRooms()">Search</button>
 		</div>
 	</ion-content>
 </ion-view>

@@ -60,12 +60,18 @@ angular.module('ionicApp', ['ionic'])
   })
   
   .controller("SearchRoomsController", function($scope, $state, $http) {
-    $http.get("http://localhost:3000/rooms.json").then(function(resp){
-      $scope.rooms = resp.data
-      console.log(resp.data)
-    }, function(err) {
-      console.error("ERR", err);
-    })
+    $scope.search = {};
+
+    $scope.searchRooms = function(){
+      console.log($scope.search);
+      $http.get("http://localhost:3000/rooms.json", {search: $scope.search}).then(function(resp){
+        $scope.rooms = resp.data
+        console.log(resp.data)
+      }, function(err) {
+        console.error("ERR", err);
+      })
+    }
+
   })
 
   .controller("SearchMatesController", function($scope, $state, $http) {
@@ -171,8 +177,7 @@ angular.module('ionicApp', ['ionic'])
         url: "/searchRooms",
         views: {
           "menuContent": {
-            controller: "SearchRoomsController",
-            templateUrl: "templates/searchRooms.html"
+            templateUrl: "templates/searchRoom.html"
           }
         }
       })
