@@ -48,6 +48,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
     json (1.8.2)
+    jwt (1.4.1)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -118,6 +119,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   httparty
   json
+  jwt
   pry
   rabl
   rack-cors

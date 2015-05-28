@@ -1,23 +1,33 @@
 angular.module('ionicApp', ['ionic'])
-  .controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
+  .controller('MainCtrl', function($scope, $ionicSideMenuDelegate, $window, $location) {
     $scope.toggleLeft = function() {
       $ionicSideMenuDelegate.toggleLeft()   
-    }
+    };
+    $scope.logout = function() {
+      delete $window.sessionStorage.token;
+      $location.path('/login');
+    };
   })
 
-  .controller("LoginController", function($scope,$state) {
+  .controller("LoginController", function($scope,$state,$http,$window) {
+    $scope.user = {};
     $scope.login = function() {
-      $state.go("menu.profile");
-      // $http.post('/authenticate', {username:$scope.username, password:$scope.password})
-      //   .success(function (data,status,headers,config) {
-      //     $window.sessionStorage.token = data.token;
-      //     $state.go('menu.profile');
-      //   })
-      //   .error(function (data,status,headers,config) {
-      //     delete $window.sessionStorage.token;
-      //     alert(data);
-      //     // alert("Error: Unknown email/password combination");
-      //   });
+      $http.post('http://localhost:3000/authenticate', {user:$scope.user})
+        .success(function (data,status,headers,config) {
+          $window.sessionStorage.token = data.token;
+          $http.get('http://localhost:3000/authtest')
+            .success(function(data) {
+              $state.go('menu.profile');
+            })
+            .error(function(data) {
+              alert("sad "+data);
+            });
+        })
+        .error(function (data,status,headers,config) {
+          delete $window.sessionStorage.token;
+          // alert(data);
+          alert("Error: Unknown email/password combination");
+        });
     };
   })
 
@@ -41,12 +51,15 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("ProfileController", function($scope, $http) {
-    $http.get("http://localhost:3000/current_user.json").then(function(resp){
-      $scope.user = resp.data
-      console.log(resp.data)
-    }, function(err){
-      console.error('ERR', err);
-    })
+    $scope.user = {}
+    $http.get("http://localhost:3000/current_user")
+      .success(function(resp){
+        $scope.user = resp
+        console.log(resp)
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
   })
 
   .controller("ChatsController", function($scope, $state, $http) {
@@ -121,9 +134,18 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
+
+	.controller("SearchRoomController", function($scope) {
+  })
+
+	.controller("SearchMatesController", function($scope) {
+  })
+
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
+        // console.log("requesttoken:");
+        // console.log($window.sessionStorage.token);
         config.headers = config.headers || {};
         if ($window.sessionStorage.token) {
           config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;

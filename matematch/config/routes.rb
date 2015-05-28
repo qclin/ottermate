@@ -4,10 +4,13 @@ Rails.application.routes.draw do
   resources :room_reviews, except: [:new, :edit]
   resources :rooms, except: [:new, :edit]
   resources :users, except: [:new, :edit]
+  resource :current_user, only: [:show]
 
   resource :current_user, only: [:show]
 
   get '/watson', to: 'watson#test'
+  post '/authenticate', to: 'auth#login'
+  get '/authtest', to: 'auth#test'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

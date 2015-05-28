@@ -1,7 +1,8 @@
 class CurrentUsersController < ApplicationController
 
-	def show
-		render json: User.find(1)
-	end
+  # skip_before_action :authenticate, only: [:show]
 
+  def show
+    render json: User.find(currentUserId)
+  end
 end
