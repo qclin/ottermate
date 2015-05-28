@@ -1,8 +1,12 @@
 angular.module('ionicApp', ['ionic'])
-  .controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
+  .controller('MainCtrl', function($scope, $ionicSideMenuDelegate, $window, $location) {
     $scope.toggleLeft = function() {
       $ionicSideMenuDelegate.toggleLeft()   
-    }
+    };
+    $scope.logout = function() {
+      delete $window.sessionStorage.token;
+      $location.path('/login');
+    };
   })
 
   .controller("LoginController", function($scope,$state,$http,$window) {
@@ -13,12 +17,11 @@ angular.module('ionicApp', ['ionic'])
           $window.sessionStorage.token = data.token;
           $http.get('http://localhost:3000/authtest')
             .success(function(data) {
-              alert("yay! "+data)
+              $state.go('menu.profile');
             })
             .error(function(data) {
               alert("sad "+data);
             });
-          // $state.go('menu.profile');
         })
         .error(function (data,status,headers,config) {
           delete $window.sessionStorage.token;
@@ -48,8 +51,8 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("ProfileController", function($scope, $http) {
-    $http.get("http://localhost:3000/users.json").then(function(resp){
-      $scope.users = resp.data
+    $http.get("http://localhost:3000/current_user.json").then(function(resp){
+      $scope.user = resp.data
       console.log(resp.data)
     }, function(err){
       console.error('ERR', err);
@@ -118,9 +121,12 @@ angular.module('ionicApp', ['ionic'])
 
 	.controller("SearchMatesController", function($scope) {
   })
+
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
+        console.log("requesttoken:");
+        console.log($window.sessionStorage.token);
         config.headers = config.headers || {};
         if ($window.sessionStorage.token) {
           config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;

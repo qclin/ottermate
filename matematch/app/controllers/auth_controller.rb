@@ -1,6 +1,8 @@
 $secrets = JSON.parse(File.read("../secrets.json"))
 class AuthController < ApplicationController
-  def authenticate
+  skip_before_action :authenticate, only: [:login]
+
+  def login
     username = params['user']['username']
     password = params['user']['password']
 
@@ -14,12 +16,13 @@ class AuthController < ApplicationController
 
   def test
     authheader = request.headers['HTTP_AUTHORIZATION']
-    if authheader[0..6] == "Bearer "
+    if authheader && authheader[0..6] == "Bearer "
       token = authheader[7..-1]
       decoded = JWT.decode token, $secrets['jwt']['secret']
-      
-      binding.pry
+      currentUserId = decoded[0]['user_id'];
+      render json: {authorized: true}
+    else
+      render json: {authorized: false}
     end
-    render json: {headers: authheader}
   end
 end
