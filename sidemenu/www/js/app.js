@@ -33,23 +33,21 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("SignUpCtrl", function($scope, $state, $http) {
+  .controller("SignUpCtrl", function($scope, $state, $http, $window) {
+    $scope.user = {}
     $scope.signup = function() {
-      var formdata = {
-        name: $scope.name,
-        password: $scope.password,
-        email: $scope.email,
-        phone: $scope.phone
-      };
-      $http.post("http://localhost:3000/users",formdata)
+      // console.log($scope.user.password);
+      // console.log($scope.user.phone);
+      $http.post("http://localhost:3000/users", {user: $scope.user})
         .success(function (data,status) {
-          $state.go("menu.profile");
+         $window.sessionStorage.token = data.token;
+         $state.go("menu.profile");
         })
         .error(function (data,status) {
           // our post got rejected
           alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
         });
-    };
+      };
   })
 
   .controller("ProfileCtrl", function($scope, $http) {

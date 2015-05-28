@@ -6,13 +6,18 @@ class AuthController < ApplicationController
     username = params['user']['username']
     password = params['user']['password']
 
-    payload = {:user_id => 1}
-
-    # here JWT is encrypting our userid and storing it in token
-    token = JWT.encode payload, $secrets['jwt']['secret'], 'HS512'
+    user = User.find_by(name: params[:username])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      session[:username] = user.name
+    else
+      @name = params[:name]
+      @error = "Unknown Username"
+      render :new
+    end
 
     # return encrypted token to angular app
-    render json: {token: token}
+    render json: {token: makeToken(1)}
   end
 
   def test
