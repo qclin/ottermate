@@ -30,17 +30,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    @user = User.find(params[:id])
-
-    if @user.update(user_params)
-      head :no_content
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
-  end
+ 
 
   # DELETE /users/1
   # DELETE /users/1.json

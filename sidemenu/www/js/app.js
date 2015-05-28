@@ -54,6 +54,7 @@ angular.module('ionicApp', ['ionic'])
     $scope.user = {}
     $http.get("http://localhost:3000/current_user")
       .success(function(resp){
+        console.log(resp)
         $scope.user = resp
         console.log(resp)
       })
