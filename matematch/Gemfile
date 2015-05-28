@@ -11,6 +11,7 @@ gem 'spring', :group => :development
 gem 'sqlite3'
 gem 'json'
 gem 'httparty'
+gem 'jwt'
 gem 'pry'
 
 gem 'rack-cors', :require => 'rack/cors'

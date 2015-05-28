@@ -1,27 +1,37 @@
 angular.module('ionicApp', ['ionic'])
-  .controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
+  .controller('MainCtrl', function($scope, $ionicSideMenuDelegate, $window, $location) {
     $scope.toggleLeft = function() {
       $ionicSideMenuDelegate.toggleLeft()   
-    }
-  })
-
-  .controller("LoginController", function($scope,$state) {
-    $scope.login = function() {
-      $state.go("menu.profile");
-      // $http.post('/authenticate', {username:$scope.username, password:$scope.password})
-      //   .success(function (data,status,headers,config) {
-      //     $window.sessionStorage.token = data.token;
-      //     $state.go('menu.profile');
-      //   })
-      //   .error(function (data,status,headers,config) {
-      //     delete $window.sessionStorage.token;
-      //     alert(data);
-      //     // alert("Error: Unknown email/password combination");
-      //   });
+    };
+    $scope.logout = function() {
+      delete $window.sessionStorage.token;
+      $location.path('/login');
     };
   })
 
-  .controller("SignUpController", function($scope, $state, $http) {
+  .controller("LoginCtrl", function($scope,$state,$http,$window) {
+    $scope.user = {};
+    $scope.login = function() {
+      $http.post('http://localhost:3000/authenticate', {user:$scope.user})
+        .success(function (data,status,headers,config) {
+          $window.sessionStorage.token = data.token;
+          $http.get('http://localhost:3000/authtest')
+            .success(function(data) {
+              $state.go('menu.profile');
+            })
+            .error(function(data) {
+              alert("sad "+data);
+            });
+        })
+        .error(function (data,status,headers,config) {
+          delete $window.sessionStorage.token;
+          // alert(data);
+          alert("Error: Unknown email/password combination");
+        });
+    };
+  })
+
+  .controller("SignUpCtrl", function($scope, $state, $http) {
     $scope.signup = function() {
       var formdata = {
         name: $scope.name,
@@ -40,16 +50,19 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("ProfileController", function($scope, $http) {
-    $http.get("http://localhost:3000/users.json").then(function(resp){
-      $scope.users = resp.data
-      console.log(resp.data)
-    }, function(err){
-      console.error('ERR', err);
-    })
+  .controller("ProfileCtrl", function($scope, $http) {
+    $scope.user = {}
+    $http.get("http://localhost:3000/current_user")
+      .success(function(resp){
+        $scope.user = resp
+        console.log(resp)
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
   })
 
-  .controller("ChatsController", function($scope, $state, $http) {
+  .controller("ChatsCtrl", function($scope, $state, $http) {
     $http.get("http://localhost:3000/chats.json").then(function(resp){
       $scope.chats = resp.data
       console.log(resp.data)
@@ -59,38 +72,55 @@ angular.module('ionicApp', ['ionic'])
   })
 
   
-  .controller("SearchRoomsController", function($scope, $state, $http, $stateParams) {
-    console.log("stateparams: ");
-    console.log($stateParams);
+  .controller("SearchRoomsCtrl", function($scope, $state, $http){
     $scope.search = {};
-
     $scope.searchRooms = function(){
-      $state.go("menu.roomresults", $scope.search);
+      $state.go("menu.roomResults", $scope.search);
     };
   })
 
-  .controller("RoomResultsController", function($scope, $state, $http, $stateParams) {
-    console.log("stateparams in results");
+  .controller("RoomResultsCtrl", function($scope, $state, $http, $stateParams) {
+    // $scope.search is now pass in as $stateParams in the Url
     console.log($stateParams);
 
-    $http.get("http://localhost:3000/rooms", {params:{search: $stateParams}}).then(function(resp){
-      $scope.rooms = resp.data;
+    //// *******petfriendly values are not being pass as boolean but are strings . . . need fixing
+
+    $http.get("http://localhost:3000/rooms", {params: $stateParams}).then(function(resp){
+      if(resp.data.length === 0){
+        // maybe there's a better way for empty results
+        $scope.msg = "no results match your criteria"
+      }else{
+        $scope.msg = "your search has return the following matches~!!"
+        $scope.rooms = resp.data;
+      }
+      console.log(resp.data);
+    }, function(err){
+      console.error("ERR", err);
+    })
+  })
+///////////// test out the following two controllers
+  .controller("SearchMatesCtrl", function($scope, $state, $http){
+    $scope.search = {};
+    $scope.searchMates = function(){
+      state.go("menu.mateResults", $scope.search)
+    };
+  })
+
+  .controller("MateResultsCtrl", function($scope, $state, $http, $stateParams){
+    $http.get("http://localhost:3000/users", {params:$stateParams}).then(function(resp){
+      if(resp.data.length === 0){
+        $scope.msg = "no mates are in your range"
+      }else{
+        $scope.msg = "looks like these folks are on the same vibe as you ~~~"
+        $scope.mates = resp.data;
+      }
       console.log(resp.data);
     }, function(err){
       console.error("ERR", err);
     })
   })
 
-  .controller("SearchMatesController", function($scope, $state, $http) {
-    $http.get("http://localhost:3000/users.json").then(function(resp){
-      $scope.users = resp.data
-      console.log(resp.data)
-    }, function(err) {
-      console.error("ERR", err);
-    })
-  })
-
-  .controller("PostRoomController", function($scope, $state, $http) {
+  .controller("PostRoomCtrl", function($scope, $state, $http) {
     $scope.room = {};
     $scope.postRoom = function() {
     $scope.room.owner_id = 1;
@@ -106,15 +136,17 @@ angular.module('ionicApp', ['ionic'])
   })
 
 
-
-	.controller("SearchRoomController", function($scope) {
+	.controller("SearchRoomCtrl", function($scope) {
   })
 
-	.controller("SearchMatesController", function($scope) {
+	.controller("SearchMatesCtrl", function($scope) {
   })
+
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
+        // console.log("requesttoken:");
+        // console.log($window.sessionStorage.token);
         config.headers = config.headers || {};
         if ($window.sessionStorage.token) {
           config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
@@ -158,7 +190,6 @@ angular.module('ionicApp', ['ionic'])
         url: "/profile",
         views: {
           "menuContent": {
-            controller: "ProfileController",
             templateUrl: "templates/profile.html"
           }
         }
@@ -167,7 +198,6 @@ angular.module('ionicApp', ['ionic'])
         url: "/chatHistory",
         views: {
           "menuContent": {
-            controller: "ChatsController",
             templateUrl: "templates/chatHistory.html"
           }
         }
@@ -188,21 +218,30 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
-      .state("menu.roomresults", {
+      .state("menu.roomResults", {
         url: "/roomresults?neighborhood&price_min&price_max&pet_friendly",
         views: {
           "menuContent": {
-            templateUrl: "templates/allRooms.html"
+            templateUrl: "templates/roomResults.html"
           }
         }
       })
+      /// these need to be test 
       .state("menu.searchMates", {
         url: "/searchMates",
         views: {
           "menuContent": {
-            controller: "SearchMatesController",
             templateUrl: "templates/searchMates.html"
           }
         }
-      });
+      })
+      .state("menu.mateResults", {
+        // change the rest of the criterias here 
+        url: "/materesults?gender&description", 
+        views: {
+          "menuContent":{
+            templateUrl: "templates/mateResults.html"
+          }
+        }
+      })
  		})

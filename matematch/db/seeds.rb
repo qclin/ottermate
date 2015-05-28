@@ -32,11 +32,11 @@ Chat.create(from_id: 7, to_id: 4, msg: "Access to large kitchen, living room, ba
 Chat.create(from_id: 8, to_id: 3, msg: "June 1 for 1 to 3 months, dates are flexible. Send me a message for images and more inf")
 Chat.create(from_id: 9, to_id: 1, msg: "Great area ! few steps away from grocery store, laundromat, great take out places etc....")
 
-Room.create(owner_id: 1, price: 879, neighborhood: "crown heights", description: "Brand New Stunning Renovation Available for May 1st")
-Room.create(owner_id: 5, price: 1205, neighborhood: "williamsburg", description: "Great area ! few steps away from grocery store, laundromat, great take out places etc.")
-Room.create(owner_id: 6, price: 750, neighborhood: "Ridgewood", description: "Good Credit & Proof of Income Needed / Guarantors Welcome -- Utilities Not Included")
-Room.create(owner_id: 8, price: 500, neighborhood: "new jersey", description: "Modern Renovation, Renovated kitchen with Steel Appliances,Central Air in all rooms,Beautiful Hardwood & Marble floors,Some units feature skylights ,Great for roommates ")
-Room.create(owner_id: 9, price: 2000, neighborhood: "union square", description: "Apt is Beautifully designed Airy Clean Spacious and warm.")
+Room.create(owner_id: 1, price: 879, neighborhood: "crown heights", description: "Brand New Stunning Renovation Available for May 1st", petfriendly: true)
+Room.create(owner_id: 5, price: 1205, neighborhood: "williamsburg", description: "Great area ! few steps away from grocery store, laundromat, great take out places etc.", petfriendly: true)
+Room.create(owner_id: 6, price: 750, neighborhood: "Ridgewood", description: "Good Credit & Proof of Income Needed / Guarantors Welcome -- Utilities Not Included", petfriendly: false)
+Room.create(owner_id: 8, price: 500, neighborhood: "new jersey", description: "Modern Renovation, Renovated kitchen with Steel Appliances,Central Air in all rooms,Beautiful Hardwood & Marble floors,Some units feature skylights ,Great for roommates ", petfriendly: false)
+Room.create(owner_id: 9, price: 2000, neighborhood: "union square", description: "Apt is Beautifully designed Airy Clean Spacious and warm.", petfriendly: false)
 
 Endorsement.create(endorser_id: 1, endorsee_id: 2, skill: "cleans well")
 Endorsement.create(endorser_id: 8, endorsee_id: 3, skill: "pays on time") 

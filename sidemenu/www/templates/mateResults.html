@@ -1,0 +1,11 @@
+<ion-view view-title="matchMates" ng-controller="MateResultsCtrl">
+  <ion-content class="has-header padding">
+    {{msg}}
+    <div ng-repeat="mate in mates">
+        {{mate.gender}} 
+        {{mate.description}}
+        <br />
+        <br />
+         </div>
+    </ion-content>
+</ion-view>
