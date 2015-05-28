@@ -1,5 +1,5 @@
-<ion-view view-title="profile" ng-controller="ProfileCtrl">
-  <ion-content class="has-header padding">
+<ion-view view-title="editprofile" ng-controller="EditProfileCtrl">
+  <ion-content contenteditable class="has-header padding">
     <ion-list>
       <ion-item><h1>Home</h1></ion-item>
       <ion-item>{{user.name}}</ion-item>
@@ -8,7 +8,7 @@
       <ion-item>{{user.email}}</ion-item>
       <ion-item>{{user.phone}}</ion-item>
       <ion-item>{{user.password}}</ion-item>
-      <button class="button button-full button-positive" on-tap="editProfile()">Edit Profile</button>
-    <ion-list>
+		</ion-list>
+		<button class="button button-full button-positive" on-tap="menu.profile">Submit Changes</button>
   </ion-content>
 </ion-view>
