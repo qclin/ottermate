@@ -1,12 +1,12 @@
 <ion-view view-title="searchRooms" ng-controller="RoomResultsCtrl">
   <ion-content class="has-header padding">
     {{msg}}
-    <div ng-repeat="room in rooms">
-    <a ui-sref="menu.oneRoom({ id: room.id })">
-        located in {{room.neighborhood}}  ${{room.price}} </a><br />
-        {{room.description}}
-        <br />
-        <br />
-         </div>
+    <ion-list>
+        <ion-item ui-sref="menu.oneRoom({ id: room.id })" ng-repeat="room in rooms">
+            {{room.neighborhood}}  
+            ${{room.price}}         
+            {{room.description}}
+        </ion-item>
+    </ion-list>
     </ion-content>
 </ion-view>
