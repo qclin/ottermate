@@ -26,7 +26,8 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = Room.new(room_params)
-
+    @room.owner_id = currentUserId
+    puts currentUserId
     if @room.save
       render json: @room, status: :created, location: @room
     else

@@ -100,16 +100,28 @@ angular.module('ionicApp', ['ionic'])
       console.error("ERR", err);
     })
   })
+   .controller("GetRoomCtrl",function($scope, $state, $http, $stateParams){
+    console.log($stateParams.id);
+    $http.get("http://localhost:3000/rooms/"+$stateParams.id).then(function(resp){
+      console.log(resp.data);
+      $scope.room = resp.data;
+    }, function(err){
+      console.error("ERR", err);
+    })
+  })
+
+
 ///////////// test out the following two controllers
   .controller("SearchMatesCtrl", function($scope, $state, $http){
     $scope.search = {};
     $scope.searchMates = function(){
-      state.go("menu.mateResults", $scope.search)
+      $state.go("menu.mateResults", $scope.search)
     };
   })
 
   .controller("MateResultsCtrl", function($scope, $state, $http, $stateParams){
     $http.get("http://localhost:3000/users", {params:$stateParams}).then(function(resp){
+      console.log(resp.data);
       if(resp.data.length === 0){
         $scope.msg = "no mates are in your range"
       }else{
@@ -121,14 +133,22 @@ angular.module('ionicApp', ['ionic'])
       console.error("ERR", err);
     })
   })
+  .controller("GetMateCtrl",function($scope, $state, $http, $stateParams){
+    console.log($stateParams.id);
+    $http.get("http://localhost:3000/users/"+$stateParams.id).then(function(resp){
+      console.log(resp.data);
+      $scope.mate = resp.data;
+    }, function(err){
+      console.error("ERR", err);
+    })
+  })
 
   .controller("PostRoomCtrl", function($scope, $state, $http) {
     $scope.room = {};
-    $scope.postRoom = function() {
-    $scope.room.owner_id = 1;
+    $scope.postRoom = function(){
       $http.post("http://localhost:3000/rooms", {room: $scope.room})
         .success(function (data,status) {
-          $state.go("menu.profile");
+          $state.go("menu.oneRoom", {id:data.id});
         })
         .error(function (data,status) {
           // our post got rejected
@@ -222,6 +242,15 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
+      .state("menu.oneRoom", {
+        // change the rest of the criterias here 
+        url: "/room?id", 
+        views: {
+          "menuContent":{
+            templateUrl: "templates/oneRoom.html"
+          }
+        }
+      })
       /// these need to be test 
       .state("menu.searchMates", {
         url: "/searchMates",
@@ -240,4 +269,13 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
- 		})
+      .state("menu.oneMate", {
+        // change the rest of the criterias here 
+        url: "/mate?id", 
+        views: {
+          "menuContent":{
+            templateUrl: "templates/oneMate.html"
+          }
+        }
+      });
+ })

@@ -2,10 +2,9 @@
   <ion-content class="has-header padding">
     {{msg}}
     <div ng-repeat="mate in mates">
-        {{mate.gender}} 
-        {{mate.description}}
-        <br />
-        <br />
+    <a ui-sref="menu.oneMate({ id: mate.id })">{{ mate.name }}</a>
+        {{mate.gender}}<br />
+        {{mate.description}}<br />
          </div>
     </ion-content>
 </ion-view>

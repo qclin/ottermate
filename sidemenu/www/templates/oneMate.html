@@ -1,0 +1,15 @@
+<ion-view view-title="oneMate" ng-controller="GetMateCtrl">
+  <ion-content class="has-header padding">
+    <ion-list>
+      <ion-item><h1>{{mate.name}}</h1></ion-item>
+      <ion-item>{{mate.name}}</ion-item>
+      <ion-item>{{mate.gender}}</ion-item>
+      <ion-item>{{mate.hasRoom}}</ion-item>
+      <ion-item>{{mate.email}}</ion-item>
+      <ion-item>{{mate.phone}}</ion-item>
+      <ion-item>{{mate.password}}</ion-item>
+    <ion-list>
+
+    <a ui-sref="menu.chat({ id: mate.id })">chat with {{ mate.name }}</a>
+  </ion-content>
+</ion-view>
