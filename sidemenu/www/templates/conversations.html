@@ -1,8 +1,8 @@
 <ion-view view-title="chathistory" ng-controller="ConversationsCtrl">
   <ion-content class="has-header padding">
     <ion-list>
-      <ion-item ng-repeat="person in people">
-        {{person}}
+      <ion-item ui-sref="menu.chat({username: '{{username}}'})" ng-repeat="username in usernames">
+        {{username}}
       </ion-item>
     </ion-list>
   </ion-content>
