@@ -15,6 +15,8 @@ angular.module('ionicApp', ['ionic'])
       $http.post('http://localhost:3000/authenticate', {user:$scope.user})
         .success(function (data,status,headers,config) {
           $window.sessionStorage.token = data.token;
+          
+          // debugging code
           $http.get('http://localhost:3000/authtest')
             .success(function(data) {
               $state.go('menu.profile');
@@ -62,13 +64,15 @@ angular.module('ionicApp', ['ionic'])
       });
   })
 
-  .controller("ChatsCtrl", function($scope, $state, $http) {
-    $http.get("http://localhost:3000/chats.json").then(function(resp){
-      $scope.chats = resp.data
-      console.log(resp.data)
-    }, function(err) {
-      console.error("ERR", err);
-    })
+  .controller("ConversationsCtrl", function($scope, $state, $http) {
+    $http.get("http://localhost:3000/chats")
+      .success(function(resp){
+        $scope.chats = resp.data
+        console.log(resp.data)
+      })
+      .error(function(err) {
+        console.error("ERR", err);
+      });
   })
   
   .controller("SearchRoomsCtrl", function($scope, $state, $http){
@@ -155,6 +159,7 @@ angular.module('ionicApp', ['ionic'])
       response: function(response) {
         if (response.status === 401) {
           delete $window.sessionStorage.token;
+          alert("unauthorized");
           $location.path('/login');
         }
         return response || $q.when(response);
@@ -192,11 +197,11 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
-      .state("menu.chatHistory", {
-        url: "/chatHistory",
+      .state("menu.conversations", {
+        url: "/conversations",
         views: {
           "menuContent": {
-            templateUrl: "templates/chatHistory.html"
+            templateUrl: "templates/conversations.html"
           }
         }
       })
