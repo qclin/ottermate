@@ -104,7 +104,7 @@ angular.module('ionicApp', ['ionic'])
 
   
   .controller("SearchRoomsCtrl", function($scope, $state, $http){
-    $scope.search = {};
+    $scope.search = {pet_friendly: "nil"};
     $scope.searchRooms = function(){
       $state.go("menu.roomResults", $scope.search);
     };
