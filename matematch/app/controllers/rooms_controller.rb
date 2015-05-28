@@ -5,7 +5,6 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     # @rooms = Room.all
-    binding.pry
     @rooms = Room.where({neighborhood: search_params.neighborhood})
     render json: @rooms
   end
@@ -13,6 +12,9 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
+
+    # post_params
+    # @room = Room.find_by({room_id: post_params.room_id})
     render json: @room
   end
 

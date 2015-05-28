@@ -58,6 +58,7 @@ angular.module('ionicApp', ['ionic'])
       console.error("ERR", err);
     })
   })
+
   
   .controller("SearchRoomsController", function($scope, $state, $http) {
     $scope.search = {};
@@ -139,10 +140,16 @@ angular.module('ionicApp', ['ionic'])
         url: "/signup",
         templateUrl: "templates/signup.html"
       })
+      .state("room", {
+        url:"/room/1",
+        controller: "RoomController",
+        templateUrl: "templates/room.html"
+      })
 
       // states that include a sidemenu
       .state("menu", {
         url: "/menu",
+        
         // abstract causes this state to only be accessible through it's child states
         abstract: true,
         templateUrl: "templates/menu.html"
