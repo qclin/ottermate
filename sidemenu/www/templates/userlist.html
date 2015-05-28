@@ -1,6 +1,6 @@
 <ion-view view-title="profile" ng-controller="ProfileController">
   <ion-content class="has-header padding">
-  <div class="public">
+  <div ng-repeat="user in users">
   {{user.name}} <br />
   {{user.gender}} <br />
   {{user.hasRoom}} <br />

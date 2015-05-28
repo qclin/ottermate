@@ -47,6 +47,7 @@ class UsersController < ApplicationController
     head :no_content
   end
 
+
   private
 
     def set_user

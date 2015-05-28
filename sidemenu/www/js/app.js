@@ -42,8 +42,8 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("ProfileController", function($scope, $http) {
-    $http.get("http://localhost:3000/users.json").then(function(resp){
-      $scope.users = resp.data
+    $http.get("http://localhost:3000/current_user.json").then(function(resp){
+      $scope.user = resp.data
       console.log(resp.data)
     }, function(err){
       console.error('ERR', err);
