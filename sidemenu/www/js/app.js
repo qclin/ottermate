@@ -147,11 +147,10 @@ angular.module('ionicApp', ['ionic'])
 
   .controller("PostRoomCtrl", function($scope, $state, $http) {
     $scope.room = {};
-    $scope.postRoom = function() {
-    $scope.room.owner_id = 1;
+    $scope.postRoom = function(){
       $http.post("http://localhost:3000/rooms", {room: $scope.room})
         .success(function (data,status) {
-          $state.go("menu.profile");
+          $state.go("menu.oneRoom", {id:data.id});
         })
         .error(function (data,status) {
           // our post got rejected
@@ -242,6 +241,15 @@ angular.module('ionicApp', ['ionic'])
         views: {
           "menuContent": {
             templateUrl: "templates/roomResults.html"
+          }
+        }
+      })
+      .state("menu.oneRoom", {
+        // change the rest of the criterias here 
+        url: "/room?id", 
+        views: {
+          "menuContent":{
+            templateUrl: "templates/oneRoom.html"
           }
         }
       })

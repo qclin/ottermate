@@ -2,7 +2,8 @@
   <ion-content class="has-header padding">
     {{msg}}
     <div ng-repeat="room in rooms">
-        located in {{room.neighborhood}}  ${{room.price}} <br />
+    <a ui-sref="menu.oneRoom({ id: room.id })">
+        located in {{room.neighborhood}}  ${{room.price}} </a><br />
         {{room.description}}
         <br />
         <br />
