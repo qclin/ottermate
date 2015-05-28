@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527174229) do
+ActiveRecord::Schema.define(version: 20150528205817) do
 
   create_table "chats", force: :cascade do |t|
     t.integer  "from_id"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20150527174229) do
     t.string   "description"
     t.float    "reliability"
     t.string   "watsonfeed"
+    t.string   "username"
   end
 
 end
