@@ -1,20 +1,30 @@
 <ion-view view-title="postroom" ng-controller="PostRoomCtrl">
   <ion-content class="has-header padding">
-    <ion-list>
-    	<label class="item item-input">
-    		<input type="text" ng-model="room.description" placeholder="description">
-    	</label>
-    	<label class="item item-input">
-    		<input type="number" ng-model="room.price" placeholder="price">
-    	</label>
-    	<label class="item item-input">
-    		<input type="text" ng-model="room.photo" placeholder="photo">
-    	</label>
+    <div class="list">
     	<label class="item item-input">
     		<input type="text" ng-model="room.neighborhood" placeholder="neighborhood">
     	</label>
+        <br/>
         <label class="item item-input">
-            <input type="text" ng-model="room.petfriendly" placeholder="petfriendly">
+            <input type="number" ng-model="room.price" placeholder="price">
+        </label>
+        <br/>
+        <label class="item item-input">
+            <input type="text" ng-model="room.photo" placeholder="photo">
+        </label>
+        <br/>
+        <label class="item item-input item-select">
+            <div class ="input-label">Pet-friendly:</div>
+            <select ng-model="room.pet_friendly">
+                <option value = true>all tails welcome</option>
+                <option value =true>not allowed</option>
+                <option value =true>it makes no difference</option>
+            </select>
+
+        </label>
+        <br/>
+        <label class="item item-input">
+            <textarea type="text" ng-model="room.description" placeholder="description" cols="15" rows="3"></textarea>
         </label>
       <!--   <label class="item item-input">
             <input type="text" ng-model="owner_id" placeholder="Owner Id">
