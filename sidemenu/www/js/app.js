@@ -51,12 +51,15 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("ProfileController", function($scope, $http) {
-    $http.get("http://localhost:3000/current_user.json").then(function(resp){
-      $scope.user = resp.data
-      console.log(resp.data)
-    }, function(err){
-      console.error('ERR', err);
-    })
+    $scope.user = {}
+    $http.get("http://localhost:3000/current_user")
+      .success(function(resp){
+        $scope.user = resp
+        console.log(resp)
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
   })
 
   .controller("ChatsController", function($scope, $state, $http) {
@@ -125,8 +128,8 @@ angular.module('ionicApp', ['ionic'])
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
-        console.log("requesttoken:");
-        console.log($window.sessionStorage.token);
+        // console.log("requesttoken:");
+        // console.log($window.sessionStorage.token);
         config.headers = config.headers || {};
         if ($window.sessionStorage.token) {
           config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;

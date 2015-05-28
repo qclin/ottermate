@@ -13,7 +13,6 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    binding.pry
     render json: @user
   end
 

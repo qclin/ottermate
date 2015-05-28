@@ -1,7 +1,7 @@
 class CurrentUsersController < ApplicationController
+  # skip_before_action :authenticate, only: [:show]
+
   def show
-    cid = currentUserId
-    binding.pry
-    render plain: "hi"
+    render json: User.find(currentUserId)
   end
 end

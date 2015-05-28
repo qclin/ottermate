@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
 
   before_action :authenticate
 
-  def currentUserId=(id)
+  def setCurrentUserId(id)
     @currentUserId=id
   end
   def currentUserId
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::API
       if authheader && authheader[0..6] == "Bearer "
         token = authheader[7..-1]
         decoded = JWT.decode token, $secrets['jwt']['secret']
-        currentUserId = decoded[0]['user_id'];
+        setCurrentUserId decoded[0]['user_id'];
       else
         render json: {'authorized':'false'}, :status => 401
       end
