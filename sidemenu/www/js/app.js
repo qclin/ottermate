@@ -9,7 +9,7 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("LoginController", function($scope,$state,$http,$window) {
+  .controller("LoginCtrl", function($scope,$state,$http,$window) {
     $scope.user = {};
     $scope.login = function() {
       $http.post('http://localhost:3000/authenticate', {user:$scope.user})
@@ -31,7 +31,7 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("SignUpController", function($scope, $state, $http) {
+  .controller("SignUpCtrl", function($scope, $state, $http) {
     $scope.signup = function() {
       var formdata = {
         name: $scope.name,
@@ -50,7 +50,7 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("ProfileController", function($scope, $http) {
+  .controller("ProfileCtrl", function($scope, $http) {
     $scope.user = {}
     $http.get("http://localhost:3000/current_user")
       .success(function(resp){
@@ -62,7 +62,7 @@ angular.module('ionicApp', ['ionic'])
       });
   })
 
-  .controller("ChatsController", function($scope, $state, $http) {
+  .controller("ChatsCtrl", function($scope, $state, $http) {
     $http.get("http://localhost:3000/chats.json").then(function(resp){
       $scope.chats = resp.data
       console.log(resp.data)
@@ -71,14 +71,14 @@ angular.module('ionicApp', ['ionic'])
     })
   })
   
-  .controller("SearchRoomsController", function($scope, $state, $http){
+  .controller("SearchRoomsCtrl", function($scope, $state, $http){
     $scope.search = {};
     $scope.searchRooms = function(){
       $state.go("menu.roomResults", $scope.search);
     };
   })
 
-  .controller("RoomResultsController", function($scope, $state, $http, $stateParams) {
+  .controller("RoomResultsCtrl", function($scope, $state, $http, $stateParams) {
     // $scope.search is now pass in as $stateParams in the Url
     console.log($stateParams);
 
@@ -98,14 +98,14 @@ angular.module('ionicApp', ['ionic'])
     })
   })
 ///////////// test out the following two controllers
-  .controller("SearchMatesController", function($scope, $state, $http){
+  .controller("SearchMatesCtrl", function($scope, $state, $http){
     $scope.search = {};
     $scope.searchMates = function(){
       state.go("menu.mateResults", $scope.search)
     };
   })
 
-  .controller("MateResultsController", function($scope, $state, $http, $stateParams){
+  .controller("MateResultsCtrl", function($scope, $state, $http, $stateParams){
     $http.get("http://localhost:3000/users", {params:$stateParams}).then(function(resp){
       if(resp.data.length === 0){
         $scope.msg = "no mates are in your range"
@@ -119,7 +119,7 @@ angular.module('ionicApp', ['ionic'])
     })
   })
 
-  .controller("PostRoomController", function($scope, $state, $http) {
+  .controller("PostRoomCtrl", function($scope, $state, $http) {
     $scope.room = {};
     $scope.postRoom = function() {
     $scope.room.owner_id = 1;
@@ -135,10 +135,10 @@ angular.module('ionicApp', ['ionic'])
   })
 
 
-	.controller("SearchRoomController", function($scope) {
+	.controller("SearchRoomCtrl", function($scope) {
   })
 
-	.controller("SearchMatesController", function($scope) {
+	.controller("SearchMatesCtrl", function($scope) {
   })
 
   .factory('authInterceptor', function($q, $window, $location) {
@@ -188,7 +188,6 @@ angular.module('ionicApp', ['ionic'])
         url: "/profile",
         views: {
           "menuContent": {
-            controller: "ProfileController",
             templateUrl: "templates/profile.html"
           }
         }
@@ -197,7 +196,6 @@ angular.module('ionicApp', ['ionic'])
         url: "/chatHistory",
         views: {
           "menuContent": {
-            controller: "ChatsController",
             templateUrl: "templates/chatHistory.html"
           }
         }
@@ -222,7 +220,7 @@ angular.module('ionicApp', ['ionic'])
         url: "/roomresults?neighborhood&price_min&price_max&pet_friendly",
         views: {
           "menuContent": {
-            templateUrl: "templates/allRooms.html"
+            templateUrl: "templates/roomResults.html"
           }
         }
       })
@@ -240,7 +238,7 @@ angular.module('ionicApp', ['ionic'])
         url: "/materesults?gender&description", 
         views: {
           "menuContent":{
-            templateUrl: "templates/allMates.html"
+            templateUrl: "templates/mateResults.html"
           }
         }
       })
