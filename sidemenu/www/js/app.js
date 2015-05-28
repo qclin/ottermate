@@ -134,13 +134,6 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-
-	.controller("SearchRoomCtrl", function($scope) {
-  })
-
-	.controller("SearchMatesCtrl", function($scope) {
-  })
-
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
