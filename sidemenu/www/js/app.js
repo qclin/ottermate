@@ -59,18 +59,24 @@ angular.module('ionicApp', ['ionic'])
     })
   })
   
-  .controller("SearchRoomsController", function($scope, $state, $http) {
+  .controller("SearchRoomsController", function($scope, $state, $http, $stateParams) {
+    console.log("stateparams: ");
+    console.log($stateParams);
     $scope.search = {};
 
     $scope.searchRooms = function(){
       console.log($scope.search);
-      $http.get("http://localhost:3000/rooms.json", {search: $scope.search}).then(function(resp){
+      $http.get("http://localhost:3000/rooms", {params:{search: $scope.search}}).then(function(resp){
         $scope.rooms = resp.data
         console.log(resp.data)
-      }, function(err) {
+        $state.go("results", {rooms : resp.data});
+      }, function(err){
         console.error("ERR", err);
       })
-    }
+    };
+  })
+
+  .controller("RoomResultsController", function($scope, $state, $http, $stateParams) {
 
   })
 
@@ -139,7 +145,10 @@ angular.module('ionicApp', ['ionic'])
         url: "/signup",
         templateUrl: "templates/signup.html"
       })
-
+      .state("results", {
+        url: "/rooms",
+        templateUrl: "templates/allRooms.html"
+      })
       // states that include a sidemenu
       .state("menu", {
         url: "/menu",

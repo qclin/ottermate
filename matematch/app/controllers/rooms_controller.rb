@@ -5,8 +5,8 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     # @rooms = Room.all
-    binding.pry
-    @rooms = Room.where({neighborhood: search_params.neighborhood})
+    search_params = JSON.parse(params[:search])
+    @rooms = Room.where({neighborhood: search_params["neighborhood"]})
     render json: @rooms
   end
 
@@ -57,8 +57,5 @@ class RoomsController < ApplicationController
     def room_params
       params.require(:room).permit(:description, :price, :photo_url, :neighborhood, :petfriendly)
     end
-    def search_params 
-      params.require(:search).permit(:neighborhood, :price_min, :price_max, :size)
-    end 
 
 end
