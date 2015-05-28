@@ -13,6 +13,14 @@ class ApplicationController < ActionController::API
     @currentUserId
   end
 
+  def makeToken(user_id)
+    payload = {:user_id => user_id}
+
+    # here JWT is encrypting our userid and storing it in token
+    JWT.encode payload, $secrets['jwt']['secret'], 'HS512'
+  end
+
+
   private
     def authenticate
       authheader = request.headers['HTTP_AUTHORIZATION']
