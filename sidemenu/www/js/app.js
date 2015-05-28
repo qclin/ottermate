@@ -5,20 +5,26 @@ angular.module('ionicApp', ['ionic'])
     }
   })
 
-  .controller("LoginController", function($scope,$state) {
+  .controller("LoginController", function($scope,$state,$http,$window) {
+    $scope.user = {};
     $scope.login = function() {
-      $state.go("menu.profile");
-      alert('hi?');
-      // $http.post('/authenticate', {username:$scope.username, password:$scope.password})
-      //   .success(function (data,status,headers,config) {
-      //     $window.sessionStorage.token = data.token;
-      //     $state.go('menu.profile');
-      //   })
-      //   .error(function (data,status,headers,config) {
-      //     delete $window.sessionStorage.token;
-      //     alert(data);
-      //     // alert("Error: Unknown email/password combination");
-      //   });
+      $http.post('http://localhost:3000/authenticate', {user:$scope.user})
+        .success(function (data,status,headers,config) {
+          $window.sessionStorage.token = data.token;
+          $http.get('http://localhost:3000/authtest')
+            .success(function(data) {
+              alert("yay! "+data)
+            })
+            .error(function(data) {
+              alert("sad "+data);
+            });
+          // $state.go('menu.profile');
+        })
+        .error(function (data,status,headers,config) {
+          delete $window.sessionStorage.token;
+          // alert(data);
+          alert("Error: Unknown email/password combination");
+        });
     };
   })
 
