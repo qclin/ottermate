@@ -1,55 +1,29 @@
 <ion-view view-title="searchroom" ng-controller="SearchRoomsController">
 	<ion-content class="has-header padding">
 		<div class="list">
-			<label class="item item-input item-select">
-				<div class="input-label">
-					Neighborhoods
-				</div>
-				<select>
-					<option>Brooklyn</option>
-					<option>The Bronx</option>
-					<option>Manhattan</option>
-					<option>Staten Island</option>
-					<option>Queens</option>
-				</select>
+			
+			<label class="item item-input">
+        <input type="text" placeholder="neighborhood" ng-model = "search.neighborhood">
+      </label>
+
+			<label class="item item-input">
+				<input type="number" ng-model="search.price_min" placeholder="min">
+			</label>
+			<label class="item item-input">
+				<input type="number" ng-model="search.price_max" placeholder="max">
 			</label>
 			<label class="item item-input item-select">
 				<div class="input-label">
-					Size
+					Pet Friendly
 				</div>
-				<select>
-					<option>10x9</option>
+				<select ng-model="search.pet_friendly">
+					<option value = true>welcome</option>
+					<option value = false>not allow</option>
 				</select>
+
 			</label>
-			<label class="item">
-				<div class="input-label">
-					Min
-				</div>
-				<div class="range range-assertive">
-					<i class="icon ion-ios7-sunny-outline"></i>
-					<input type="range" min="{{user.min}}" max="{{user.max}}" value="{{user.value}}" step="100" ng-model="user.value">
-				</div>
-			</label>
-			<label class="item">
-				<div class="input-label">
-					Max
-				</div>
-				<div class="range range-assertive">
-					<i class="icon ion-ios7-sunny-outline"></i>
-					<input type="range" min="{{user.min}}" max="{{user.max}}" value="{{user.value}}" step="100" ng-model="user.value">
-				</div>
-			</label>
-			<label class="item item-input item-select">
-				<div class="input-label">
-					Number Of People
-				</div>
-				<select>
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-				</select>
-			</label>
+			<br>
+			<button class="button button-positive" on-tap="searchRooms()">Search</button>
 		</div>
 	</ion-content>
 </ion-view>

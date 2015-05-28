@@ -8,7 +8,6 @@ angular.module('ionicApp', ['ionic'])
   .controller("LoginController", function($scope,$state) {
     $scope.login = function() {
       $state.go("menu.profile");
-      alert('hi?');
       // $http.post('/authenticate', {username:$scope.username, password:$scope.password})
       //   .success(function (data,status,headers,config) {
       //     $window.sessionStorage.token = data.token;
@@ -59,20 +58,50 @@ angular.module('ionicApp', ['ionic'])
     })
   })
   
-  .controller("SearchRoomsController", function($scope, $state, $http) {
-    $http.get("http://localhost:3000/rooms.json").then(function(resp){
-      $scope.rooms = resp.data
-      console.log(resp.data)
-    }, function(err) {
+  .controller("SearchRoomsController", function($scope, $state, $http){
+    $scope.search = {};
+    $scope.searchRooms = function(){
+      $state.go("menu.roomResults", $scope.search);
+    };
+  })
+
+  .controller("RoomResultsController", function($scope, $state, $http, $stateParams) {
+    // $scope.search is now pass in as $stateParams in the Url
+    console.log($stateParams);
+
+    //// *******petfriendly values are not being pass as boolean but are strings . . . need fixing
+
+    $http.get("http://localhost:3000/rooms", {params: $stateParams}).then(function(resp){
+      if(resp.data.length === 0){
+        // maybe there's a better way for empty results
+        $scope.msg = "no results match your criteria"
+      }else{
+        $scope.msg = "your search has return the following matches~!!"
+        $scope.rooms = resp.data;
+      }
+      console.log(resp.data);
+    }, function(err){
       console.error("ERR", err);
     })
   })
+///////////// test out the following two controllers
+  .controller("SearchMatesController", function($scope, $state, $http){
+    $scope.search = {};
+    $scope.searchMates = function(){
+      state.go("menu.mateResults", $scope.search)
+    };
+  })
 
-  .controller("SearchMatesController", function($scope, $state, $http) {
-    $http.get("http://localhost:3000/users.json").then(function(resp){
-      $scope.users = resp.data
-      console.log(resp.data)
-    }, function(err) {
+  .controller("MateResultsController", function($scope, $state, $http, $stateParams){
+    $http.get("http://localhost:3000/users", {params:$stateParams}).then(function(resp){
+      if(resp.data.length === 0){
+        $scope.msg = "no mates are in your range"
+      }else{
+        $scope.msg = "looks like these folks are on the same vibe as you ~~~"
+        $scope.mates = resp.data;
+      }
+      console.log(resp.data);
+    }, function(err){
       console.error("ERR", err);
     })
   })
@@ -92,13 +121,6 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-
-
-	.controller("SearchRoomController", function($scope) {
-  })
-
-	.controller("SearchMatesController", function($scope) {
-  })
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
@@ -133,7 +155,6 @@ angular.module('ionicApp', ['ionic'])
         url: "/signup",
         templateUrl: "templates/signup.html"
       })
-
       // states that include a sidemenu
       .state("menu", {
         url: "/menu",
@@ -171,18 +192,34 @@ angular.module('ionicApp', ['ionic'])
         url: "/searchRooms",
         views: {
           "menuContent": {
-            controller: "SearchRoomsController",
-            templateUrl: "templates/searchRooms.html"
+            templateUrl: "templates/searchRoom.html"
           }
         }
       })
+      .state("menu.roomResults", {
+        url: "/roomresults?neighborhood&price_min&price_max&pet_friendly",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/allRooms.html"
+          }
+        }
+      })
+      /// these need to be test 
       .state("menu.searchMates", {
         url: "/searchMates",
         views: {
           "menuContent": {
-            controller: "SearchMatesController",
             templateUrl: "templates/searchMates.html"
           }
         }
-      });
+      })
+      .state("menu.mateResults", {
+        // change the rest of the criterias here 
+        url: "/materesults?gender&description", 
+        views: {
+          "menuContent":{
+            templateUrl: "templates/allMates.html"
+          }
+        }
+      })
  		})

@@ -4,8 +4,12 @@ class RoomsController < ApplicationController
   # GET /rooms
   # GET /rooms.json
   def index
-    @rooms = Room.all
-
+    # @rooms = Room.all
+    if params['pet_friendly'] == nil
+      @rooms = Room.where("neighborhood = ? AND price >= ? AND price <= ?", params["neighborhood"], params["price_min"], params["price_max"]);
+    else
+      @rooms = Room.where("neighborhood = ? AND price >= ? AND price <= ? AND petfriendly = ?", params["neighborhood"], params["price_min"], params["price_max"], params["pet_friendly"]);
+    end
     render json: @rooms
   end
 
@@ -56,4 +60,5 @@ class RoomsController < ApplicationController
     def room_params
       params.require(:room).permit(:description, :price, :photo_url, :neighborhood, :petfriendly)
     end
+
 end
