@@ -21,7 +21,7 @@ class ApplicationController < ActionController::API
         decoded = JWT.decode token, $secrets['jwt']['secret']
         setCurrentUserId decoded[0]['user_id'];
       else
-        render json: {'authorized':'false'}, :status => 401
+        # render json: {'authorized':'false'}, :status => 401
       end
 
       # if !session[:user_id]

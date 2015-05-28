@@ -65,14 +65,42 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("ConversationsCtrl", function($scope, $state, $http) {
+
+    // get list of usernames that we've chatted with
     $http.get("http://localhost:3000/chats")
-      .success(function(resp){
-        $scope.chats = resp.data
-        console.log(resp.data)
+      .success(function(data){
+        $scope.usernames = data
       })
       .error(function(err) {
         console.error("ERR", err);
       });
+  })
+
+  .controller("ChatCtrl", function($scope, $state, $http, $stateParams) {
+    $scope.chat = {}
+    $scope.user2 = $stateParams.username;
+    loadChat();
+
+    function loadChat() {
+      $http.get("http://localhost:3000/chats/"+$stateParams.username)
+        .success(function(data) {
+          $scope.messages = data;
+        })
+        .error(function(data) {
+          console.log(data);
+        });
+    }
+
+    $scope.sendMessage = function() {
+      $http.post("http://localhost:3000/chats",{message: $scope.chat.message, to_username: $scope.user2})
+        .success(function(data) {
+          $scope.chat.message = "";
+          loadChat();
+        })
+        .error(function(data) {
+          console.log(data);
+        });
+    };
   })
 
   
@@ -197,6 +225,14 @@ angular.module('ionicApp', ['ionic'])
         views: {
           "menuContent": {
             templateUrl: "templates/conversations.html"
+          }
+        }
+      })
+      .state("menu.chat", {
+        url: "/menu/chat?username",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/chat.html"
           }
         }
       })
