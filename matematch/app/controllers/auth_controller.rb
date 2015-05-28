@@ -6,8 +6,9 @@ class AuthController < ApplicationController
     username = params['user']['username']
     password = params['user']['password']
 
-    @user = User.find_by(username: params[:username])
-    if @user && @user.authenticate(params[:password])
+    @user = User.find_by(username: username)
+
+    if @user && @user.authenticate(password)
       session[:user_id] = @user.id
       redirect_to(user_path(@user))
     else

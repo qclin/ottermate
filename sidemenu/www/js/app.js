@@ -19,7 +19,7 @@ angular.module('ionicApp', ['ionic'])
           // debugging code
           $http.get('http://localhost:3000/authtest')
             .success(function(data) {
-              $state.go('menu.profile');
+              // $state.go('menu.profile');
             })
             .error(function(data) {
               alert("sad "+data);
