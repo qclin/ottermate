@@ -8,7 +8,6 @@ angular.module('ionicApp', ['ionic'])
   .controller("LoginController", function($scope,$state) {
     $scope.login = function() {
       $state.go("menu.profile");
-      alert('hi?');
       // $http.post('/authenticate', {username:$scope.username, password:$scope.password})
       //   .success(function (data,status,headers,config) {
       //     $window.sessionStorage.token = data.token;
@@ -65,19 +64,20 @@ angular.module('ionicApp', ['ionic'])
     $scope.search = {};
 
     $scope.searchRooms = function(){
-      console.log($scope.search);
-      $http.get("http://localhost:3000/rooms", {params:{search: $scope.search}}).then(function(resp){
-        $scope.rooms = resp.data
-        console.log(resp.data)
-        $state.go("results", {rooms : resp.data});
-      }, function(err){
-        console.error("ERR", err);
-      })
+      $state.go("menu.roomresults", $scope.search);
     };
   })
 
   .controller("RoomResultsController", function($scope, $state, $http, $stateParams) {
+    console.log("stateparams in results");
+    console.log($stateParams);
 
+    $http.get("http://localhost:3000/rooms", {params:{search: $stateParams}}).then(function(resp){
+      $scope.rooms = resp.data;
+      console.log(resp.data);
+    }, function(err){
+      console.error("ERR", err);
+    })
   })
 
   .controller("SearchMatesController", function($scope, $state, $http) {
@@ -145,10 +145,6 @@ angular.module('ionicApp', ['ionic'])
         url: "/signup",
         templateUrl: "templates/signup.html"
       })
-      .state("results", {
-        url: "/rooms",
-        templateUrl: "templates/allRooms.html"
-      })
       // states that include a sidemenu
       .state("menu", {
         url: "/menu",
@@ -187,6 +183,14 @@ angular.module('ionicApp', ['ionic'])
         views: {
           "menuContent": {
             templateUrl: "templates/searchRoom.html"
+          }
+        }
+      })
+      .state("menu.roomresults", {
+        url: "/roomresults?neighborhood&price_min&price_max&pet_friendly",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/allRooms.html"
           }
         }
       })
