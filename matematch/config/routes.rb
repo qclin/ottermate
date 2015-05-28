@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   resources :chats, except: [:new, :edit]
   resources :room_reviews, except: [:new, :edit]
   resources :rooms, except: [:new, :edit]
-  resources :users, except: [:new, :edit]
+  resources :users, except: [:new, :edit, :update]
   resource :current_user, only: [:show]
 
-  resource :current_user, only: [:show]
+  resource :current_user, only: [:show, :update]
 
   get '/watson', to: 'watson#test'
   post '/authenticate', to: 'auth#login'
