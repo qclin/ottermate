@@ -6,14 +6,13 @@ class AuthController < ApplicationController
     username = params['user']['username']
     password = params['user']['password']
 
-    user = User.find_by(name: params[:username])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      session[:username] = user.name
+    @user = User.find_by(username: params[:username])
+    if @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect_to(user_path(@user))
     else
-      @name = params[:name]
-      @error = "Unknown Username"
-      render :new
+      flash[:error] = "Unknown User"
+      redirect_to(login_path)
     end
 
     # return encrypted token to angular app
