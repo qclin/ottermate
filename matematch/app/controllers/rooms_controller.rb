@@ -5,17 +5,27 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     # @rooms = Room.all
+
+    @rooms = Room.where({neighborhood: search_params["neighborhood"]})
+    params = JSON.parse(params[:search])
+    binding.pry
+    range = [params["price_min"] .. params["price_max"]]
+    @rooms = Room.where({neighborhood: params["neighborhood"], price: in:range, pet_friendly: params["pet_friendly"]})
     if params['pet_friendly'] == nil
       @rooms = Room.where("neighborhood = ? AND price >= ? AND price <= ?", params["neighborhood"], params["price_min"], params["price_max"]);
     else
       @rooms = Room.where("neighborhood = ? AND price >= ? AND price <= ? AND petfriendly = ?", params["neighborhood"], params["price_min"], params["price_max"], params["pet_friendly"]);
     end
+    
     render json: @rooms
   end
 
   # GET /rooms/1
   # GET /rooms/1.json
   def show
+
+    # post_params
+    # @room = Room.find_by({room_id: post_params.room_id})
     render json: @room
   end
 

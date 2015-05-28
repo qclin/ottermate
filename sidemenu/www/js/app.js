@@ -74,6 +74,7 @@ angular.module('ionicApp', ['ionic'])
         console.error("ERR", err);
       });
   })
+
   
   .controller("SearchRoomsCtrl", function($scope, $state, $http){
     $scope.search = {};
@@ -138,13 +139,6 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-
-	.controller("SearchRoomCtrl", function($scope) {
-  })
-
-	.controller("SearchMatesCtrl", function($scope) {
-  })
-
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
@@ -185,6 +179,7 @@ angular.module('ionicApp', ['ionic'])
       // states that include a sidemenu
       .state("menu", {
         url: "/menu",
+        
         // abstract causes this state to only be accessible through it's child states
         abstract: true,
         templateUrl: "templates/menu.html"
