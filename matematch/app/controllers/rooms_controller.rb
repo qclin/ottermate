@@ -5,12 +5,12 @@ class RoomsController < ApplicationController
   # GET /rooms.json
   def index
     # @rooms = Room.all
-<<<<<<< HEAD
-    @rooms = Room.where({neighborhood: search_params.neighborhood})
-=======
-    search_params = JSON.parse(params[:search])
+
     @rooms = Room.where({neighborhood: search_params["neighborhood"]})
->>>>>>> b802d870fe7ba4585bab4a2c85faae75473ecf04
+    params = JSON.parse(params[:search])
+    binding.pry
+    range = [params["price_min"] .. params["price_max"]]
+    @rooms = Room.where({neighborhood: params["neighborhood"], price: in:range, pet_friendly: params["pet_friendly"]})
     render json: @rooms
   end
 
