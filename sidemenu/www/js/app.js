@@ -65,11 +65,24 @@ angular.module('ionicApp', ['ionic'])
     })
   })
   
-  .controller("SearchRoomsController", function($scope, $state, $http) {
-    $http.get("http://localhost:3000/rooms.json").then(function(resp){
-      $scope.rooms = resp.data
-      console.log(resp.data)
-    }, function(err) {
+  .controller("SearchRoomsController", function($scope, $state, $http, $stateParams) {
+    console.log("stateparams: ");
+    console.log($stateParams);
+    $scope.search = {};
+
+    $scope.searchRooms = function(){
+      $state.go("menu.roomresults", $scope.search);
+    };
+  })
+
+  .controller("RoomResultsController", function($scope, $state, $http, $stateParams) {
+    console.log("stateparams in results");
+    console.log($stateParams);
+
+    $http.get("http://localhost:3000/rooms", {params:{search: $stateParams}}).then(function(resp){
+      $scope.rooms = resp.data;
+      console.log(resp.data);
+    }, function(err){
       console.error("ERR", err);
     })
   })
@@ -86,6 +99,7 @@ angular.module('ionicApp', ['ionic'])
   .controller("PostRoomController", function($scope, $state, $http) {
     $scope.room = {};
     $scope.postRoom = function() {
+    $scope.room.owner_id = 1;
       $http.post("http://localhost:3000/rooms", {room: $scope.room})
         .success(function (data,status) {
           $state.go("menu.profile");
@@ -138,7 +152,6 @@ angular.module('ionicApp', ['ionic'])
         url: "/signup",
         templateUrl: "templates/signup.html"
       })
-
       // states that include a sidemenu
       .state("menu", {
         url: "/menu",
@@ -176,8 +189,15 @@ angular.module('ionicApp', ['ionic'])
         url: "/searchRooms",
         views: {
           "menuContent": {
-            controller: "SearchRoomsController",
-            templateUrl: "templates/searchRooms.html"
+            templateUrl: "templates/searchRoom.html"
+          }
+        }
+      })
+      .state("menu.roomresults", {
+        url: "/roomresults?neighborhood&price_min&price_max&pet_friendly",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/allRooms.html"
           }
         }
       })

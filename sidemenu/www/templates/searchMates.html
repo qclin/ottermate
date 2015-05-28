@@ -1,7 +1,20 @@
 <ion-view view-title="searchMates" ng-controller="SearchMatesController">
   <ion-content class="has-header padding">
-    <div ng-repeat="user in users">
-        {{user.name}}
-         </div>
+    <ion-list>
+    	<label class="item item-input">
+    		<input type="number" ng-model="budgetRange" placeholder="budget range">
+    	</label>
+    	<label class="item item-input">
+    		<div class="input-label">
+    			Gender
+    		</div>
+    		<select>
+    			<option>Male</option>
+    			<option>Female</option>
+    		</select>
+    	</label>
+    	<br>
+    	<button class="button button-positive" on-tap="searchMates()">Search</button>
+    </ion-list>
     </ion-content>
 </ion-view>
