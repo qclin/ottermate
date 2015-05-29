@@ -8,6 +8,18 @@
       <label class="item item-input">
         <input type="text" placeholder="Username" ng-model="user.username">
       </label>
+
+      <select ng-model="user.gender">
+          <option value="male">male</option>
+          <option value="female">female</option>
+      </select>
+
+      <label class="item item-checkbox">
+        <div class="item-content">Have A Room?<input type="checkbox" name="hasRoom" ng-model="user.hasRoom"></div>
+      </label>
+      <label class="item item-input">
+        <input type="number" placeholder="budget" ng-model="user.budget">
+      </label>
       <label class="item item-input">
         <input type="password" placeholder="Password" ng-model="user.password">
       </label>
@@ -15,27 +27,19 @@
         <input type="password" placeholder="Confirm Password" ng-model="user.confirm_password">
       </label>
       <label class="item item-input">
-        <input type="email" name="email" placeholder="Email" ng-model="user.email">
+        <input type="email" placeholder="Email" ng-model="user.email">
       </label>
       <label class="item item-input">
-        <input type="number" name="phone" placeholder="Phone Number" ng-model="user.phone">
+        <input type="text" placeholder="Phone Number" ng-model="user.phone">
       </label>
       <label class="item item-input">
-        <input type="text" name="occupation" placeholder="Occupation" ng-model="user.occupation">
+        <input type="text" placeholder="Occupation" ng-model="user.occupation">
       </label>
-      <label class="item item-checkbox">
-        <div class="item-content">Have A Room?<input type="checkbox" name="hasRoom" ng-model="user.hasRoom"></div>
+
+      <label class="item item-input">
+        <input type="text" placeholder="description" ng-model="user.description">
       </label>
-      <label class="item item-radio">
-        <input type="radio" name="gender" value="male" ng-model="user.gender"> 
-        <div class="item-content">Male</div>
-        <i class="radio-icon ion-checkmark"></i>
-      </label>
-      <label class="item item-radio">
-        <input type="radio" name="gender" value="female" ng-model="user.gender"> 
-        <div class="item-content">Female</div>
-        <i class="radio-icon ion-checkmark"></i>
-      </label>
+      
       <button class="button button-positive" on-tap="signup()">
         Sign Up
       </button>

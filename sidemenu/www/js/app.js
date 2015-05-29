@@ -1,5 +1,15 @@
 angular.module('ionicApp', ['ionic'])
-  .controller('MainCtrl', function($scope, $ionicSideMenuDelegate, $window, $location) {
+  .controller('MainCtrl', function($rootScope, $scope, $ionicSideMenuDelegate, $window, $location) {
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+      // when we switch state, check if we have a valid token
+      if (typeof $window.sessionStorage.token === 'undefined') {
+        // no valid token, so block transition unless it's the login or signup pages
+        if (toState.name !== 'login' && toState.name !== 'signup' ) {
+          event.preventDefault();
+        }
+      }
+    });
+
     $scope.toggleLeft = function() {
       $ionicSideMenuDelegate.toggleLeft()   
     };
@@ -10,22 +20,15 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("LoginCtrl", function($scope,$state,$http,$window) {
-    $scope.user = {};
+    $scope.user = {}
     $scope.login = function() {
       $http.post('http://localhost:3000/authenticate', {user:$scope.user})
         .success(function (data,status,headers,config) {
           $window.sessionStorage.token = data.token;
-          
-          // debugging code
-          $http.get('http://localhost:3000/authtest')
-            .success(function(data) {
-              $state.go('menu.profile');
-            })
-            .error(function(data) {
-              alert("sad "+data);
-            });
+          $state.go('menu.profile');
         })
         .error(function (data,status,headers,config) {
+          console.log('bad password');
           delete $window.sessionStorage.token;
           // alert(data);
           alert("Error: Unknown email/password combination");
@@ -55,15 +58,35 @@ angular.module('ionicApp', ['ionic'])
     $http.get("http://localhost:3000/current_user")
       .success(function(resp){
         $scope.user = resp
-        console.log(resp)
       })
       .error(function(err){
         console.error('ERR', err);
       });
   })
 
-  .controller("ConversationsCtrl", function($scope, $state, $http) {
+  .controller("EditProfileCtrl", function($scope, $http, $state){
+    $scope.user = {}
+    $http.get("http://localhost:3000/current_user")
+      .success(function(resp){
+        $scope.user = resp
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
+      $scope.updateProfile = function(){
+        console.log($scope.user)
+         $http.put("http://localhost:3000/current_user", {user: $scope.user})
+          .success(function (data,status) {
+            console.log(data);
+           $state.go("menu.profile");
+          })
+          .error(function (data,status) {
+            alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
+          });
+      }
+  })
 
+  .controller("ConversationsCtrl", function($scope, $state, $http) {
     // get list of usernames that we've chatted with
     $http.get("http://localhost:3000/chats")
       .success(function(data){
@@ -110,36 +133,29 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("RoomResultsCtrl", function($scope, $state, $http, $stateParams) {
-    // $scope.search is now pass in as $stateParams in the Url
-    console.log($stateParams);
-
-    //// *******petfriendly values are not being pass as boolean but are strings . . . need fixing
-
-    $http.get("http://localhost:3000/rooms", {params: $stateParams}).then(function(resp){
-      if(resp.data.length === 0){
-        // maybe there's a better way for empty results
-        $scope.msg = "no results match your criteria"
-      }else{
-        $scope.msg = "your search has return the following matches~!!"
-        $scope.rooms = resp.data;
-      }
-      console.log(resp.data);
-    }, function(err){
-      console.error("ERR", err);
-    })
+    $http.get("http://localhost:3000/rooms", {params: $stateParams})
+      .success(function(resp){
+        if(resp.data.length === 0){
+          // maybe there's a better way for empty results
+          $scope.msg = "no results match your criteria"
+        }else{
+          $scope.msg = "your search has return the following matches~!!"
+          $scope.rooms = resp.data;
+        }
+      })
+      .error( function(err){
+        console.error("ERR", err);
+      });
   })
-   .controller("GetRoomCtrl",function($scope, $state, $http, $stateParams){
-    console.log($stateParams.id);
+
+  .controller("GetRoomCtrl",function($scope, $state, $http, $stateParams){
     $http.get("http://localhost:3000/rooms/"+$stateParams.id).then(function(resp){
-      console.log(resp.data);
       $scope.room = resp.data;
     }, function(err){
       console.error("ERR", err);
-    })
+    });
   })
 
-
-///////////// test out the following two controllers
   .controller("SearchMatesCtrl", function($scope, $state, $http){
     $scope.search = {};
     $scope.searchMates = function(){
@@ -149,7 +165,6 @@ angular.module('ionicApp', ['ionic'])
 
   .controller("MateResultsCtrl", function($scope, $state, $http, $stateParams){
     $http.get("http://localhost:3000/users", {params:$stateParams}).then(function(resp){
-      console.log(resp.data);
       if(resp.data.length === 0){
         $scope.msg = "no mates are in your range"
       }else{
@@ -159,7 +174,7 @@ angular.module('ionicApp', ['ionic'])
       console.log(resp.data);
     }, function(err){
       console.error("ERR", err);
-    })
+    });
   })
   .controller("GetMateCtrl",function($scope, $state, $http, $stateParams){
     console.log($stateParams.id);
@@ -168,7 +183,15 @@ angular.module('ionicApp', ['ionic'])
       $scope.mate = resp.data;
     }, function(err){
       console.error("ERR", err);
-    })
+    });
+
+    $http.get("http://localhost:3000/endorsements", {params:{user_id:$stateParams.id}}).then(function(resp){
+      console.log(resp.data);
+      $scope.endorsements = resp.data;
+    }, function(err){
+      console.error("ERR", err);
+    });
+
   })
 
   .controller("PostRoomCtrl", function($scope, $state, $http) {
@@ -188,6 +211,7 @@ angular.module('ionicApp', ['ionic'])
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
+        console.log("req");
         // console.log("requesttoken:");
         // console.log($window.sessionStorage.token);
         config.headers = config.headers || {};
@@ -196,17 +220,16 @@ angular.module('ionicApp', ['ionic'])
         }
         return config;
       },
-      response: function(response) {
+      responseError: function(response) {
+        console.log(response);
         if (response.status === 401) {
           delete $window.sessionStorage.token;
-          alert("unauthorized");
           $location.path('/login');
         }
-        return response || $q.when(response);
+        return $q.reject(response.statusText);
       }
     };
   })
-
 
   .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');
@@ -235,6 +258,14 @@ angular.module('ionicApp', ['ionic'])
         views: {
           "menuContent": {
             templateUrl: "templates/profile.html"
+          }
+        }
+      })
+      .state("menu.editProfile", {
+        url: "/editProfile",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/editProfile.html"
           }
         }
       })
@@ -298,7 +329,7 @@ angular.module('ionicApp', ['ionic'])
       })
       .state("menu.mateResults", {
         // change the rest of the criterias here 
-        url: "/materesults?gender&description", 
+        url: "/materesults?gender&description&budget&range", 
         views: {
           "menuContent":{
             templateUrl: "templates/mateResults.html"

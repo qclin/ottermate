@@ -6,7 +6,10 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     #@users = User.all
-    @users = User.where("hasRoom = ? AND gender = ? AND description LIKE ?", false, params["gender"].downcase, params["description"]);
+    min = params["budget"].to_i - params["range"].to_i
+    max = params["budget"].to_i + params["range"].to_i
+    
+    @users = User.where("hasRoom = ? AND gender = ? AND description LIKE ? AND budget >= ? AND budget <= ?", false, params["gender"].downcase, params["description"], min,max);
     render json: @users
   end
 
@@ -30,17 +33,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
-  def update
-    @user = User.find(params[:id])
-
-    if @user.update(user_params)
-      head :no_content
-    else
-      render json: @user.errors, status: :unprocessable_entity
-    end
-  end
+ 
 
   # DELETE /users/1
   # DELETE /users/1.json
@@ -58,6 +51,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :username, :price, :gender, :hasRoom, :personality, :occupation, :email, :phone, :password)
+      params.require(:user).permit(:name, :username, :budget, :gender, :hasRoom, :personality, :occupation, :email, :phone, :password, :description)
     end
 end

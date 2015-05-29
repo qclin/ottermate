@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  resources :user_endorsements, except: [:new, :edit]
+  resources :endorsements, except: [:new, :edit]
   resources :chats, except: [:new, :edit]
-  resources :room_reviews, except: [:new, :edit]
+  resources :reviews, except: [:new, :edit]
   resources :rooms, except: [:new, :edit]
   resources :users, except: [:new, :edit, :update]
-  resource :current_user, only: [:show]
 
   resource :current_user, only: [:show, :update]
 

@@ -4,7 +4,7 @@ class ReviewsController < ApplicationController
   # GET /reviews
   # GET /reviews.json
   def index
-    @reviews = RoomReview.all
+    @reviews = Review.all
 
     render json: @reviews
   end
@@ -18,7 +18,7 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
-    @review = RoomReview.new(review_params)
+    @review = Review.new(review_params)
 
     if @review.save
       render json: @review, status: :created, location: @review
@@ -30,7 +30,7 @@ class ReviewsController < ApplicationController
   # PATCH/PUT /reviews/1
   # PATCH/PUT /reviews/1.json
   def update
-    @review = RoomReview.find(params[:id])
+    @review = Review.find(params[:id])
 
     if @review.update(review_params)
       head :no_content
@@ -50,7 +50,7 @@ class ReviewsController < ApplicationController
   private
 
     def set_review
-      @review = RoomReview.find(params[:id])
+      @review = Review.find(params[:id])
     end
 
     def review_params
