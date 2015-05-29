@@ -54,13 +54,32 @@ angular.module('ionicApp', ['ionic'])
     $scope.user = {}
     $http.get("http://localhost:3000/current_user")
       .success(function(resp){
-        console.log(resp)
         $scope.user = resp
-        console.log(resp)
       })
       .error(function(err){
         console.error('ERR', err);
       });
+  })
+
+  .controller("EditProfileCtrl", function($scope, $http){
+    $scope.user = {}
+    $http.get("http://localhost:3000/current_user")
+      .success(function(resp){
+        $scope.user = resp
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
+      $scope.updateProfile = function(){
+        console.log($scope.user)
+         $http.put("http://localhost:3000/current_user", {user: $scope.user})
+          .success(function (data,status) {
+           $state.go("menu.profile");
+          })
+          .error(function (data,status) {
+            alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
+          });
+      }
   })
 
   .controller("ConversationsCtrl", function($scope, $state, $http) {
@@ -227,6 +246,14 @@ angular.module('ionicApp', ['ionic'])
         views: {
           "menuContent": {
             templateUrl: "templates/profile.html"
+          }
+        }
+      })
+      .state("menu.editProfile", {
+        url: "/editProfile",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/editProfile.html"
           }
         }
       })

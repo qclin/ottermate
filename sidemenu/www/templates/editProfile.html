@@ -1,14 +1,39 @@
 <ion-view view-title="editprofile" ng-controller="EditProfileCtrl">
   <ion-content contenteditable class="has-header padding">
-    <ion-list>
-      <ion-item><h1>Home</h1></ion-item>
-      <ion-item>{{user.name}}</ion-item>
-      <ion-item>{{user.gender}}</ion-item>
-      <ion-item>{{user.hasRoom}}</ion-item>
-      <ion-item>{{user.email}}</ion-item>
-      <ion-item>{{user.phone}}</ion-item>
-      <ion-item>{{user.password}}</ion-item>
-		</ion-list>
-		<button class="button button-full button-positive" on-tap="menu.profile">Submit Changes</button>
+
+  <div class="list">
+      <label class="item item-input">
+        <input type="text" value="{{user.name}}" ng-model="user.name">
+      </label>
+      
+      <div ng-hide="{{user.username}}" ng-model="user.username">
+
+      <label class="item item-checkbox">
+        <div class="item-content">Have A Room?<input type="checkbox" value="{{user.hasRoom}}" ng-model="user.hasRoom"></div>
+      </label>
+      <label class="item item-input">
+        <input type="number" value="{{user.budget}}" ng-model="user.budget">
+      </label>
+      
+      <div ng-hide="{{user.password}}" ng-model="user.password">
+
+
+      <label class="item item-input">
+        <input type="email" value="{{user.email}}" ng-model="user.email">
+      </label>
+      <label class="item item-input">
+        <input type="text" value="{{user.phone}}" ng-model="user.phone">
+      </label>
+      <label class="item item-input">
+        <input type="text" value="{{user.occupation}}" ng-model="user.occupation">
+      </label>
+     
+
+      <select ng-model="user.gender">
+          <option value="male">male</option>
+          <option value="female">female</option>
+      </select>
+   
+		<button class="button button-full button-positive" on-tap="updateProfile()">Submit Changes</button>
   </ion-content>
 </ion-view>

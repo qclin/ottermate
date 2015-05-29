@@ -11,15 +11,15 @@ Room.destroy_all
 Endorsement.destroy_all
 Review.destroy_all
 
-User.create(username: "curiousplatupus", name: "thom", gender: "male", hasRoom: true, email: "shea@butter.com", phone: 9179209888 , password: "fireisland", description: "friendly")
-User.create(username: "anymoushrew", name: "thom2", gender: "female", hasRoom: false, email: "werea@utter.com", phone: 1782038889 , password: "firand", description: "clean")
-User.create(username: "smashingcoco", name: "thom3", gender: "male", hasRoom: false, email: "swra@tter.com", phone: 9178823459 , password: "fireisl", description: "outgoing")
-User.create(username: "dummydata", name: "thom4", gender: "female", hasRoom: false, email: "tea@ter.com", phone: 9788984569 , password: "reisland", description: "motivated")
-User.create(username: "jumpstart", name: "thom5", gender: "female", hasRoom: true, email: "sheeeea@ter.com", phone: 9233898889 , password: "island", description: "active")
-User.create(username: "statechange", name: "thom6", gender: "male", hasRoom: true, email: "seea@buer.com", phone: 3458333889 , password: "landfireis", description: "vegan")
-User.create(username: "americanpie", name: "thom7", gender: "male", hasRoom: false, email: "shea@butt.com", phone: 9178894248 , password: "fireland", description: "dog-lover")
-User.create(username: "ferristail", name: "thom8", gender: "female", hasRoom: true, email: "swera@buer.com", phone: 9178898779 , password: "fireis", description: "nerd, book-lover")
-User.create(username: "willowillo", name: "thom9", gender: "male", hasRoom: true, email: "shea@ster.com", phone: 1788966689 , password: "island", description: "likes to cook and host parties")
+User.create(username: "curiousplatupus", name: "thom", gender: "male", hasRoom: true, email: "shea@butter.com", phone: "9179209888", occupation: "student", password: "fireisland", description: "friendly")
+User.create(username: "anymoushrew", name: "thom2", gender: "female", hasRoom: false, budget: 700, email: "werea@utter.com", phone: "1782038889", occupation: "handy-man", password: "firand", description: "clean")
+User.create(username: "smashingcoco", name: "thom3", gender: "male", hasRoom: false, budget: 900, email: "swra@tter.com", phone: "9178823459", occupation: "plumper", password: "fireisl", description: "outgoing")
+User.create(username: "dummydata", name: "thom4", gender: "female", hasRoom: false, budget: 1200, email: "tea@ter.com", phone: "9788984569", occupation: "fire-fighter", password: "reisland", description: "motivated")
+User.create(username: "jumpstart", name: "thom5", gender: "female", hasRoom: true, email: "sheeeea@ter.com", phone: "9233898889", occupation: "delievery man", password: "island", description: "active")
+User.create(username: "statechange", name: "thom6", gender: "male", hasRoom: true, email: "seea@buer.com", phone: "3458333889", occupation: "skater", password: "landfireis", description: "vegan")
+User.create(username: "americanpie", name: "thom7", gender: "male", hasRoom: false, budget: 800, email: "shea@butt.com", phone: "9178894248", occupation: "go-pro", password: "fireland", description: "dog-lover")
+User.create(username: "ferristail", name: "thom8", gender: "female", hasRoom: true, email: "swera@buer.com", phone: "9178898779", occupation: "mailman", password: "fireis", description: "nerd, book-lover")
+User.create(username: "willowillo", name: "thom9", gender: "male", hasRoom: true, email: "shea@ster.com", phone: "1788966689", occupation: "instructor", password: "island", description: "likes to cook and host parties")
 
 Chat.create(from_id: 1, to_id: 2, msg: "Lorem Ipsum used since the 1500s is reproduced below for those interested")
 Chat.create(from_id: 3, to_id: 8, msg: "If you want to move around here ASAP but can't afford to do it without roommates")
