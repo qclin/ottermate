@@ -73,8 +73,29 @@ angular.module('ionicApp', ['ionic'])
     });
   })
 
-  .controller("ConversationsCtrl", function($rootScope, $scope, $state, $http) {
+  .controller("EditProfileCtrl", function($scope, $http, $state){
+    $scope.user = {}
+    $http.get("http://localhost:3000/current_user")
+      .success(function(resp){
+        $scope.user = resp
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
+      $scope.updateProfile = function(){
+        console.log($scope.user)
+         $http.put("http://localhost:3000/current_user", {user: $scope.user})
+          .success(function (data,status) {
+            console.log(data);
+           $state.go("menu.profile");
+          })
+          .error(function (data,status) {
+            alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
+          });
+      }
+  })
 
+  .controller("ConversationsCtrl", function($scope, $state, $http) {
     $rootScope.$on('$viewContentLoading', function() {
       // get list of usernames that we've chatted with
       $http.get("http://localhost:3000/chats")
@@ -257,6 +278,14 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
+      .state("menu.editProfile", {
+        url: "/editProfile",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/editProfile.html"
+          }
+        }
+      })
       .state("menu.conversations", {
         url: "/conversations",
         views: {
@@ -317,7 +346,7 @@ angular.module('ionicApp', ['ionic'])
       })
       .state("menu.mateResults", {
         // change the rest of the criterias here 
-        url: "/materesults?gender&description", 
+        url: "/materesults?gender&description&budget&range", 
         views: {
           "menuContent":{
             templateUrl: "templates/mateResults.html"
