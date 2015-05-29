@@ -1,6 +1,14 @@
 <ion-side-menus>
     <ion-side-menu-content>
         <ion-nav-bar class="bar-positive">
+           <ion-nav-buttons side="right">
+           <a ui-sref="menu.editProfile">
+           	<button class="button icon button-clear ion-ios-cog-outline"></button>
+           </a>
+           <a ui-sref="menu.conversations">
+           	<button class="button icon button-clear ion-ios-chatbubble"></button>
+           </a>
+           </ion-nav-buttons>
             <ion-nav-buttons side="left">
                 <button class="button icon button-clear ion-navicon-round" on-tap="toggleLeft()"></button>
             </ion-nav-buttons>
@@ -13,9 +21,6 @@
         </ion-list>
         <ion-list>
             <ion-item menu-close ui-sref="menu.postRoom">Post Room</ion-item>
-        </ion-list>
-        <ion-list>
-            <ion-item menu-close ui-sref="menu.conversations">Conversations</ion-item>
         </ion-list>
          <ion-list>
             <ion-item menu-close ui-sref="menu.searchRooms">Search Rooms</ion-item>
