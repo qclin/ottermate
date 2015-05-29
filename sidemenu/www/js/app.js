@@ -186,12 +186,29 @@ angular.module('ionicApp', ['ionic'])
     });
 
     $http.get("http://localhost:3000/endorsements", {params:{user_id:$stateParams.id}}).then(function(resp){
-      console.log(resp.data);
-      $scope.endorsements = resp.data;
+      console.log(resp.data)
+      $scope.handy = Array.apply(null, Array(resp.data.handy)).map(function(a,b){return b;});
+      console.log($scope.handy)
+      $scope.neatfreak = Array.apply(null, Array(resp.data.neatfreak)).map(function(a,b){return b;});
+      $scope.foodie = Array.apply(null, Array(resp.data.foodie)).map(function(a,b){return b;});
+      $scope.active = Array.apply(null, Array(resp.data.active)).map(function(a,b){return b;});
+      $scope.punctual = Array.apply(null, Array(resp.data.punctual)).map(function(a,b){return b;});
+      $scope.lowkey = Array.apply(null, Array(resp.data.lowkey)).map(function(a,b){return b;});
     }, function(err){
       console.error("ERR", err);
     });
 
+    $scope.endorseUser = function(skill){
+      console.log(skill);
+      $http.post("http://localhost:3000/endorsements", {endorsee_id: $stateParams.id, skill: skill})
+      .success(function(data, status){
+        console.log($stateParams.id)
+        $state.go("menu.oneMate", {id:$stateParams.id});
+      })
+      .error(function(data,status){
+        console.log("bad post!" + JSON.stringify(data) + " status: " +status); 
+      });
+    };
   })
 
   .controller("PostRoomCtrl", function($scope, $state, $http) {
