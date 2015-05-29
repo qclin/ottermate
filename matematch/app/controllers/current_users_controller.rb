@@ -7,7 +7,7 @@ class CurrentUsersController < ApplicationController
   def update
     @user = User.find(currentUserId)
     if @user.update(user_params)
-      head :no_content
+      render json: User.find(currentUserId)
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -15,7 +15,7 @@ class CurrentUsersController < ApplicationController
 
   private
   def user_params
-      params.require(:user).permit(:name, :username, :budget, :gender, :hasRoom, :personality, :occupation, :email, :phone, :password)
+      params.require(:user).permit(:name, :budget, :gender, :hasRoom, :personality, :occupation, :email, :phone, :description)
   end
 
 end

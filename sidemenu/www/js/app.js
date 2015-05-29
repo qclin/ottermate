@@ -61,7 +61,7 @@ angular.module('ionicApp', ['ionic'])
       });
   })
 
-  .controller("EditProfileCtrl", function($scope, $http){
+  .controller("EditProfileCtrl", function($scope, $http, $state){
     $scope.user = {}
     $http.get("http://localhost:3000/current_user")
       .success(function(resp){
@@ -74,6 +74,7 @@ angular.module('ionicApp', ['ionic'])
         console.log($scope.user)
          $http.put("http://localhost:3000/current_user", {user: $scope.user})
           .success(function (data,status) {
+            console.log(data);
            $state.go("menu.profile");
           })
           .error(function (data,status) {
@@ -317,7 +318,7 @@ angular.module('ionicApp', ['ionic'])
       })
       .state("menu.mateResults", {
         // change the rest of the criterias here 
-        url: "/materesults?gender&description", 
+        url: "/materesults?gender&description&budget&range", 
         views: {
           "menuContent":{
             templateUrl: "templates/mateResults.html"

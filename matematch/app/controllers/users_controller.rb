@@ -6,7 +6,10 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     #@users = User.all
-    @users = User.where("hasRoom = ? AND gender = ? AND description LIKE ?", false, params["gender"].downcase, params["description"]);
+    min = params["budget"].to_i - params["range"].to_i
+    max = params["budget"].to_i + params["range"].to_i
+    
+    @users = User.where("hasRoom = ? AND gender = ? AND description LIKE ? AND budget >= ? AND budget <= ?", false, params["gender"].downcase, params["description"], min,max);
     render json: @users
   end
 
@@ -48,6 +51,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name, :username, :budget, :gender, :hasRoom, :personality, :occupation, :email, :phone, :password)
+      params.require(:user).permit(:name, :username, :budget, :gender, :hasRoom, :personality, :occupation, :email, :phone, :password, :description)
     end
 end

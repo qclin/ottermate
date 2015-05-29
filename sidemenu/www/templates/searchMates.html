@@ -14,80 +14,18 @@
     	<br>
 
         <label class="item item-input">
-         <input type="text" placeholder="description" ng-model = "search.description">
+         <input type="text" placeholder="character traits" ng-model = "search.description">
+        </label>
+        <div class="input-label">
+            Budget range
+        </div>
+        <label class="item item-input">
+         <input type="number" placeholder="$$$ target $$$" ng-model = "search.budget">
         </label>
 
         <label class="item item-input">
-            <div class="input-label">
-                personality
-            </div>
-            <select ng-model = "search.personality">
-                <option value = "Agreeableness">Agreeableness</option>
-                <option value = "Conscientiousness">Conscientiousness</option>
-                <option value = "Extraversion">Extraversion</option>
-                <option value = "Cooperation">Cooperation</option>
-                <option value = "Neuroticism">Neuroticism</option>
-            </select>
+         <input type="number" placeholder="$ acceptable range $" ng-model = "search.range">
         </label>
-
-
-        <div class="list" ng-model = "search.personality.Agreeableness">
-          <div class="item range range-positive">
-            <i class="icon ion-ios-sunny-outline"></i>
-            <input type="range" name="personality" min="0" max="100" value="50">
-            <i class="icon ion-ios-sunny"></i>
-            <div class="input-label">
-                Agreeableness
-            </div>
-          </div>
-        </div>
-
-         <div class="list" ng-model = "search.personality.Conscientiousness">
-          <div class="item range range-positive">
-            <i class="icon ion-ios-sunny-outline"></i>
-            <input type="range" name="personality" min="0" max="100" value="50">
-            <i class="icon ion-ios-sunny"></i>
-            <div class="input-label">
-                Conscientiousness
-            </div>
-          </div>
-        </div>
-
-         <div class="list" ng-model = "search.personality.Extraversion">
-          <div class="item range range-positive">
-            <i class="icon ion-ios-sunny-outline"></i>
-            <input type="range" name="personality" min="0" max="100" value="50">
-            <i class="icon ion-ios-sunny"></i>
-            <div class="input-label">
-                Extraversion
-            </div>
-          </div>
-        </div>
-
-         <div class="list" ng-model = "search.personality.Cooperation">
-          <div class="item range range-positive">
-            <i class="icon ion-ios-sunny-outline"></i>
-            <input type="range" name="personality" min="0" max="100" value="50">
-            <i class="icon ion-ios-sunny"></i>
-            <div class="input-label">
-                Cooperation
-            </div>
-          </div>
-        </div>
-
-         <div class="list" ng-model = "search.personality.Neuroticism">
-          <div class="item range range-positive">
-            <i class="icon ion-ios-sunny-outline"></i>
-            <input type="range" name="personality" min="0" max="100" value="50">
-            <i class="icon ion-ios-sunny"></i>
-            <div class="input-label">
-                Neuroticism
-            </div>
-          </div>
-        </div>
-
- 
-
 
     	<button class="button button-positive" on-tap="searchMates()">Search</button>
     </ion-list>

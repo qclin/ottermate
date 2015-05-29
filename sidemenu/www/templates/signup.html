@@ -8,6 +8,12 @@
       <label class="item item-input">
         <input type="text" placeholder="Username" ng-model="user.username">
       </label>
+
+      <select ng-model="user.gender">
+          <option value="male">male</option>
+          <option value="female">female</option>
+      </select>
+
       <label class="item item-checkbox">
         <div class="item-content">Have A Room?<input type="checkbox" name="hasRoom" ng-model="user.hasRoom"></div>
       </label>
@@ -29,12 +35,11 @@
       <label class="item item-input">
         <input type="text" placeholder="Occupation" ng-model="user.occupation">
       </label>
-      
-      <select ng-model="user.gender">
-          <option value="male">male</option>
-          <option value="female">female</option>
-      </select>
 
+      <label class="item item-input">
+        <input type="text" placeholder="description" ng-model="user.description">
+      </label>
+      
       <button class="button button-positive" on-tap="signup()">
         Sign Up
       </button>
