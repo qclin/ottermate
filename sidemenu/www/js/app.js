@@ -226,7 +226,7 @@ angular.module('ionicApp', ['ionic'])
           delete $window.sessionStorage.token;
           $location.path('/login');
         }
-        return $q.reject(response.statusText);
+        return $q.reject(response);
       }
     };
   })
