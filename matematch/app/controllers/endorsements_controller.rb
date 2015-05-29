@@ -4,8 +4,9 @@ class EndorsementsController < ApplicationController
   # GET /endorsements
   # GET /endorsements.json
   def index
-    @endorsements = UserEndorsement.all
+    # @endorsements = Endorsement.all
 
+    @endorsements = Endorsement.where({endorsee_id: params[:user_id]}).group(:skill).count
     render json: @endorsements
   end
 
@@ -18,7 +19,7 @@ class EndorsementsController < ApplicationController
   # POST /endorsements
   # POST /endorsements.json
   def create
-    @endorsement = UserEndorsement.new(endorsement_params)
+    @endorsement = Endorsement.new(endorsement_params)
 
     if @endorsement.save
       render json: @endorsement, status: :created, location: @endorsement
@@ -30,7 +31,7 @@ class EndorsementsController < ApplicationController
   # PATCH/PUT /endorsements/1
   # PATCH/PUT /endorsements/1.json
   def update
-    @endorsement = UserEndorsement.find(params[:id])
+    @endorsement = Endorsement.find(params[:id])
 
     if @endorsement.update(endorsement_params)
       head :no_content
@@ -50,7 +51,7 @@ class EndorsementsController < ApplicationController
   private
 
     def set_endorsement
-      @endorsement = UserEndorsement.find(params[:id])
+      @endorsement = Endorsement.find(params[:id])
     end
 
     def endorsement_params

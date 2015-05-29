@@ -184,6 +184,14 @@ angular.module('ionicApp', ['ionic'])
     }, function(err){
       console.error("ERR", err);
     });
+
+    $http.get("http://localhost:3000/endorsements", {params:{user_id:$stateParams.id}}).then(function(resp){
+      console.log(resp.data);
+      $scope.endorsements = resp.data;
+    }, function(err){
+      console.error("ERR", err);
+    });
+
   })
 
   .controller("PostRoomCtrl", function($scope, $state, $http) {
