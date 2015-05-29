@@ -1,5 +1,5 @@
 angular.module('ionicApp', ['ionic'])
-  .controller('MainCtrl', function($rootScope, $scope, $ionicSideMenuDelegate, $window, $location) {
+  .controller('MainCtrl', function($rootScope, $ionicModal, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       // when we switch state, check if we have a valid token
       if (typeof $window.sessionStorage.token === 'undefined') {
@@ -9,7 +9,26 @@ angular.module('ionicApp', ['ionic'])
         }
       }
     });
-
+	
+		$ionicModal.fromTemplateUrl('templates/searchModal.html', {
+			scope: $scope,
+			animation: 'slide-in-up'
+		}).then(function(modal) {
+			$scope.modal = modal;
+		});
+		$scope.closeModal = function() {
+			$scope.modal.hide();
+		};
+		//Cleanup the modal when we're done with it!
+		$scope.$on('$destroy', function() {
+			$scope.modal.remove();
+		});
+		
+		$scope.searchModal = function() {
+			$scope.modal.show();
+			return $state.is('contact.details.item');
+		}
+		
     $scope.toggleLeft = function() {
       $ionicSideMenuDelegate.toggleLeft()   
     };
@@ -243,7 +262,7 @@ angular.module('ionicApp', ['ionic'])
           delete $window.sessionStorage.token;
           $location.path('/login');
         }
-        return $q.reject(response.statusText);
+        return $q.reject(response);
       }
     };
   })
