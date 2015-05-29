@@ -4,6 +4,7 @@
         "/Users/sebastiansalinas/Desktop/sidemenu/platforms/ios/www/plugins/cordova-plugin-device/www/device.js",
         "/Users/sebastiansalinas/Desktop/sidemenu/www/lib/ionic/js/ionic.min.js",
         "/Users/sebastiansalinas/Desktop/sidemenu/www/lib/ionic/js/ionic.js",
-        "/Users/sebastiansalinas/Desktop/sidemenu/www/lib/ionic/js/ionic.bundle.min.js"
+        "/Users/sebastiansalinas/Desktop/sidemenu/www/lib/ionic/js/ionic.bundle.min.js",
+        "/Users/sebastiansalinas/Desktop/angularity/sidemenu/platforms/ios/build/emulator/sidemenu.app/www/lib/ionic/js/ionic.bundle.min.js"
     ]
 }
