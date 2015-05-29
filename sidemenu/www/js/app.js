@@ -195,7 +195,7 @@ angular.module('ionicApp', ['ionic'])
       console.error("ERR", err);
     });
   })
-  .controller("GetMateCtrl",function($scope, $state, $http, $stateParams){
+  .controller("GetMateCtrl",function($scope, $state, $http, $stateParams, $window){
     console.log($stateParams.id);
     $http.get("http://localhost:3000/users/"+$stateParams.id).then(function(resp){
       console.log(resp.data);
@@ -221,8 +221,8 @@ angular.module('ionicApp', ['ionic'])
       console.log(skill);
       $http.post("http://localhost:3000/endorsements", {endorsee_id: $stateParams.id, skill: skill})
       .success(function(data, status){
-        console.log($stateParams.id)
-        $state.go("menu.oneMate", {id:$stateParams.id});
+        //probably want to add a pop-up msg telling them they've endorse the skill
+         $window.location.reload(true);
       })
       .error(function(data,status){
         console.log("bad post!" + JSON.stringify(data) + " status: " +status); 
