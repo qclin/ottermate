@@ -1,11 +1,24 @@
 <ion-view view-title="oneRoom" ng-controller="GetRoomCtrl">
   <ion-content class="has-header padding">
-    <ion-item>
-      {{room.neighborhood}}
-      $${{room.price}}<br>
-      Pet friendly ? 
-      {{room.petfriendly}}<br>
+    <div class="list card">
+    
+    <div class="item item-header">
+    	<h2>{{room.neighborhood}}</h2>
+    	<p>$${{room.price}}</p>
+    </div>
+     <div class="item item-body">
+     <p>
       {{room.description}}
-    </ion-item>
+     </p>
+      Pet friendly ? 
+      {{room.petfriendly}}
+      </div>
+      <div class="item tabs tabs-secondary tabs-icon-left">
+      	<a class="tab-item" ui-sref="">
+      		<i class="icon ion-star" on-tap="reviewModal()"></i>
+      		review
+      	</a>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
