@@ -1,5 +1,5 @@
 angular.module('ionicApp', ['ionic'])
-  .controller('MainCtrl', function($rootScope, $scope, $ionicSideMenuDelegate, $window, $location) {
+  .controller('MainCtrl', function($rootScope, $ionicModal, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       // when we switch state, check if we have a valid token
       if (typeof $window.sessionStorage.token === 'undefined') {
@@ -9,7 +9,26 @@ angular.module('ionicApp', ['ionic'])
         }
       }
     });
-
+	
+		$ionicModal.fromTemplateUrl('templates/searchModal.html', {
+			scope: $scope,
+			animation: 'slide-in-up'
+		}).then(function(modal) {
+			$scope.modal = modal;
+		});
+		$scope.closeModal = function() {
+			$scope.modal.hide();
+		};
+		//Cleanup the modal when we're done with it!
+		$scope.$on('$destroy', function() {
+			$scope.modal.remove();
+		});
+		
+		$scope.searchModal = function() {
+			$scope.modal.show();
+			return $state.is('contact.details.item');
+		}
+		
     $scope.toggleLeft = function() {
       $ionicSideMenuDelegate.toggleLeft()   
     };
@@ -186,12 +205,29 @@ angular.module('ionicApp', ['ionic'])
     });
 
     $http.get("http://localhost:3000/endorsements", {params:{user_id:$stateParams.id}}).then(function(resp){
-      console.log(resp.data);
-      $scope.endorsements = resp.data;
+      console.log(resp.data)
+      $scope.handy = Array.apply(null, Array(resp.data.handy)).map(function(a,b){return b;});
+      console.log($scope.handy)
+      $scope.neatfreak = Array.apply(null, Array(resp.data.neatfreak)).map(function(a,b){return b;});
+      $scope.foodie = Array.apply(null, Array(resp.data.foodie)).map(function(a,b){return b;});
+      $scope.active = Array.apply(null, Array(resp.data.active)).map(function(a,b){return b;});
+      $scope.punctual = Array.apply(null, Array(resp.data.punctual)).map(function(a,b){return b;});
+      $scope.lowkey = Array.apply(null, Array(resp.data.lowkey)).map(function(a,b){return b;});
     }, function(err){
       console.error("ERR", err);
     });
 
+    $scope.endorseUser = function(skill){
+      console.log(skill);
+      $http.post("http://localhost:3000/endorsements", {endorsee_id: $stateParams.id, skill: skill})
+      .success(function(data, status){
+        console.log($stateParams.id)
+        $state.go("menu.oneMate", {id:$stateParams.id});
+      })
+      .error(function(data,status){
+        console.log("bad post!" + JSON.stringify(data) + " status: " +status); 
+      });
+    };
   })
 
   .controller("PostRoomCtrl", function($scope, $state, $http) {
@@ -226,7 +262,7 @@ angular.module('ionicApp', ['ionic'])
           delete $window.sessionStorage.token;
           $location.path('/login');
         }
-        return $q.reject(response.statusText);
+        return $q.reject(response);
       }
     };
   })

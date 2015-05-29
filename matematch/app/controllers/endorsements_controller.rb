@@ -5,7 +5,6 @@ class EndorsementsController < ApplicationController
   # GET /endorsements.json
   def index
     # @endorsements = Endorsement.all
-
     @endorsements = Endorsement.where({endorsee_id: params[:user_id]}).group(:skill).count
     render json: @endorsements
   end
@@ -19,8 +18,10 @@ class EndorsementsController < ApplicationController
   # POST /endorsements
   # POST /endorsements.json
   def create
-    @endorsement = Endorsement.new(endorsement_params)
-
+    if params[:endorsee_id] != @currentUserId
+    @endorsement = Endorsement.new({endorser_id: @currentUserId, endorsee_id: params[:endorsee_id], skill: params[:skill] })
+    end 
+    
     if @endorsement.save
       render json: @endorsement, status: :created, location: @endorsement
     else
