@@ -112,9 +112,6 @@ angular.module('ionicApp', ['ionic'])
 
   .controller("RoomResultsCtrl", function($scope, $state, $http, $stateParams) {
     // $scope.search is now pass in as $stateParams in the Url
-    console.log($stateParams);
-
-    //// *******petfriendly values are not being pass as boolean but are strings . . . need fixing
 
     $http.get("http://localhost:3000/rooms", {params: $stateParams}).then(function(resp){
       if(resp.data.length === 0){
@@ -124,23 +121,19 @@ angular.module('ionicApp', ['ionic'])
         $scope.msg = "your search has return the following matches~!!"
         $scope.rooms = resp.data;
       }
-      console.log(resp.data);
     }, function(err){
       console.error("ERR", err);
     })
   })
-   .controller("GetRoomCtrl",function($scope, $state, $http, $stateParams){
-    console.log($stateParams.id);
+
+  .controller("GetRoomCtrl",function($scope, $state, $http, $stateParams){
     $http.get("http://localhost:3000/rooms/"+$stateParams.id).then(function(resp){
-      console.log(resp.data);
       $scope.room = resp.data;
     }, function(err){
       console.error("ERR", err);
     })
   })
 
-
-///////////// test out the following two controllers
   .controller("SearchMatesCtrl", function($scope, $state, $http){
     $scope.search = {};
     $scope.searchMates = function(){
@@ -150,7 +143,6 @@ angular.module('ionicApp', ['ionic'])
 
   .controller("MateResultsCtrl", function($scope, $state, $http, $stateParams){
     $http.get("http://localhost:3000/users", {params:$stateParams}).then(function(resp){
-      console.log(resp.data);
       if(resp.data.length === 0){
         $scope.msg = "no mates are in your range"
       }else{
@@ -207,7 +199,6 @@ angular.module('ionicApp', ['ionic'])
       }
     };
   })
-
 
   .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');
