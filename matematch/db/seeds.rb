@@ -13,6 +13,7 @@ Review.destroy_all
 
 User.create(username: "curiousplatupus", name: "thom", gender: "male", hasRoom: true, email: "shea@butter.com", phone: "9179209888", occupation: "student", password: "fireisland", description: "friendly")
 User.create(username: "anymoushrew", name: "thom2", gender: "female", hasRoom: false, budget: 700, email: "werea@utter.com", phone: "1782038889", occupation: "handy-man", password: "firand", description: "clean")
+User.create(username: "e", name: "evan", gender: "male", hasRoom: true, email: "e@e.com", phone: "1111111111", occupation: "student", password: "e", description: "tired")
 User.create(username: "smashingcoco", name: "thom3", gender: "male", hasRoom: false, budget: 900, email: "swra@tter.com", phone: "9178823459", occupation: "plumper", password: "fireisl", description: "outgoing")
 User.create(username: "dummydata", name: "thom4", gender: "female", hasRoom: false, budget: 1200, email: "tea@ter.com", phone: "9788984569", occupation: "fire-fighter", password: "reisland", description: "motivated")
 User.create(username: "jumpstart", name: "thom5", gender: "female", hasRoom: true, email: "sheeeea@ter.com", phone: "9233898889", occupation: "delievery man", password: "island", description: "active")

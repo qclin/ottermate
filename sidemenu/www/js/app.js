@@ -19,17 +19,12 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("LoginCtrl", function($rootScope, $scope,$state,$http,$window) {
-    $rootScope.$on('$viewContentLoading', function() {
-      $scope.user = {}
-    });
+  .controller("LoginCtrl", function($scope,$state,$http,$window) {
+    $scope.user = {}
     $scope.login = function() {
       $http.post('http://localhost:3000/authenticate', {user:$scope.user})
         .success(function (data,status,headers,config) {
-          console.log("??");
-          console.log(data);
           $window.sessionStorage.token = data.token;
-           console.log("token = "+data.token);
           $state.go('menu.profile');
         })
         .error(function (data,status,headers,config) {
@@ -41,10 +36,8 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("SignUpCtrl", function($rootScope, $scope, $state, $http, $window) {
-    $rootScope.$on('$viewContentLoading', function() {
-      $scope.user = {}
-    });
+  .controller("SignUpCtrl", function($scope, $state, $http, $window) {
+    $scope.user = {}
     $scope.signup = function() {
       // console.log($scope.user.password);
       // console.log($scope.user.phone);
@@ -60,17 +53,15 @@ angular.module('ionicApp', ['ionic'])
       };
   })
 
-  .controller("ProfileCtrl", function($rootScope, $scope, $http) {
-    $rootScope.$on('$viewContentLoading', function() {
-      $scope.user = {}
-      $http.get("http://localhost:3000/current_user")
-        .success(function(resp){
-          $scope.user = resp
-        })
-        .error(function(err){
-          console.error('ERR', err);
-        });
-    });
+  .controller("ProfileCtrl", function($scope, $http) {
+    $scope.user = {}
+    $http.get("http://localhost:3000/current_user")
+      .success(function(resp){
+        $scope.user = resp
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
   })
 
   .controller("EditProfileCtrl", function($scope, $http, $state){
@@ -96,24 +87,20 @@ angular.module('ionicApp', ['ionic'])
   })
 
   .controller("ConversationsCtrl", function($scope, $state, $http) {
-    $rootScope.$on('$viewContentLoading', function() {
-      // get list of usernames that we've chatted with
-      $http.get("http://localhost:3000/chats")
-        .success(function(data){
-          $scope.usernames = data
-        })
-        .error(function(err) {
-          console.error("ERR", err);
-        });
-    });
+    // get list of usernames that we've chatted with
+    $http.get("http://localhost:3000/chats")
+      .success(function(data){
+        $scope.usernames = data
+      })
+      .error(function(err) {
+        console.error("ERR", err);
+      });
   })
 
-  .controller("ChatCtrl", function($rootScope, $scope, $state, $http, $stateParams) {
-    $rootScope.$on('$viewContentLoading', function() {
-      $scope.chat = {}
-      $scope.user2 = $stateParams.username;
-      loadChat();
-    });
+  .controller("ChatCtrl", function($scope, $state, $http, $stateParams) {
+    $scope.chat = {}
+    $scope.user2 = $stateParams.username;
+    loadChat();
 
     function loadChat() {
       $http.get("http://localhost:3000/chats/"+$stateParams.username)
@@ -138,98 +125,85 @@ angular.module('ionicApp', ['ionic'])
   })
 
   
-  .controller("SearchRoomsCtrl", function($rootScope, $scope, $state, $http){
-    $rootScope.$on('$viewContentLoading', function() {
-      $scope.search = {pet_friendly: "nil"};
-      $scope.searchRooms = function(){
-        $state.go("menu.roomResults", $scope.search);
-      };
-    });
+  .controller("SearchRoomsCtrl", function($scope, $state, $http){
+    $scope.search = {pet_friendly: "nil"};
+    $scope.searchRooms = function(){
+      $state.go("menu.roomResults", $scope.search);
+    };
   })
 
-  .controller("RoomResultsCtrl", function($rootScope, $scope, $state, $http, $stateParams) {
-    $rootScope.$on('$viewContentLoading', function() {
-      $http.get("http://localhost:3000/rooms", {params: $stateParams})
-        .success(function(resp){
-          if(resp.data.length === 0){
-            // maybe there's a better way for empty results
-            $scope.msg = "no results match your criteria"
-          }else{
-            $scope.msg = "your search has return the following matches~!!"
-            $scope.rooms = resp.data;
-          }
-        })
-        .error( function(err){
-          console.error("ERR", err);
-        });
-    });
-  })
-
-  .controller("GetRoomCtrl",function($rootScope, $scope, $state, $http, $stateParams){
-    $rootScope.$on('$viewContentLoading', function() {
-      $http.get("http://localhost:3000/rooms/"+$stateParams.id).then(function(resp){
-        $scope.room = resp.data;
-      }, function(err){
+  .controller("RoomResultsCtrl", function($scope, $state, $http, $stateParams) {
+    $http.get("http://localhost:3000/rooms", {params: $stateParams})
+      .success(function(resp){
+        if(resp.data.length === 0){
+          // maybe there's a better way for empty results
+          $scope.msg = "no results match your criteria"
+        }else{
+          $scope.msg = "your search has return the following matches~!!"
+          $scope.rooms = resp.data;
+        }
+      })
+      .error( function(err){
         console.error("ERR", err);
       });
+  })
+
+  .controller("GetRoomCtrl",function($scope, $state, $http, $stateParams){
+    $http.get("http://localhost:3000/rooms/"+$stateParams.id).then(function(resp){
+      $scope.room = resp.data;
+    }, function(err){
+      console.error("ERR", err);
     });
   })
 
-  .controller("SearchMatesCtrl", function($rootScope, $scope, $state, $http){
-    $rootScope.$on('$viewContentLoading', function() {
-      $scope.search = {};
-    });
+  .controller("SearchMatesCtrl", function($scope, $state, $http){
+    $scope.search = {};
     $scope.searchMates = function(){
       $state.go("menu.mateResults", $scope.search)
     };
   })
 
-  .controller("MateResultsCtrl", function($rootScope, $scope, $state, $http, $stateParams){
-    $rootScope.$on('$viewContentLoading', function() {
-      $http.get("http://localhost:3000/users", {params:$stateParams}).then(function(resp){
-        if(resp.data.length === 0){
-          $scope.msg = "no mates are in your range"
-        }else{
-          $scope.msg = "looks like these folks are on the same vibe as you ~~~"
-          $scope.mates = resp.data;
-        }
-        console.log(resp.data);
-      }, function(err){
-        console.error("ERR", err);
-      });
+  .controller("MateResultsCtrl", function($scope, $state, $http, $stateParams){
+    $http.get("http://localhost:3000/users", {params:$stateParams}).then(function(resp){
+      if(resp.data.length === 0){
+        $scope.msg = "no mates are in your range"
+      }else{
+        $scope.msg = "looks like these folks are on the same vibe as you ~~~"
+        $scope.mates = resp.data;
+      }
+      console.log(resp.data);
+    }, function(err){
+      console.error("ERR", err);
     });
   })
-  .controller("GetMateCtrl",function($rootScope, $scope, $state, $http, $stateParams){
-    $rootScope.$on('$viewContentLoading', function() {
-      console.log($stateParams.id);
-      $http.get("http://localhost:3000/users/"+$stateParams.id).then(function(resp){
-        console.log(resp.data);
-        $scope.mate = resp.data;
-      }, function(err){
-        console.error("ERR", err);
-      });
+  .controller("GetMateCtrl",function($scope, $state, $http, $stateParams){
+    console.log($stateParams.id);
+    $http.get("http://localhost:3000/users/"+$stateParams.id).then(function(resp){
+      console.log(resp.data);
+      $scope.mate = resp.data;
+    }, function(err){
+      console.error("ERR", err);
     });
   })
 
-  .controller("PostRoomCtrl", function($rootScope, $scope, $state, $http) {
-    $rootScope.$on('$viewContentLoading', function() {
-      $scope.room = {};
-      $scope.postRoom = function(){
-        $http.post("http://localhost:3000/rooms", {room: $scope.room})
-          .success(function (data,status) {
-            $state.go("menu.oneRoom", {id:data.id});
-          })
-          .error(function (data,status) {
-            // our post got rejected
-            console.log("bad post! "+ JSON.stringify(data) + " status: "+ status);
-          });
-      };
-    });
+  .controller("PostRoomCtrl", function($scope, $state, $http) {
+    $scope.room = {};
+    $scope.postRoom = function(){
+      $http.post("http://localhost:3000/rooms", {room: $scope.room})
+        .success(function (data,status) {
+          $state.go("menu.oneRoom", {id:data.id});
+        })
+        .error(function (data,status) {
+          // our post got rejected
+          console.log("bad post! "+ JSON.stringify(data) + " status: "+ status);
+        });
+    };
   })
 
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
+        console.log("req");
         // console.log("requesttoken:");
         // console.log($window.sessionStorage.token);
         config.headers = config.headers || {};
@@ -239,6 +213,7 @@ angular.module('ionicApp', ['ionic'])
         return config;
       },
       responseError: function(response) {
+        console.log(response);
         if (response.status === 401) {
           delete $window.sessionStorage.token;
           $location.path('/login');
