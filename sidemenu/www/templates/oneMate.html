@@ -10,7 +10,36 @@
     <ion-item ui-sref="menu.chat({ id: mate.id })">chat with {{ mate.name }}</ion-item>
 
     <ion-list>
-      cleans well | {{endorsements["cleans well"]}}
+    <ion-item on-double-tap= "endorseUser('handy')">
+      handy
+       <i class="ion-settings" style= "color:red" ng-repeat="h in handy"></i> 
+    </ion-item>
+
+    <ion-item on-double-tap= "endoreUser('neatfreak')">
+      neatfreak
+       <i class = "ion-leaf" style= "color:green" ng-repeat="n in neatfreak"></i> 
+    </ion-item>
+
+    <ion-item on-double-tap= "endorseUser('foodie')">
+      foodie
+       <i class = "ion-icecream" style= "color:pink" ng-repeat="f in foodie"></i> 
+    </ion-item>
+
+    <ion-item on-double-tap= "endorseUser('active')">
+      active
+       <i class = "ion-paper-airplane" style= "color:purple" ng-repeat="a in active"></i> 
+    </ion-item>
+
+    <ion-item on-double-tap= "endorseUser('punctual')">
+      punctual
+       <i class = "ion-clock" style= "color:blue" ng-repeat="p in punctual"></i> 
+    </ion-item>
+
+    <ion-item on-double-tap= "endorseUser('lowkey')">
+      lowkey
+       <i class = "ion-map" ng-repeat="l in lowkey"></i> 
+    </ion-item>
+    
     </ion-list>
   </ion-content>
 </ion-view>

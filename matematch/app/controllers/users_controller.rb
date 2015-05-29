@@ -6,10 +6,32 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     #@users = User.all
+  if params["budget"] != nil && params["range"] != nil
     min = params["budget"].to_i - params["range"].to_i
     max = params["budget"].to_i + params["range"].to_i
-    
-    @users = User.where("hasRoom = ? AND gender = ? AND description LIKE ? AND budget >= ? AND budget <= ?", false, params["gender"].downcase, params["description"], min,max);
+  elsif params["budget"] != nil
+    min = params["budget"].to_i - 50
+    max = params["budget"].to_i + 50
+  end 
+
+  if min!= nil && max!= nil && params["description"] != nil && params["gender"] != nil
+    @users = User.where("hasRoom = ? AND gender = ? AND description LIKE ? AND budget >= ? AND budget <= ?", false, params["gender"], params["description"], min, max)
+  elsif min!= nil && max!= nil && params["description"] != nil
+    @users = User.where("hasRoom = ? AND description LIKE ? AND budget >= ? AND budget <= ?", false, params["description"], min, max)
+  elsif min != nil && max != nil && params["gender"] != nil
+    @users = User.where("hasRoom = ? AND gender = ? AND budget >= ? AND budget <= ?", false, params["gender"], min, max)
+  elsif params["description"] != nil && params["gender"] != nil
+    @users = User.where("hasRoom = ? AND gender = ? AND description LIKE ?", false, params["gender"], params["description"])
+  elsif params["description"] != nil 
+    @users = User.where("hasRoom = ? AND description LIKE ?", false, params["description"])
+  elsif params["gender"] != nil
+    @users = User.where("hasRoom = ? AND gender = ?", false, params["gender"])
+  elsif min != nil && max != nil
+    @users = User.where("hasRoom = ? AND budget >= ? AND budget <= ?", false, min, max)
+  else
+    @users = User.where("hasRoom = ?", false)
+  end 
+
     render json: @users
   end
 

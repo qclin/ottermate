@@ -22,7 +22,7 @@ var personality_insights = watson.personality_insights({
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.post('/analyzeme', cors(corsOptions), function(req,res) {
+app.post('/personality', cors(corsOptions), function(req,res) {
   personality_insights.profile(
     {text: req.body.text},
     function (err, response) {
