@@ -11,10 +11,8 @@ class AuthController < ApplicationController
     if @user && @user.authenticate(password)
       # return encrypted token to angular app
       render json: {token: makeToken(@user.id)}
-
     else
       render json: {'authorized':'false'}, :status => 401
-
     end
   end
 
