@@ -255,6 +255,17 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
+  .controller("PersonalityCtrl", function($scope, $http) {
+    $scope.user = {}
+    $http.get("http://localhost:3000/personality")
+      .success(function(resp){
+        $scope.user = resp
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
+  })
+
   .factory('authInterceptor', function($q, $window, $location) {
     return {
       request: function(config) {
@@ -383,6 +394,17 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
+
+      .state("menu.personality", {
+        url: "/personality?id&mate?id",
+        views : {
+          "menuContent":{
+            templateUrl: "templates/personality.html"
+          }
+        }
+      })
+
+
       .state("menu.oneMate", {
         // change the rest of the criterias here 
         url: "/mate?id", 
