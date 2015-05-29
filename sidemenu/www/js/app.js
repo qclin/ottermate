@@ -254,6 +254,18 @@ angular.module('ionicApp', ['ionic'])
         });
     };
   })
+  .controller("PostReviewCtrl", function($scope, $state, $http){
+    $scope.review = {}; 
+    $scope.postReview = function(){
+      $http.post("http://localhost:3000/reviews", {review: $scope.review})
+        .success(function(data, status){
+          $state.go("menu.oneRoom", {id: $scope.room.id }); 
+        })
+        .error(function(data, status){
+          console.log("bad post! "+ JSON.stringify(data) + " status: "+ status); 
+        });
+    };
+  })
 
   .controller("PersonalityCtrl", function($scope, $http) {
     $scope.user = {}
@@ -403,8 +415,6 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
-
-
       .state("menu.oneMate", {
         // change the rest of the criterias here 
         url: "/mate?id", 
@@ -413,5 +423,12 @@ angular.module('ionicApp', ['ionic'])
             templateUrl: "templates/oneMate.html"
           }
         }
+      })
+      .state("menu.postReview", {
+        url:"/postReview"
+        views: {
+          "menuContent": {
+            templateUrl: "templates/postReview.html"
+          }
       });
  })
