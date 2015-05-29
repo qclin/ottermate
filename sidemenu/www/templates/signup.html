@@ -1,21 +1,14 @@
+   <ion-header-bar class="bar bar-header bar-positive">
+   	<button side="right" class="button button-clear button-primary" on-tap="logout()">Back</button>
+   </ion-header-bar>
 <ion-view view-title="Sign Up" ng-controller="SignUpCtrl">
-  <ion-content>
-    <h2>Sign up here</h2>
+  <ion-content class="padding">
     <div class="list">
       <label class="item item-input">
         <input type="text" placeholder="Name" ng-model="user.name">
       </label>
       <label class="item item-input">
         <input type="text" placeholder="Username" ng-model="user.username">
-      </label>
-
-      <select ng-model="user.gender">
-          <option value="male">male</option>
-          <option value="female">female</option>
-      </select>
-
-      <label class="item item-checkbox">
-        <div class="item-content">Have A Room?<input type="checkbox" name="hasRoom" ng-model="user.hasRoom"></div>
       </label>
       <label class="item item-input">
         <input type="number" placeholder="budget" ng-model="user.budget">
@@ -39,8 +32,22 @@
       <label class="item item-input">
         <input type="text" placeholder="description" ng-model="user.description">
       </label>
+     	<label class="item item-input item-select">
+     	<div class="input-label">Gender</div>
+      <select ng-model="user.gender">
+          <option value="male">male</option>
+          <option value="female">female</option>
+      </select>
+      </label>
       
-      <button class="button button-positive" on-tap="signup()">
+			<label class="item item-input item-select">
+        <div class="input-label">Have A Room?</div>
+        <select ng-model="user.hasRoom">
+        	<option value="hasRoom">yes</option>
+        </select>
+			</label>
+     
+      <button class="button button-block button-positive" on-tap="signup()">
         Sign Up
       </button>
   </ion-content>
