@@ -1,4 +1,9 @@
-angular.module('ionicApp', ['ionic'])
+angular.module('apiSettings', [])
+  .value('apiSettings', {
+    baseUrl: "http://localhost:3000/"
+  });
+
+angular.module('ionicApp', ['ionic','apiSettings'])
   .controller('MainCtrl', function($rootScope, $ionicModal, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       // when we switch state, check if we have a valid token
@@ -38,10 +43,10 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("LoginCtrl", function($scope,$state,$http,$window) {
+  .controller("LoginCtrl", function($scope,$state,$window,$http,apiSettings) {
     $scope.user = {}
     $scope.login = function() {
-      $http.post('http://localhost:3000/authenticate', {user:$scope.user})
+      $http.post(apiSettings.baseUrl+'authenticate', {user:$scope.user})
         .success(function (data,status,headers,config) {
           $window.sessionStorage.token = data.token;
           $state.go('menu.profile');
@@ -55,12 +60,12 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("SignUpCtrl", function($scope, $state, $http, $window) {
+  .controller("SignUpCtrl", function($scope, $state, $http, apiSettings, $window) {
     $scope.user = {}
     $scope.signup = function() {
       // console.log($scope.user.password);
       // console.log($scope.user.phone);
-      $http.post("http://localhost:3000/users", {user: $scope.user})
+      $http.post(apiSettings.baseUrl+"users", {user: $scope.user})
         .success(function (data,status) {
          $window.sessionStorage.token = data.token;
          $state.go("menu.profile");
@@ -72,9 +77,9 @@ angular.module('ionicApp', ['ionic'])
       };
   })
 
-  .controller("ProfileCtrl", function($scope, $http) {
+  .controller("ProfileCtrl", function($scope, $http, apiSettings) {
     $scope.user = {}
-    $http.get("http://localhost:3000/current_user")
+    $http.get(apiSettings.baseUrl+"current_user")
       .success(function(resp){
         $scope.user = resp
       })
@@ -83,9 +88,9 @@ angular.module('ionicApp', ['ionic'])
       });
   })
 
-  .controller("EditProfileCtrl", function($scope, $http, $state){
+  .controller("EditProfileCtrl", function($scope, $http, apiSettings, $state){
     $scope.user = {}
-    $http.get("http://localhost:3000/current_user")
+    $http.get(apiSettings.baseUrl+"current_user")
       .success(function(resp){
         $scope.user = resp
       })
@@ -94,7 +99,7 @@ angular.module('ionicApp', ['ionic'])
       });
       $scope.updateProfile = function(){
         console.log($scope.user)
-         $http.put("http://localhost:3000/current_user", {user: $scope.user})
+         $http.put(apiSettings.baseUrl+"current_user", {user: $scope.user})
           .success(function (data,status) {
             console.log(data);
            $state.go("menu.profile");
@@ -105,9 +110,9 @@ angular.module('ionicApp', ['ionic'])
       }
   })
 
-  .controller("ConversationsCtrl", function($scope, $state, $http) {
+  .controller("ConversationsCtrl", function($scope, $state, $http, apiSettings) {
     // get list of usernames that we've chatted with
-    $http.get("http://localhost:3000/chats")
+    $http.get(apiSettings.baseUrl+"chats")
       .success(function(data){
         $scope.usernames = data
       })
@@ -116,13 +121,13 @@ angular.module('ionicApp', ['ionic'])
       });
   })
 
-  .controller("ChatCtrl", function($scope, $state, $http, $stateParams) {
+  .controller("ChatCtrl", function($scope, $state, $http, apiSettings, $stateParams) {
     $scope.chat = {}
     $scope.user2 = $stateParams.username;
     loadChat();
 
     function loadChat() {
-      $http.get("http://localhost:3000/chats/"+$stateParams.username)
+      $http.get(apiSettings.baseUrl+"chats/"+$stateParams.username)
         .success(function(data) {
           $scope.messages = data;
         })
@@ -132,7 +137,7 @@ angular.module('ionicApp', ['ionic'])
     }
 
     $scope.sendMessage = function() {
-      $http.post("http://localhost:3000/chats",{message: $scope.chat.message, to_username: $scope.user2})
+      $http.post(apiSettings.baseUrl+"chats",{message: $scope.chat.message, to_username: $scope.user2})
         .success(function(data) {
           $scope.chat.message = "";
           loadChat();
@@ -144,15 +149,15 @@ angular.module('ionicApp', ['ionic'])
   })
 
   
-  .controller("SearchRoomsCtrl", function($scope, $state, $http){
+  .controller("SearchRoomsCtrl", function($scope, $state, $http, apiSettings){
     $scope.search = {pet_friendly: "nil"};
     $scope.searchRooms = function(){
       $state.go("menu.roomResults", $scope.search);
     };
   })
 
-  .controller("RoomResultsCtrl", function($scope, $state, $http, $stateParams) {
-    $http.get("http://localhost:3000/rooms", {params: $stateParams})
+  .controller("RoomResultsCtrl", function($scope, $state, $http, apiSettings, $stateParams) {
+    $http.get(apiSettings.baseUrl+"rooms", {params: $stateParams})
       .success(function(resp){
         if(resp.data.length === 0){
           // maybe there's a better way for empty results
@@ -167,23 +172,23 @@ angular.module('ionicApp', ['ionic'])
       });
   })
 
-  .controller("GetRoomCtrl",function($scope, $state, $http, $stateParams){
-    $http.get("http://localhost:3000/rooms/"+$stateParams.id).then(function(resp){
+  .controller("GetRoomCtrl",function($scope, $state, $http, apiSettings, $stateParams){
+    $http.get(apiSettings.baseUrl+"rooms/"+$stateParams.id).then(function(resp){
       $scope.room = resp.data;
     }, function(err){
       console.error("ERR", err);
     });
   })
 
-  .controller("SearchMatesCtrl", function($scope, $state, $http){
+  .controller("SearchMatesCtrl", function($scope, $state, $http, apiSettings){
     $scope.search = {};
     $scope.searchMates = function(){
       $state.go("menu.mateResults", $scope.search)
     };
   })
 
-  .controller("MateResultsCtrl", function($scope, $state, $http, $stateParams){
-    $http.get("http://localhost:3000/users", {params:$stateParams}).then(function(resp){
+  .controller("MateResultsCtrl", function($scope, $state, $http, apiSettings, $stateParams){
+    $http.get(apiSettings.baseUrl+"users", {params:$stateParams}).then(function(resp){
       if(resp.data.length === 0){
         $scope.msg = "no mates are in your range"
       }else{
@@ -195,16 +200,16 @@ angular.module('ionicApp', ['ionic'])
       console.error("ERR", err);
     });
   })
-  .controller("GetMateCtrl",function($scope, $state, $http, $stateParams, $window, $ionicPopup){
+  .controller("GetMateCtrl",function($scope, $state, $http, apiSettings, $stateParams, $window, $ionicPopup){
     console.log($stateParams.id);
-    $http.get("http://localhost:3000/users/"+$stateParams.id).then(function(resp){
+    $http.get(apiSettings.baseUrl+"users/"+$stateParams.id).then(function(resp){
       console.log(resp.data);
       $scope.mate = resp.data;
     }, function(err){
       console.error("ERR", err);
     });
 
-    $http.get("http://localhost:3000/endorsements", {params:{user_id:$stateParams.id}}).then(function(resp){
+    $http.get(apiSettings.baseUrl+"endorsements", {params:{user_id:$stateParams.id}}).then(function(resp){
       console.log(resp.data)
       $scope.handy = Array.apply(null, Array(resp.data.handy)).map(function(a,b){return b;});
       console.log($scope.handy)
@@ -225,7 +230,7 @@ angular.module('ionicApp', ['ionic'])
      });
       confirmPopup.then(function(res){
         if(res){
-          $http.post("http://localhost:3000/endorsements", {endorsee_id: $stateParams.id, skill: skill})
+          $http.post(apiSettings.baseUrl+"endorsements", {endorsee_id: $stateParams.id, skill: skill})
           .success(function(data, status){
             //probably want to add a pop-up msg telling them they've endorse the skill
             $window.location.reload(true);
@@ -241,10 +246,10 @@ angular.module('ionicApp', ['ionic'])
 
   })
 
-  .controller("PostRoomCtrl", function($scope, $state, $http) {
+  .controller("PostRoomCtrl", function($scope, $state, $http, apiSettings) {
     $scope.room = {};
     $scope.postRoom = function(){
-      $http.post("http://localhost:3000/rooms", {room: $scope.room})
+      $http.post(apiSettings.baseUrl+"rooms", {room: $scope.room})
         .success(function (data,status) {
           $state.go("menu.oneRoom", {id:data.id});
         })
@@ -254,10 +259,10 @@ angular.module('ionicApp', ['ionic'])
         });
     };
   })
-  .controller("PostReviewCtrl", function($scope, $state, $http){
+  .controller("PostReviewCtrl", function($scope, $state, $http, apiSettings){
     $scope.review = {}; 
     $scope.postReview = function(){
-      $http.post("http://localhost:3000/reviews", {review: $scope.review})
+      $http.post(apiSettings.baseUrl+"reviews", {review: $scope.review})
         .success(function(data, status){
           $state.go("menu.oneRoom", {id: $scope.room.id }); 
         })
@@ -267,9 +272,9 @@ angular.module('ionicApp', ['ionic'])
     };
   })
 
-  .controller("PersonalityCtrl", function($scope, $http) {
+  .controller("PersonalityCtrl", function($scope, $http, apiSettings) {
     $scope.user = {}
-    $http.get("http://localhost:3000/personality")
+    $http.get(apiSettings.baseUrl+"personality")
       .success(function(resp){
         $scope.user = resp
       })
