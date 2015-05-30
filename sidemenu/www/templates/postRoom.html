@@ -16,18 +16,16 @@
         <label class="item item-input item-select">
             <div class ="input-label">Pet-friendly:</div>
             <select ng-model="room.pet_friendly">
-                <option value = true>all tails welcome</option>
-                <option value =true>not allowed</option>
-                <option value =true>it makes no difference</option>
+                <option value =nil>doesn't matter</option>
+                <option value =true>all welcome</option>
+                <option value =false>not allowed</option>
             </select>
         </label>
 <!--        <br/>-->
         <label class="item item-input">
             <textarea type="text" ng-model="room.description" placeholder="description" cols="15" rows="3"></textarea>
         </label>
-      <!--   <label class="item item-input">
-            <input type="text" ng-model="owner_id" placeholder="Owner Id">
-            </label> -->
+        
 <!--    	<br>-->
     	<button class="button button-block button-positive" on-tap="postRoom()">Submit</button>
     </ion-list>
