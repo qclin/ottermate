@@ -1,14 +1,26 @@
-<ion-view view-title="profile" ng-controller="ProfileCtrl">
+<ion-view view-title="personality" ng-controller="PersonalityCtrl">
 <link href="css/style.css" rel="stylesheet">
   <ion-content class="has-header padding">
     <ion-list>
     <div class="personalitypage"
-
-      <ion-item><h1>{{user.name}} personality comparison to {{mate.name}}</h1></ion-item>
+      <ion-item>
+      <h1>Update Your Personality Evaluation {{user.name}}</h1>
+      <h1> Hit the Watson Api Here, on click! </h1>
+      </ion-item>
       
-    </ion-list>
+<!--      <div class="list list-inset">
+  		<label class="item item-input">
+    	<i class="icon ion-ios-body placeholder-icon"></i>
+    	<input type="text" placeholder="Add Text Here" rows="40">
+  		</label>
+	</div> -->
+
+ 	<label class="item item-input">
+    <textarea type="text" placeholder="Add Emails" cols="15" rows="15"></textarea>
+    </label>
+    <button class="button button-block button-positive" on-tap="analyze()">Analyze Me</button>
     </div>
 
-
+    </ion-list>
   </ion-content>
 </ion-view>

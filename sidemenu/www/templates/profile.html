@@ -1,15 +1,17 @@
-<ion-view view-title="profile" ng-controller="PersonalityCtrl">
+<ion-view view-title="profile" ng-controller="ProfileCtrl">
 <link href="css/style.css" rel="stylesheet">
   <ion-content class="has-header padding">
     <ion-list>
     <div class="homepage"
-      <ion-item><h1>{{user.name}}</h1></ion-item>
-      
+      <ion-item>
+      <h1>{{user.name}}</h1>
+      </ion-item>
       {{user.email}}
       <br/>
       {{user.phone}}
       <br/>
       {{user.description}}
+    <a class="button button-block button-positive" ui-sref="menu.personality">Personality Test</a>
     </ion-list>
     </div>
 
