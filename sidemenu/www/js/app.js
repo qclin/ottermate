@@ -195,7 +195,7 @@ angular.module('ionicApp', ['ionic'])
       console.error("ERR", err);
     });
   })
-  .controller("GetMateCtrl",function($scope, $state, $http, $stateParams){
+  .controller("GetMateCtrl",function($scope, $state, $http, $stateParams, $window, $ionicPopup){
     console.log($stateParams.id);
     $http.get("http://localhost:3000/users/"+$stateParams.id).then(function(resp){
       console.log(resp.data);
@@ -219,15 +219,26 @@ angular.module('ionicApp', ['ionic'])
 
     $scope.endorseUser = function(skill){
       console.log(skill);
-      $http.post("http://localhost:3000/endorsements", {endorsee_id: $stateParams.id, skill: skill})
-      .success(function(data, status){
-        console.log($stateParams.id)
-        $state.go("menu.oneMate", {id:$stateParams.id});
-      })
-      .error(function(data,status){
-        console.log("bad post!" + JSON.stringify(data) + " status: " +status); 
+      var confirmPopup = $ionicPopup.confirm({
+       title: "Endorsed "+skill + " !" ,
+       template: 'Do you really think so ?'
+     });
+      confirmPopup.then(function(res){
+        if(res){
+          $http.post("http://localhost:3000/endorsements", {endorsee_id: $stateParams.id, skill: skill})
+          .success(function(data, status){
+            //probably want to add a pop-up msg telling them they've endorse the skill
+            $window.location.reload(true);
+          })
+          .error(function(data,status){
+            console.log("bad post!" + JSON.stringify(data) + " status: " +status); 
+          });
+        }else{
+          console.log('cancel endorsement');
+        }
       });
-    };
+    }
+
   })
 
   .controller("PostRoomCtrl", function($scope, $state, $http) {
@@ -242,6 +253,29 @@ angular.module('ionicApp', ['ionic'])
           console.log("bad post! "+ JSON.stringify(data) + " status: "+ status);
         });
     };
+  })
+  .controller("PostReviewCtrl", function($scope, $state, $http){
+    $scope.review = {}; 
+    $scope.postReview = function(){
+      $http.post("http://localhost:3000/reviews", {review: $scope.review})
+        .success(function(data, status){
+          $state.go("menu.oneRoom", {id: $scope.room.id }); 
+        })
+        .error(function(data, status){
+          console.log("bad post! "+ JSON.stringify(data) + " status: "+ status); 
+        });
+    };
+  })
+
+  .controller("PersonalityCtrl", function($scope, $http) {
+    $scope.user = {}
+    $http.get("http://localhost:3000/personality")
+      .success(function(resp){
+        $scope.user = resp
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
   })
 
   .factory('authInterceptor', function($q, $window, $location) {
@@ -372,6 +406,16 @@ angular.module('ionicApp', ['ionic'])
           }
         }
       })
+
+//      .state("menu.personality", {
+//        url: "/personality?id&mate?id",
+//        views : {
+//          "menuContent":{
+//            templateUrl: "templates/personality.html"
+//          }
+//        }
+//      })
+
       .state("menu.oneMate", {
         // change the rest of the criterias here 
         url: "/mate?id", 
@@ -380,5 +424,14 @@ angular.module('ionicApp', ['ionic'])
             templateUrl: "templates/oneMate.html"
           }
         }
+      })
+      .state("menu.postReview", {
+        url:"/postReview",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/postRoom.html"
+          }
+        }
       });
  })
+

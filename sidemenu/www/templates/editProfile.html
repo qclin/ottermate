@@ -6,14 +6,17 @@
         <input type="text" value="{{user.name}}" placeholder = "name" ng-model="user.name">
       </label>
 
-
+			<label class="item item-input item-select">
+     <div class="input-label">Gender</div>
       <select ng-model="user.gender">
           <option value="male">male</option>
           <option value="female">female</option>
       </select>
+			</label>
 
-      <label class="item item-checkbox">
-        <div class="item-content">Have A Room?<input type="checkbox" value="{{user.hasRoom}}" ng-model="user.hasRoom"></div>
+      <label class="item item-input item-select">
+				<div class="input-label">Have A Room?</div>
+     <input type="checkbox" value="{{user.hasRoom}}" ng-model="user.hasRoom">
       </label>
       <label class="item item-input">
         <input type="number" value="{{user.budget}}" placeholder = "budget" ng-model="user.budget">

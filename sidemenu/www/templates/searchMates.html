@@ -2,32 +2,30 @@
   <ion-content class="has-header padding">
     <ion-list>
 
-    	<label class="item item-input">
-    		<div class="input-label">
-    			Gender
-    		</div>
+    	<label class="item item-input item-select">
+    		<div class="input-label">Gender</div>
     		<select ng-model = "search.gender">
     			<option value = "male">Male</option>
     			<option value = "female">Female</option>
     		</select>
     	</label>
-    	<br>
 
         <label class="item item-input">
-         <input type="text" placeholder="character traits" ng-model = "search.description">
+        <span class="input-label">character traits</span>
+         <input type="text" ng-model = "search.description">
         </label>
-        <div class="input-label">
-            Budget range
-        </div>
+        
         <label class="item item-input">
-         <input type="number" placeholder="$$$ target $$$" ng-model = "search.budget">
+         <span class="input-label">target range</span>
+         <input type="number" ng-model = "search.budget">
         </label>
 
         <label class="item item-input">
-         <input type="number" placeholder="$ acceptable range $" ng-model = "search.range">
+        <span class="input-label">acceptable range</span>
+         <input type="number" ng-model = "search.range">
         </label>
 
-    	<button class="button button-positive" on-tap="searchMates()">Search</button>
+    	<button class="button button-block button-positive" on-tap="searchMates()">Search</button>
     </ion-list>
     </ion-content>
 </ion-view>

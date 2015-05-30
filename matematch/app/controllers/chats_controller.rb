@@ -46,6 +46,12 @@ class ChatsController < ApplicationController
 
     if @chat.save
       render json: {sent: true}
+
+      # evan, i'm appending the msg to watson text here 
+      @currentUser = User.find(@currentUserId)
+      updated_watsonfeed = @currentUser.watsonfeed + " /n " + params[:message] 
+      
+      @currentUser.update({ watsonfeed: updated_watsonfeed})
     else
       render json: @chat.errors, status: :unprocessable_entity
     end
