@@ -4,15 +4,15 @@
     	<label class="item item-input">
     		<input type="text" ng-model="room.neighborhood" placeholder="neighborhood">
     	</label>
-        <br/>
+<!--        <br/>-->
         <label class="item item-input">
             <input type="number" ng-model="room.price" placeholder="price">
         </label>
-        <br/>
+<!--        <br/>-->
         <label class="item item-input">
             <input type="text" ng-model="room.photo" placeholder="photo">
         </label>
-        <br/>
+<!--        <br/>-->
         <label class="item item-input item-select">
             <div class ="input-label">Pet-friendly:</div>
             <select ng-model="room.pet_friendly">
@@ -20,17 +20,16 @@
                 <option value =true>not allowed</option>
                 <option value =true>it makes no difference</option>
             </select>
-
         </label>
-        <br/>
+<!--        <br/>-->
         <label class="item item-input">
             <textarea type="text" ng-model="room.description" placeholder="description" cols="15" rows="3"></textarea>
         </label>
       <!--   <label class="item item-input">
             <input type="text" ng-model="owner_id" placeholder="Owner Id">
             </label> -->
-    	<br>
-    	<button class="button button-positive" on-tap="postRoom()">Submit</button>
+<!--    	<br>-->
+    	<button class="button button-block button-positive" on-tap="postRoom()">Submit</button>
     </ion-list>
   </ion-content>
 </ion-view>
