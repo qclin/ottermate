@@ -407,14 +407,14 @@ angular.module('ionicApp', ['ionic'])
         }
       })
 
-      .state("menu.personality", {
-        url: "/personality?id&mate?id",
-        views : {
-          "menuContent":{
-            templateUrl: "templates/personality.html"
-          }
-        }
-      })
+      // .state("menu.personality", {
+      //   url: "/personality?id&mate?id",
+      //   views : {
+      //     "menuContent":{
+      //       templateUrl: "templates/personality.html"
+      //     }
+      //   }
+      // })
       .state("menu.oneMate", {
         // change the rest of the criterias here 
         url: "/mate?id", 
@@ -425,10 +425,11 @@ angular.module('ionicApp', ['ionic'])
         }
       })
       .state("menu.postReview", {
-        url:"/postReview"
+        url:"/postReview",
         views: {
           "menuContent": {
-            templateUrl: "templates/postReview.html"
+            templateUrl: "templates/postRoom.html"
           }
+        }
       });
  })
