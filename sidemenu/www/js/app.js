@@ -1,8 +1,3 @@
-angular.module('apiSettings', [])
-  .value('apiSettings', {
-    baseUrl: "http://localhost:3000/"
-  });
-
 angular.module('ionicApp', ['ionic','apiSettings'])
   .controller('MainCtrl', function($rootScope, $ionicModal, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
