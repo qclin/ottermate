@@ -152,12 +152,13 @@ angular.module('ionicApp', ['ionic','apiSettings'])
   .controller("RoomResultsCtrl", function($scope, $state, $http, apiSettings, $stateParams) {
     $http.get(apiSettings.baseUrl+"rooms", {params: $stateParams})
       .success(function(resp){
-        if(resp.data.length === 0){
+        console.log(resp);
+        if(resp.length === 0){
           // maybe there's a better way for empty results
           $scope.msg = "no results match your criteria"
         }else{
           $scope.msg = "your search has return the following matches~!!"
-          $scope.rooms = resp.data;
+          $scope.rooms = resp;
         }
       })
       .error( function(err){
@@ -170,6 +171,12 @@ angular.module('ionicApp', ['ionic','apiSettings'])
       $scope.room = resp.data;
     }, function(err){
       console.error("ERR", err);
+    });
+    $http.get(apiSettings.baseUrl+"reviews/", {params: {room_id: $stateParams.id}}).then(function(resp){
+      $scope.reviews = resp.data;
+      console.log($scope.reviews)
+    }, function(err){
+      console.log("ERR", err); 
     });
   })
 
@@ -194,7 +201,6 @@ angular.module('ionicApp', ['ionic','apiSettings'])
     });
   })
   .controller("GetMateCtrl",function($scope, $state, $http, apiSettings, $stateParams, $window, $ionicPopup){
-    console.log($stateParams.id);
     $http.get(apiSettings.baseUrl+"users/"+$stateParams.id).then(function(resp){
       console.log(resp.data);
       $scope.mate = resp.data;
@@ -246,18 +252,20 @@ angular.module('ionicApp', ['ionic','apiSettings'])
         .success(function (data,status) {
           $state.go("menu.oneRoom", {id:data.id});
         })
-        .error(function (data,status) {
+        .error(function (data,status){
           // our post got rejected
           console.log("bad post! "+ JSON.stringify(data) + " status: "+ status);
         });
     };
   })
-  .controller("PostReviewCtrl", function($scope, $state, $http, apiSettings){
-    $scope.review = {}; 
+  .controller("PostReviewCtrl", function($scope, $state, $http, apiSettings, $stateParams){
+    $scope.review= {};
     $scope.postReview = function(){
-      $http.post(apiSettings.baseUrl+"reviews", {review: $scope.review})
+      console.log($stateParams.id);
+      console.log($scope.review.content);
+      $http.post(apiSettings.baseUrl+"reviews", {comment: $scope.review.content, room_id: $stateParams.id})
         .success(function(data, status){
-          $state.go("menu.oneRoom", {id: $scope.room.id }); 
+          $state.go("menu.oneRoom", {id: $stateParams.id}); 
         })
         .error(function(data, status){
           console.log("bad post! "+ JSON.stringify(data) + " status: "+ status); 
@@ -266,7 +274,7 @@ angular.module('ionicApp', ['ionic','apiSettings'])
   })
 
   .controller("PersonalityCtrl", function($scope, $http, apiSettings) {
-    $scope.user = {}
+    $scope.user = {};
     $http.get(apiSettings.baseUrl+"current_user")
       .success(function(resp){
         $scope.user = resp
@@ -447,10 +455,10 @@ angular.module('ionicApp', ['ionic','apiSettings'])
         }
       })
       .state("menu.postReview", {
-        url:"/postReview",
+        url:"/room?id/postReview",
         views: {
           "menuContent": {
-            templateUrl: "templates/postRoom.html"
+            templateUrl: "templates/postReview.html"
           }
         }
       });

@@ -4,8 +4,8 @@ class ReviewsController < ApplicationController
   # GET /reviews
   # GET /reviews.json
   def index
-    @reviews = Review.all
-
+    # @reviews = Review.all
+    @reviews = Review.where({room_id: params[:room_id]})
     render json: @reviews
   end
 
@@ -18,7 +18,8 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
-    @review = Review.new(review_params)
+    binding.pry
+    @review = Review.new({reviewer_id: @currentUserId, comment: params[:comment], room_id: params[:room_id]})
 
     if @review.save
       render json: @review, status: :created, location: @review
@@ -54,6 +55,6 @@ class ReviewsController < ApplicationController
     end
 
     def review_params
-      params.require(:review).permit(:id, :reviewer_id, :review)
+      params.require(:review).permit(:room_id, :reviewer_id, :comment)
     end
 end
