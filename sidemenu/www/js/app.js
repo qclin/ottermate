@@ -58,8 +58,6 @@ angular.module('ionicApp', ['ionic','apiSettings'])
   .controller("SignUpCtrl", function($scope, $state, $http, apiSettings, $window) {
     $scope.user = {}
     $scope.signup = function() {
-      // console.log($scope.user.password);
-      // console.log($scope.user.phone);
       $http.post(apiSettings.baseUrl+"users", {user: $scope.user})
         .success(function (data,status) {
          $window.sessionStorage.token = data.token;
@@ -269,7 +267,7 @@ angular.module('ionicApp', ['ionic','apiSettings'])
 
   .controller("PersonalityCtrl", function($scope, $http, apiSettings) {
     $scope.user = {}
-    $http.get(apiSettings.baseUrl+"personality")
+    $http.get(apiSettings.baseUrl+"current_user")
       .success(function(resp){
         $scope.user = resp
       })
@@ -277,6 +275,20 @@ angular.module('ionicApp', ['ionic','apiSettings'])
         console.error('ERR', err);
       });
   })
+
+  // NEEDS TO BE UPDATED TO HIT WATSON, STATE.GO(menu.personalityResults)
+  .controller("PersonalityResultsCtrl", function($scope, $http) {
+    $scope.user = {}
+    $http.get(apiSettings.baseUrl+"current_user")
+      .success(function(resp){
+        $scope.user = resp
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
+  })
+
+
 
   .factory('authInterceptor', function($q, $window, $location) {
     return {
@@ -315,6 +327,7 @@ angular.module('ionicApp', ['ionic','apiSettings'])
         url: "/signup",
         templateUrl: "templates/signup.html"
       })
+     
       // states that include a sidemenu
       .state("menu", {
         url: "/menu",
@@ -331,6 +344,22 @@ angular.module('ionicApp', ['ionic','apiSettings'])
           }
         }
       })
+     .state("menu.personality", {
+        url: "/personality",
+        views: {
+          "menuContent": {
+           templateUrl: "templates/personality.html"
+          }
+        }
+     })
+       .state("menu.personalityResults", {
+        url: "/personalityResults",
+        views: {
+          "menuContent": {
+           templateUrl: "templates/personalityResults.html"
+          }
+        }
+     })
       .state("menu.editProfile", {
         url: "/editProfile",
         views: {
@@ -407,14 +436,6 @@ angular.module('ionicApp', ['ionic','apiSettings'])
         }
       })
 
-//      .state("menu.personality", {
-//        url: "/personality?id&mate?id",
-//        views : {
-//          "menuContent":{
-//            templateUrl: "templates/personality.html"
-//          }
-//        }
-//      })
 
       .state("menu.oneMate", {
         // change the rest of the criterias here 
