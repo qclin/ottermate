@@ -4,10 +4,35 @@ class RoomsController < ApplicationController
   # GET /rooms
   # GET /rooms.json
   def index
-    if params['pet_friendly'] == "nil"
-      @rooms = Room.where("neighborhood = ? AND price >= ? AND price <= ?", params["neighborhood"], params["price_min"], params["price_max"]);
-    else
-      @rooms = Room.where("neighborhood = ? AND price >= ? AND price <= ? AND petfriendly = ?", params["neighborhood"], params["price_min"], params["price_max"], params["pet_friendly"]);
+    pet = params['pet_friendly']
+    neighborhood = params["neighborhood"]
+    min = params["price_min"]
+    max = params["price_max"]
+
+    if neighborhood != nil && min != nil && max != nil && pet != "nil"
+      @rooms = Room.where("neighborhood = ? AND price >= ? AND price <= ? AND petfriendly = ?", neighborhood, min, max, pet);
+    elsif neighborhood != nil && min != nil && max != nil 
+      @rooms = Room.where("neighborhood = ? AND price >= ? AND price <= ?", neighborhood, min, max);
+    elsif min != nil && max != nil && pet != "nil"
+      @rooms = Room.where("price >= ? AND price <= ? AND petfriendly = ?", min, max, pet);
+    elsif neighborhood != nil && max != nil && pet != "nil"
+      @rooms = Room.where("neighborhood = ? AND price <= ? AND petfriendly = ?", neighborhood, max, pet);
+    elsif neighborhood != nil && min != nil && pet != "nil"
+      @rooms = Room.where("neighborhood = ? AND price >= ? AND petfriendly = ?", neighborhood, min, pet);
+    elsif neighborhood != nil && max != nil
+      @rooms = Room.where("neighborhood = ? AND price <= ?", neighborhood, max);
+    elsif max != nil && pet != "nil"
+      @rooms = Room.where("price <= ? AND petfriendly = ?", max, pet);
+    elsif neighborhood != nil && pet != "nil"
+      @rooms = Room.where("neighborhood = ? AND petfriendly = ?", neighborhood, pet);
+    elsif neighborhood != nil
+      @rooms = Room.where("neighborhood = ?", neighborhood);
+    elsif pet != "nil"
+      @rooms = Room.where("petfriendly = ?", pet);
+    elsif min != nil && max != nil
+      @rooms = Room.where("price >= ? AND price <= ?", min, max);
+    else 
+      @rooms = Room.all
     end
     
     render json: @rooms
