@@ -1,4 +1,4 @@
-var ottermate = angular.module('ionicApp', ['ionic','apiSettings'])
+var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
   .controller('MainCtrl', function($rootScope, $ionicModal, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       // when we switch state, check if we have a valid token
@@ -462,6 +462,14 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings'])
         views: {
           "menuContent": {
             templateUrl: "templates/postReview.html"
+          }
+        }
+      })
+      .state("menu.camera", {
+        url:"/camera",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/camera.html"
           }
         }
       });
