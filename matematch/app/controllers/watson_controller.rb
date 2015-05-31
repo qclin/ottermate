@@ -33,7 +33,6 @@ class WatsonController < ApplicationController
     else
       render json: {msg: 'not enough data'}, status: 404
     end
-    # render json: {msg: 'hi'}
   end
 
   private
