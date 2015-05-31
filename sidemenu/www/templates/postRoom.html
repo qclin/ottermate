@@ -26,6 +26,14 @@
             <textarea type="text" ng-model="room.description" placeholder="description" cols="15" rows="3"></textarea>
         </label>
 <!--    	<br>-->
+        
+        <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" ui-sref = "menu.uploadPhoto">
+            <i class="icon ion-ios-cloud-upload-outline" on-tap="uploadModal()"></i>
+            upload photos
+        </a>
+        </div>
+
     	<button class="button button-block button-positive" on-tap="postRoom()">Submit</button>
     </ion-list>
   </ion-content>

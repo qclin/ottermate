@@ -1,4 +1,4 @@
-angular.module('ionicApp', ['ionic','apiSettings'])
+angular.module('ionicApp', ['ionic','apiSettings','cameraUpload'])
   .controller('MainCtrl', function($rootScope, $ionicModal, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       // when we switch state, check if we have a valid token
@@ -400,6 +400,14 @@ angular.module('ionicApp', ['ionic','apiSettings'])
           }
         }
       })
+      .state("menu.uploadPhoto", {
+        url: "/uploadPhoto",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/uploadPhoto.html"
+          }
+        }
+      })
       .state("menu.searchRooms", {
         url: "/searchRooms",
         views: {
@@ -443,8 +451,6 @@ angular.module('ionicApp', ['ionic','apiSettings'])
           }
         }
       })
-
-
       .state("menu.oneMate", {
         // change the rest of the criterias here 
         url: "/mate?id", 

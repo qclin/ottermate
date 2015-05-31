@@ -1,0 +1,27 @@
+<ion-modal-view ng-controller="uploadPhotoCtrl">
+  <ion-content>
+    
+
+        <h1><i class="mdi-image-camera-alt small"></i><br />INSERT PHOTO</h1>
+        <div class="button-bar"> 
+        <a class="button" ng-click="takePicture();"><i class ="ion-camera"></i></a> 
+        <a class="button" ng-click="selectPicture()"><i class ="ion-images"></i></a> 
+        <a class="button" ng-click="viewPictures();"><i class = "ion-eye"></i></a> 
+        </div>
+
+        <div ng-show="picData" class="item item-image">When pics loaded click to upload!
+        <img id="myImage" class="item" ng-src="{{picData}}" ng-click="uploadPicture()" style="height:200px;"/>
+        </div>
+
+        <div class="home-sq" ng-show=photos>
+            <p>
+            <i class="icon ion-alert-circled" style="color:#F60"></i> 
+            Click to set photo like avatar, or lon click to delete!</p>
+
+            <div ng-repeat="photo in photos track by $index" ng-click="setPhoto($index, photo.name, profilo.user_id)" on-hold="delPhoto($index, photo.name)" style="background-image:url({{photo.file}});background-size:120% auto"> 
+            </div>
+
+        </div>
+
+  </ion-content>
+</ion-modal-view>
