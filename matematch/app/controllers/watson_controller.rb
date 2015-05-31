@@ -33,7 +33,7 @@ class WatsonController < ApplicationController
         res = HTTParty.post("http://localhost:9090/personality",
           :body => {:text => user.watsonfeed}
         );
-        user.update({personality: res.parsed_response})
+        user.update({personality: res.parsed_response.to_json})
       end
     end
 end

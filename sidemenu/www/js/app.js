@@ -1,4 +1,4 @@
-angular.module('ionicApp', ['ionic','apiSettings'])
+var ottermate = angular.module('ionicApp', ['ionic','apiSettings'])
   .controller('MainCtrl', function($rootScope, $ionicModal, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       // when we switch state, check if we have a valid token
@@ -292,20 +292,6 @@ angular.module('ionicApp', ['ionic','apiSettings'])
         console.error('ERR', err);
       });
   })
-
-  // NEEDS TO BE UPDATED TO HIT WATSON, STATE.GO(menu.personalityResults)
-  .controller("PersonalityResultsCtrl", function($scope, $http, apiSettings, $stateParams) {
-    $scope.user = {}
-    $http.get(apiSettings.baseUrl+"watson/"+$stateParams.id)
-      .success(function(resp){
-        alert(resp);
-      })
-      .error(function(err){
-        console.error('ERR', err);
-      });
-  })
-
-
 
   .factory('authInterceptor', function($q, $window, $location) {
     return {
