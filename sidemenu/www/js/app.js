@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 angular.module('ionicApp', ['ionic','apiSettings','cameraUpload'])
+=======
+var ottermate = angular.module('ionicApp', ['ionic','apiSettings'])
+>>>>>>> 4d8cdfc610fca5f43967f8240d1520a0b678673d
   .controller('MainCtrl', function($rootScope, $ionicModal, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       // when we switch state, check if we have a valid token
@@ -273,8 +277,17 @@ angular.module('ionicApp', ['ionic','apiSettings','cameraUpload'])
     };
   })
 
-  .controller("PersonalityCtrl", function($scope, $http, apiSettings) {
+  .controller("PersonalityAppendCtrl", function($scope, $state, $http, apiSettings) {
     $scope.user = {};
+    $scope.analyze = function() {
+      $http.post(apiSettings.baseUrl + "/current_user/watsonfeed", {text: $scope.user.emails})
+        .success(function(resp) {
+          $state.go('menu.profile');
+        })
+        .error(function(err) {
+          alert('failed '+err);
+        });
+    };
     $http.get(apiSettings.baseUrl+"current_user")
       .success(function(resp){
         $scope.user = resp
@@ -283,20 +296,6 @@ angular.module('ionicApp', ['ionic','apiSettings','cameraUpload'])
         console.error('ERR', err);
       });
   })
-
-  // NEEDS TO BE UPDATED TO HIT WATSON, STATE.GO(menu.personalityResults)
-  .controller("PersonalityResultsCtrl", function($scope, $http) {
-    $scope.user = {}
-    $http.get(apiSettings.baseUrl+"current_user")
-      .success(function(resp){
-        $scope.user = resp
-      })
-      .error(function(err){
-        console.error('ERR', err);
-      });
-  })
-
-
 
   .factory('authInterceptor', function($q, $window, $location) {
     return {
@@ -352,16 +351,16 @@ angular.module('ionicApp', ['ionic','apiSettings','cameraUpload'])
           }
         }
       })
-     .state("menu.personality", {
-        url: "/personality",
+     .state("menu.personalityAppend", {
+        url: "/personalityAppend",
         views: {
           "menuContent": {
-           templateUrl: "templates/personality.html"
+           templateUrl: "templates/personalityAppend.html"
           }
         }
      })
        .state("menu.personalityResults", {
-        url: "/personalityResults",
+        url: "/personalityResults?id",
         views: {
           "menuContent": {
            templateUrl: "templates/personalityResults.html"

@@ -42,18 +42,18 @@ class ChatsController < ApplicationController
   def create
     to_user = User.find_by(name: params[:to_username])
 
-    @chat = Chat.new(msg: params[:message], from_id: currentUserId, to_id: to_user.id, read: false)
+    chat = Chat.new(msg: params[:message], from_id: currentUserId, to_id: to_user.id, read: false)
 
-    if @chat.save
-      render json: {sent: true}
+    if chat.save
 
       # evan, i'm appending the msg to watson text here 
-      @currentUser = User.find(@currentUserId)
-      updated_watsonfeed = @currentUser.watsonfeed + " /n " + params[:message] 
+      currentUser = User.find(currentUserId)
+      updated_watsonfeed = currentUser.watsonfeed + " \n " + params[:message] 
       
-      @currentUser.update({ watsonfeed: updated_watsonfeed})
+      currentUser.update({ watsonfeed: updated_watsonfeed, personality: nil})
+      render json: {sent: true}
     else
-      render json: @chat.errors, status: :unprocessable_entity
+      render json: chat.errors, status: :unprocessable_entity
     end
   end
 

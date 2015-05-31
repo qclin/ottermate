@@ -13,6 +13,16 @@ class CurrentUsersController < ApplicationController
     end
   end
 
+  def watsonfeed
+    user = User.find(currentUserId)
+    if user.watsonfeed
+      user.update({watsonfeed: (user.watsonfeed + "\n" + params[:text]), personality: nil})
+    else
+      user.update({watsonfeed: params[:text], personality: nil})
+    end
+    render json: {:appended => true}
+  end
+
   private
   def user_params
       params.require(:user).permit(:name, :budget, :gender, :hasRoom, :personality, :occupation, :email, :phone, :description)

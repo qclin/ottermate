@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
+    <script src="example.json"></script>
+    <script src="example2.json"></script>
+    <style>
+    </style>
+</head>
+<body>
+
+<script language="JavaScript">
+
+var compare = [ 
+ (((data.children[0].children[0].percentage))),
+ (((data2.children[0].children[0].percentage))),
+ (((data.children[0].children[1].percentage))), 
+ (((data2.children[0].children[1].percentage))), 
+ (((data.children[0].children[2].percentage))), 
+ (((data2.children[0].children[2].percentage))), 
+ (((data.children[0].children[3].percentage))), 
+ (((data2.children[0].children[3].percentage))), 
+ (((data.children[0].children[4].percentage))), 
+ (((data2.children[0].children[4].percentage))) ]
+
+var names = [ 
+data.children[0].children[0].name, 
+data.children[0].children[1].name, 
+data.children[0].children[2].name,
+data.children[0].children[3].name, 
+data.children[0].children[4].name ]
+
+var people = ["Evan", "Tom"]
+
+var svgWidth = window.innerWidth,
+	svgHeight = 800,
+	titleHeight = 40,
+	titleYShift = 5,
+	barHeight = 30,
+	barLeftPadding = 20,
+  barRightPadding = 80,
+	barBottomPadding = 10,
+	barSeperation = 5,
+	legendHeight = 50,
+	rowHeight = titleHeight + (2 * barHeight) + barSeperation + barBottomPadding,
+	legendBoxPadRight = svgWidth/8,
+	legendBoxPadLeft = 20,
+	legendBoxSize = barHeight,
+	legendVertPad = (legendHeight - legendBoxSize) / 2,
+	legendYShift = 5,
+	percentageLeftPad = 10,
+	percentageYShift = 5;
+
+
+var svg = d3.select("body")
+.append("svg")
+.attr("width", svgWidth)
+.attr("height", svgHeight);
+
+svg.selectAll("rect") 
+           .data(compare)
+           .enter()
+           .append("rect")
+           .attr("x", function (d, i) {
+               return barLeftPadding;
+           })
+           .attr("y", function (d, i) {
+               return legendHeight + rowHeight * (Math.floor(i / 2)) + titleHeight + (i % 2 === 0 ? 0 : barHeight + barSeperation);
+           })
+           .attr("width", function (d) {
+           	console.log(d)
+           	   return (svgWidth - barLeftPadding - barRightPadding) * d;
+       	   })
+           .attr("height", function (d) {
+               return barHeight;
+           })
+		   .attr("fill", function(d, i) {
+           		if (i % 2) {
+           			return 'burlywood';
+           		};
+           			return 'darkcyan';
+       		});
+
+svg.selectAll("text.percentages")
+   .data(compare)
+   .enter()
+   .append("text")
+   .text(function(d) {
+   	return (Math.floor(d * 100)) + "%";   
+   })
+   .attr("x", function(d, i) {
+   	return barLeftPadding + ((svgWidth - barLeftPadding - barRightPadding) * d) + percentageLeftPad;  
+   })
+
+   .attr("y", function(d, i) {
+   	return legendHeight + rowHeight * (Math.floor(i / 2)) + titleHeight + (i % 2 === 0 ? 0 : barHeight + barSeperation) + (barHeight / 2)+percentageYShift;
+   })
+   .attr("font-family", "sans-serif")
+   .attr("font-size", "14px")
+   .attr("fill", "black")
+   .style("text-anchor", "start"); 
+
+svg.selectAll("rect.legends")
+.data(people)
+.enter()
+.append("rect")
+.attr("x", function(d, i) {
+	return (svgWidth / 2) * (i + 1) - legendBoxPadRight - legendBoxSize;
+})
+.attr("y", function(d, i) {
+	return legendVertPad;
+})
+.attr("width", legendBoxSize)
+.attr("height", legendBoxSize)
+.attr("fill", function(d, i) {
+    if (i % 2) {
+        return 'burlywood';
+    };
+        return 'darkcyan';
+    });;
+
+
+
+svg.selectAll("text.legendlabels")
+	.data(people)
+	.enter()
+	.append('text')
+	.text(function(d) {
+		return d;
+	})
+	.attr("x", function(d, i) {
+		return (svgWidth / 2) * (i + 1) - legendBoxPadRight - legendBoxSize - legendBoxPadLeft;
+	})
+	.attr("y", function(d, i) {
+		return legendHeight / 2 + legendYShift;
+	})
+	.style("text-anchor", "end");
+
+ svg.selectAll("text.labels")
+   .data(names)
+   .enter()
+   .append("text")
+   .text(function(d) {
+   	return d;   
+   })
+   .attr("x", function(d, i) {
+   	return svgWidth / 2;  
+   })
+
+   .attr("y", function(d, i) {
+   	return legendHeight + (rowHeight * i) + (titleHeight / 2) + titleYShift;
+   })
+
+   .attr("font-family", "sans-serif")
+   .attr("font-size", "14px")
+   .attr("fill", "black")
+   .style("text-anchor", "middle");
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
