@@ -132,8 +132,6 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings'])
     $scope.sendMessage = function() {
       $http.post(apiSettings.baseUrl+"chats/",{message: $scope.chat.message, to_username: $scope.user2})
         .success(function(data) {
-          console.log("here we are");
-          console.log(data);
           $scope.chat.message = "";
           loadChat();
         })
@@ -282,7 +280,7 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings'])
     $scope.analyze = function() {
       $http.post(apiSettings.baseUrl + "/current_user/watsonfeed", {text: $scope.user.emails})
         .success(function(resp) {
-          $state.go('menu.profile');
+          $state.go('menu.personalityResults');
         })
         .error(function(err) {
           alert('failed '+err);

@@ -10,14 +10,15 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
           user1pers = JSON.parse(data.user2.personality);
           twoUsers = false;
           people = [data.user2.name];
-          $scope.msg = "I'm sorry " + data.user2.name + " does not have enough personality to compare right now";
+          $scope.msg = "I'm sorry " + data.user2.name + " does not have enough personality data to compare right now";
     
-        } else if (data.user2.personality === null) {
+        } else if (data.user2 === null || data.user2.personality === null) {
           user1pers = JSON.parse(data.user1.personality);
           twoUsers = false;
           people = [data.user1.name];
-          $scope.msg = "I'm sorry " + data.user2.name + " does not have enough personality to compare right now";
-  
+          if (data.user2 !== null) {
+            $scope.msg = "I'm sorry " + data.user2.name + " does not have enough personality data to compare right now";
+          }
         } else {
           user1pers = JSON.parse(data.user1.personality);
           user2pers = JSON.parse(data.user2.personality);
