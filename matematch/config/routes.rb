@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     post '/watsonfeed', to: 'current_users#watsonfeed'
   end
 
+  get '/viewimage', to: 'rooms#viewimage'
+  get '/upload', to: 'rooms#upload'
+  post '/uploadImage', to: 'rooms#uploadImage'
+
   get '/watson/:id', to: 'watson#show'
   post '/authenticate', to: 'auth#login'
   get '/authtest', to: 'auth#test'

@@ -8,7 +8,8 @@ var secrets = require('../secrets.json');
 var exampletext = fs.readFileSync('../exampletext.txt');
 
 var corsOptions = {
-  origin: "http://localhost"
+  // origin: "http://localhost"
+  origin: "http://evangriffiths.nyc"
 }
 
 var app = express();

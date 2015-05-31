@@ -1,5 +1,20 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :update, :destroy]
+  skip_before_action :authenticate, only: [:upload,:uploadImage,:viewimage]
+
+  def upload
+    @room = Room.find(1)
+  end
+
+  def uploadImage
+    @room = Room.find(1)
+    @room.update({image: params[:file]})
+    render json: {msg: "image received"}
+  end
+
+  def viewimage
+    @room = Room.find(1)
+  end
 
   # GET /rooms
   # GET /rooms.json
