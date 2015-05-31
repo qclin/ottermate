@@ -13,13 +13,23 @@ class WatsonController < ApplicationController
 
   def show
     updateWatsonCache(currentUserId)
-    updateWatsonCache(params[:id])
+    updateWatsonCache(params[:id]) if params[:id] != "undefined"
 
     user1 = User.find(currentUserId)
-    user2 = User.find(params[:id])
-
-    if user1.personality != nil && user2.personality != nil
-      render json: {user1: {name: user1.username, personality: user1.personality},user2: {name: user2.username, personality: user2.personality}}
+    if params[:id] != "undefined"
+      user2 = User.find(params[:id])
+    else
+      user2 = nil
+    end
+  
+    if (user1 != nil && user1.personality != nil) || (user2 != nil && user2.personality != nil)
+      output = {user1: {name: user1.username, personality: user1.personality}}
+      if user2 == nil
+        output[:user2] = nil
+      else
+        output[:user2] = {name: user2.username, personality: user2.personality}
+      end
+      render json: output
     else
       render json: {msg: 'not enough data'}, status: 404
     end
@@ -29,7 +39,7 @@ class WatsonController < ApplicationController
   private
     def updateWatsonCache(user_id)
       user = User.find(user_id)
-      if user.personality == nil && user.watsonfeed.scan(/\w+/).length >= 100
+      if user != nil && user.personality == nil && user.watsonfeed != nil && user.watsonfeed.scan(/\w+/).length >= 100
         res = HTTParty.post("http://localhost:9090/personality",
           :body => {:text => user.watsonfeed}
         );

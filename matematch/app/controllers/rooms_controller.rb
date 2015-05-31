@@ -44,7 +44,9 @@ class RoomsController < ApplicationController
 
     # post_params
     # @room = Room.find_by({room_id: post_params.room_id})
-    render json: @room
+    user_id = @room.owner_id
+    @user = User.find_by(id: user_id)
+    render json: {room: @room, user: @user}
   end
 
   # POST /rooms

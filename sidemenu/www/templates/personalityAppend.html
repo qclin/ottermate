@@ -4,19 +4,12 @@
     <ion-list>
     <div class="personalitypage"
       <ion-item>
-      <h1>Update Your Personality Evaluation {{user.name}}</h1>
-      <h1> Hit the Watson Api Here, on click! </h1>
+      <h1>{{user.username}} You Can Update Your Personality Evaluation Here </h1>
       </ion-item>
       
-<!--      <div class="list list-inset">
-  		<label class="item item-input">
-    	<i class="icon ion-ios-body placeholder-icon"></i>
-    	<input type="text" placeholder="Add Text Here" rows="40">
-  		</label>
-	</div> -->
 
  	<label class="item item-input">
-    <textarea type="text" placeholder="Add Emails" cols="15" rows="15" ng-model="user.emails"></textarea>
+    <textarea type="text" placeholder="Add Emails or Text" cols="15" rows="15" ng-model="user.emails"></textarea>
     </label>
     <button class="button button-block button-positive" on-tap="analyze()">Analyze Me</button>
     </div>

@@ -3,31 +3,42 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
     $http.get(apiSettings.baseUrl+"watson/"+$stateParams.id)
       .success(function(data){
 
-        var user1pers = JSON.parse(data.user1.personality);
-        var user2pers = JSON.parse(data.user2.personality);
-        // console.log(user1pers[0].children[0]);
-        var compare = [
-         user1pers[0].children[0].children[0].percentage,
-         user2pers[0].children[0].children[0].percentage,
-         user1pers[0].children[0].children[1].percentage, 
-         user2pers[0].children[0].children[1].percentage, 
-         user1pers[0].children[0].children[2].percentage, 
-         user2pers[0].children[0].children[2].percentage, 
-         user1pers[0].children[0].children[3].percentage, 
-         user2pers[0].children[0].children[3].percentage, 
-         user1pers[0].children[0].children[4].percentage, 
-         user2pers[0].children[0].children[4].percentage
-        ];
+        var user1pers,user2pers,twoUsers,people;
 
-        var names = [ 
-          user1pers[0].children[0].children[0].name, 
-          user1pers[0].children[0].children[1].name, 
-          user1pers[0].children[0].children[2].name,
-          user1pers[0].children[0].children[3].name, 
-          user1pers[0].children[0].children[4].name
-        ];
+        // check for nulls
+        if (data.user1.personality === null) {
+          user1pers = JSON.parse(data.user2.personality);
+          twoUsers = false;
+          people = [data.user2.name];
+          $scope.msg = "I'm sorry " + data.user2.name + " does not have enough personality data to compare right now";
+    
+        } else if (data.user2 === null || data.user2.personality === null) {
+          user1pers = JSON.parse(data.user1.personality);
+          twoUsers = false;
+          people = [data.user1.name];
+          if (data.user2 !== null) {
+            $scope.msg = "I'm sorry " + data.user2.name + " does not have enough personality data to compare right now";
+          }
+        } else {
+          user1pers = JSON.parse(data.user1.personality);
+          user2pers = JSON.parse(data.user2.personality);
+          twoUsers = true;
+          people = [data.user1.name, data.user2.name]
+        }
 
-        var people = [data.user1.name, data.user2.name]
+        var compare = [];
+        for (var i = 0; i < 5; i++) {
+          compare.push(user1pers[0].children[0].children[i].percentage);
+          if (twoUsers) {
+            compare.push(user2pers[0].children[0].children[i].percentage);
+          }
+        }
+
+        var names = [];
+        for (var i = 0; i < 5; i++) { 
+          names.push(user1pers[0].children[0].children[i].name);
+        };
+
 
         var svgWidth = window.innerWidth,
           svgHeight = 700,
@@ -39,7 +50,7 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
           barBottomPadding = 10,
           barSeperation = 5,
           legendHeight = 50,
-          rowHeight = titleHeight + (2 * barHeight) + barSeperation + barBottomPadding,
+          rowHeight = titleHeight + barHeight + barBottomPadding + (twoUsers ? barHeight + barSeperation : 0),
           legendBoxPadRight = svgWidth/8,
           legendBoxPadLeft = 20,
           legendBoxSize = barHeight,
@@ -62,7 +73,11 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
             return barLeftPadding;
           })
           .attr("y", function (d, i) {
-            return legendHeight + rowHeight * (Math.floor(i / 2)) + titleHeight + (i % 2 === 0 ? 0 : barHeight + barSeperation);
+            if (twoUsers) {
+              return legendHeight + rowHeight * (Math.floor(i / 2)) + titleHeight + (i % 2 === 0 ? 0 : barHeight + barSeperation);
+            } else {
+              return legendHeight + rowHeight * i + titleHeight;
+            }            
           })
           .attr("width", function (d) {
             console.log(d)
@@ -72,7 +87,7 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
             return barHeight;
           })
           .attr("fill", function(d, i) {
-            if (i % 2) {
+            if (i % 2 && twoUsers) {
               return 'burlywood';
             };
             return 'darkcyan';
@@ -90,7 +105,11 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
           })
 
           .attr("y", function(d, i) {
-            return legendHeight + rowHeight * (Math.floor(i / 2)) + titleHeight + (i % 2 === 0 ? 0 : barHeight + barSeperation) + (barHeight / 2)+percentageYShift;
+            if (twoUsers) {
+              return legendHeight + rowHeight * (Math.floor(i / 2)) + titleHeight + (i % 2 === 0 ? 0 : barHeight + barSeperation) + (barHeight / 2)+percentageYShift;
+            } else {
+              return legendHeight + rowHeight * i + titleHeight + (barHeight / 2)+percentageYShift;
+            }          
           })
           .attr("font-family", "sans-serif")
           .attr("font-size", "14px")
@@ -102,7 +121,11 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
         .enter()
         .append("rect")
         .attr("x", function(d, i) {
+          if (twoUsers) {
           return (svgWidth / 2) * (i + 1) - legendBoxPadRight - legendBoxSize;
+        } else {
+          return (svgWidth / 2) * (i + 1) - legendBoxPadRight - legendBoxSize + (svgWidth / 7);
+        }
         })
         .attr("y", function(d, i) {
           return legendVertPad;
@@ -110,11 +133,11 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
         .attr("width", legendBoxSize)
         .attr("height", legendBoxSize)
         .attr("fill", function(d, i) {
-            if (i % 2) {
+            if (i % 2 && twoUsers) {
                 return 'burlywood';
             };
                 return 'darkcyan';
-            });;
+            });
 
 
 
@@ -126,7 +149,11 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
             return d;
           })
           .attr("x", function(d, i) {
+           if (twoUsers) {
             return (svgWidth / 2) * (i + 1) - legendBoxPadRight - legendBoxSize - legendBoxPadLeft;
+          } else {
+            return (svgWidth / 2) * (i + 1) - legendBoxPadRight - legendBoxSize - legendBoxPadLeft + (svgWidth / 7);
+          }
           })
           .attr("y", function(d, i) {
             return legendHeight / 2 + legendYShift;
@@ -152,7 +179,6 @@ ottermate.controller("PersonalityResultsCtrl", function($scope, $http, apiSettin
            .attr("font-size", "14px")
            .attr("fill", "black")
            .style("text-anchor", "middle");
-
 
       })
       // failed to get personality data from rails
