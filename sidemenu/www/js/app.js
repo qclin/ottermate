@@ -273,8 +273,17 @@ angular.module('ionicApp', ['ionic','apiSettings'])
     };
   })
 
-  .controller("PersonalityCtrl", function($scope, $http, apiSettings) {
+  .controller("PersonalityAppendCtrl", function($scope, $state, $http, apiSettings) {
     $scope.user = {};
+    $scope.analyze = function() {
+      $http.post(apiSettings.baseUrl + "/current_user/watsonfeed", {text: $scope.user.emails})
+        .success(function(resp) {
+          $state.go('menu.profile');
+        })
+        .error(function(err) {
+          alert('failed '+err);
+        });
+    };
     $http.get(apiSettings.baseUrl+"current_user")
       .success(function(resp){
         $scope.user = resp
@@ -285,11 +294,11 @@ angular.module('ionicApp', ['ionic','apiSettings'])
   })
 
   // NEEDS TO BE UPDATED TO HIT WATSON, STATE.GO(menu.personalityResults)
-  .controller("PersonalityResultsCtrl", function($scope, $http) {
+  .controller("PersonalityResultsCtrl", function($scope, $http, apiSettings, $stateParams) {
     $scope.user = {}
-    $http.get(apiSettings.baseUrl+"current_user")
+    $http.get(apiSettings.baseUrl+"watson/"+$stateParams.id)
       .success(function(resp){
-        $scope.user = resp
+        alert(resp);
       })
       .error(function(err){
         console.error('ERR', err);
@@ -352,16 +361,16 @@ angular.module('ionicApp', ['ionic','apiSettings'])
           }
         }
       })
-     .state("menu.personality", {
-        url: "/personality",
+     .state("menu.personalityAppend", {
+        url: "/personalityAppend",
         views: {
           "menuContent": {
-           templateUrl: "templates/personality.html"
+           templateUrl: "templates/personalityAppend.html"
           }
         }
      })
        .state("menu.personalityResults", {
-        url: "/personalityResults",
+        url: "/personalityResults?id",
         views: {
           "menuContent": {
            templateUrl: "templates/personalityResults.html"

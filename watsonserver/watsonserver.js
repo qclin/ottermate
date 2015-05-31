@@ -22,12 +22,14 @@ var personality_insights = watson.personality_insights({
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+// app.use(cors());  // enable access from all domains
+
 app.post('/personality', cors(corsOptions), function(req,res) {
   personality_insights.profile(
     {text: req.body.text},
     function (err, response) {
       if (err)
-        res.json({error: err});
+        res.status(404).json({error: err});
       else
         res.json(response.tree.children);
   });
