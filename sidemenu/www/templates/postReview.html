@@ -2,8 +2,10 @@
 	<ion-content>
 		<div class="list">
 			<label class="item item-input">
-				<textarea type="text" ng-model="room.review" placeholder="post your review" cols="15" rows="3"></textarea>
+				<textarea type="text" ng-model="review.content" placeholder="post your review" cols="15" rows="3"></textarea>
 			</label>
+       <button class="button button-full button-positive" on-tap="postReview()">post</button>
+
 		</div>
 	</ion-content>
 </ion-modal-view>

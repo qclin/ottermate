@@ -5,9 +5,11 @@ Rails.application.routes.draw do
   resources :rooms, except: [:new, :edit]
   resources :users, except: [:new, :edit, :update]
 
-  resource :current_user, only: [:show, :update]
+  resource :current_user, only: [:show, :update] do
+    post '/watsonfeed', to: 'current_users#watsonfeed'
+  end
 
-  get '/watson', to: 'watson#test'
+  get '/watson/:id', to: 'watson#show'
   post '/authenticate', to: 'auth#login'
   get '/authtest', to: 'auth#test'
   # The priority is based upon order of creation: first created -> highest priority.
