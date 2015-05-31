@@ -7,7 +7,8 @@
       email: {{mate.email}}<br>
       phone: {{mate.phone}}
 
-    <ion-item ui-sref="menu.chat({ id: mate.id })">chat with {{ mate.username }}</ion-item>
+    <ion-item ui-sref="menu.chat({ username: mate.username })">chat with {{ mate.username }}</ion-item>
+    
     <ion-item ui-sref="menu.personalityResults({ id: mate.id })">Personality Comparison</ion-item>
 
     <ion-list>

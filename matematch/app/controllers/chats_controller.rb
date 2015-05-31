@@ -10,9 +10,7 @@ class ChatsController < ApplicationController
     # make sure we have some chat userids before we access the usernames
     if (toids.length + fromids.length > 0)
       users = User.where(:id => toids+fromids)
-    #   # render array of usernames
-    #   render json: users.map{|u| u.username}
-      render json: users.map {|u| u.name}
+      render json: users.map {|u| u.username}
     else
       # render empty array
       render json: []
@@ -24,13 +22,13 @@ class ChatsController < ApplicationController
   def show
     username = params[:id]
     user1 = User.find(currentUserId)
-    user2 = User.find_by({name: username})
+    user2 = User.find_by({username: username})
     chats = Chat.select(:from_id,:msg).where("(from_id = ? AND to_id = ?) OR (from_id = ? AND to_id = ?)", currentUserId, user2.id, user2.id, currentUserId).order(created_at: :desc)
     formattedmessages = chats.map do |chat|
       if (chat.from_id == currentUserId)
-        {:username => user1.name, :msg => chat.msg}
+        {:username => user1.username, :msg => chat.msg}
       else
-        {:username => user2.name, :msg => chat.msg}
+        {:username => user2.username, :msg => chat.msg}
       end
     end
     render json: formattedmessages
@@ -40,7 +38,7 @@ class ChatsController < ApplicationController
   # add message from current user to user params[:to_username]
   # POST /chats
   def create
-    to_user = User.find_by(name: params[:to_username])
+    to_user = User.find_by(username: params[:to_username])
 
     chat = Chat.new(msg: params[:message], from_id: currentUserId, to_id: to_user.id, read: false)
 
