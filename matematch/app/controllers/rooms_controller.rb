@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show,:destroy]
-  skip_before_action :authenticate, only: [:upload,:uploadImage,:viewimage]
+  skip_before_action :authenticate, only: [:upload,:viewimage]
 
   def upload
     @room = Room.find(1)
