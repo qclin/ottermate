@@ -10,6 +10,7 @@ class RoomsController < ApplicationController
     room = Room.find_by(owner_id: currentUserId)
     if room == nil
       room = Room.create({owner_id: currentUserId})
+      User.find(currentUserId).update({hasRoom: true})
     end
     room.update({image: params[:file]})
     room.update({photo_url: "http://" + env['HTTP_HOST'] + room.image.url(:medium)})
@@ -58,8 +59,10 @@ class RoomsController < ApplicationController
   end
 
   def show
-    user = User.find_by(id: params[:id])
-    room = Room.find_by(owner_id: params[:id])
+    room = Room.find(params[:id])
+    user = User.find(room.owner_id)
+    # user = User.find_by(id: params[:id])
+    # room = Room.find_by(owner_id: params[:id])
     render json: {room: room, user: user}
   end
 
@@ -73,7 +76,9 @@ class RoomsController < ApplicationController
     else
       room = Room.new(room_params)
       room.owner_id = currentUserId
+
       if room.save
+        User.find(currentUserId).update({hasRoom: true})
         render json: room, status: :created, location: room
       else
         render json: room.errors, status: :unprocessable_entity

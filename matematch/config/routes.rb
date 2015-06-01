@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     post '/watsonfeed', to: 'current_users#watsonfeed'
     put '/room', to: 'current_users#putroom'
     get '/room', to: 'current_users#getroom'
+    post '/roomdelete', to: 'current_users#destroyroom'
   end
 
   # get '/viewimage', to: 'rooms#viewimage'
