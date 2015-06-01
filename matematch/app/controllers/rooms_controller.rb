@@ -1,10 +1,10 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show,:destroy]
-  skip_before_action :authenticate, only: [:upload,:viewimage]
+  # skip_before_action :authenticate, only: [:upload,:viewimage]
 
-  def upload
-    @room = Room.find(1)
-  end
+  # def upload
+  #   @room = Room.find(1)
+  # end
 
   def uploadImage
     room = Room.find_by(owner_id: currentUserId)
@@ -16,9 +16,9 @@ class RoomsController < ApplicationController
     render json: {filename: room.image_file_name}
   end
 
-  def viewimage
-    @room = Room.find(1)
-  end
+  # def viewimage
+  #   @room = Room.find(1)
+  # end
 
   # GET /rooms
   # GET /rooms.json

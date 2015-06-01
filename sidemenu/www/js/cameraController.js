@@ -18,7 +18,7 @@ ottermate.controller("CameraCtrl", function($scope, $http, apiSettings, $statePa
       fileOptions.headers = {'AUTHORIZATION': 'Bearer ' + $window.sessionStorage.token};
       $cordovaFileTransfer.upload(apiSettings.baseUrl+"uploadImage", imageURI, fileOptions) // probably need to pass authorization header in here
         .then(function(result) {
-          $scope.progress = JSON.parse(result).filename;
+          $scope.progress = result;
           // Success!
         }, function(err) {
           $scope.progress = JSON.stringify(err);

@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     get '/room', to: 'current_users#getroom'
   end
 
-  get '/viewimage', to: 'rooms#viewimage'
-  get '/upload', to: 'rooms#upload'
+  # get '/viewimage', to: 'rooms#viewimage'
+  # get '/upload', to: 'rooms#upload'
   post '/uploadImage', to: 'rooms#uploadImage'
 
   get '/watson/:id', to: 'watson#show'
