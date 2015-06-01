@@ -92,29 +92,26 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
         console.error('ERR', err);
       });
     $scope.updateProfile = function(){
-      console.log($scope.user)
        $http.put(apiSettings.baseUrl+"current_user", {user: $scope.user})
         .success(function (data,status) {
-          console.log(data);
-         $state.go("menu.profile");
+          $state.go("menu.profile");
         })
         .error(function (data,status) {
           alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
         });
     };
   })
-    .controller("EditRoomCtrl", function($scope, $http, apiSettings, $state){
-      $scope.room = {}
-      $http.get(apiSettings.baseUrl+"current_user/getroom")
-      .success(function(resp){
-        console.log(resp)
-        $scope.room = resp
-      })
-      .error(function(err){
-        console.error('ERR', err);
-      });
-      $scope.editRoom = function(){
-      $http.put(apiSettings.baseUrl+"rooms", {room: $scope.room})
+  .controller("EditRoomCtrl", function($scope, $http, apiSettings, $state){
+    $scope.room = {}
+    $http.get(apiSettings.baseUrl+"current_user/room")
+    .success(function(resp){
+      $scope.room = resp
+    })
+    .error(function(err){
+      console.error('ERR', err);
+    });
+    $scope.updateRoom = function(){
+      $http.put(apiSettings.baseUrl+"current_user/room", {room: $scope.room})
         .success(function (data,status) {
           console.log(data);
           $state.go("menu.oneRoom", {id:data.id});
@@ -123,7 +120,7 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
           // our post got rejected
           console.log("bad post! "+ JSON.stringify(data) + " status: "+ status);
         });
-    }
+    };
   })
 
   .controller("ConversationsCtrl", function($scope, $state, $http, apiSettings) {
@@ -332,7 +329,6 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
         return config;
       },
       responseError: function(response) {
-        console.log(response);
         if (response.status === 401) {
           delete $window.sessionStorage.token;
           $location.path('/login');

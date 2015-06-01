@@ -13,7 +13,7 @@
       Pet friendly ? 
       {{room.petfriendly}}
       <div>
-      <img src="{{baseUrl}}{{room.photo_url}}">
+      <img ng-if="room.photo_url" src="{{baseUrl}}{{room.photo_url}}">
       </div>
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">

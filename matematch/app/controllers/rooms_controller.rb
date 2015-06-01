@@ -7,10 +7,14 @@ class RoomsController < ApplicationController
   end
 
   def uploadImage
-    room = Room.find(1)
+    binding.pry
+    room = Room.find_by(owner_id: currentUserId)
+    if room == nil
+      room = Room.create({owner_id: currentUserId})
+    end
     room.update({image: params[:file]})
-    room.update({photo_url: room.image.url(:medium)})
-    render json: {msg: "image received"}
+    room.update({photo_url: env['HTTP_HOST'] + room.image.url(:medium)})
+    render json: {filename: room.image_file_name}
   end
 
   def viewimage
@@ -54,50 +58,28 @@ class RoomsController < ApplicationController
     render json: @rooms
   end
 
-  # GET /rooms/1
-  # GET /rooms/1.json
   def show
-
-    # post_params
-    # @room = Room.find_by({room_id: post_params.room_id})
-
-
-    user_id = @room.owner_id
-    @user = User.find_by(id: user_id)
-    render json: {room: @room, user: @user}
+    user = User.find_by(id: params[:id])
+    room = Room.find_by(owner_id: params[:id])
+    render json: {room: room, user: user}
   end
 
   # POST /rooms
   # POST /rooms.json
   def create
-    @room = Room.new(room_params)
-    @room.owner_id = currentUserId
-    puts currentUserId
-    if @room.save
-      render json: @room, status: :created, location: @room
+    room = Room.find_by(owner_id: currentUserId)
+    if room
+      room.update(room_params)
+      render json: room, status: :created, location: room
     else
-      render json: @room.errors, status: :unprocessable_entity
+      room = Room.new(room_params)
+      room.owner_id = currentUserId
+      if room.save
+        render json: room, status: :created, location: room
+      else
+        render json: room.errors, status: :unprocessable_entity
+      end
     end
-  end
-
-  # PATCH/PUT /rooms/1
-  # PATCH/PUT /rooms/1.json
-  def update
-    @room = Room.find(params[:id])
-
-    if @room.update(room_params)
-      head :no_content
-    else
-      render json: @room.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /rooms/1
-  # DELETE /rooms/1.json
-  def destroy
-    @room.destroy
-
-    head :no_content
   end
 
   private
@@ -107,7 +89,7 @@ class RoomsController < ApplicationController
     end
 
     def room_params
-      params.require(:room).permit(:description, :price, :photo_url, :neighborhood, :petfriendly)
+      params.require(:room).permit(:description, :price, :neighborhood, :petfriendly)
     end
 
 end
