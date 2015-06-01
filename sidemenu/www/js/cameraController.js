@@ -1,4 +1,4 @@
-ottermate.controller("CameraCtrl", function($scope, $http, apiSettings, $stateParams, $cordovaCamera, $cordovaFileTransfer, $ionicPlatform) {
+ottermate.controller("CameraCtrl", function($scope, $http, apiSettings, $stateParams, $cordovaCamera, $cordovaFileTransfer, $ionicPlatform, $window) {
 
   $scope.uri = "uri goes here";
 
@@ -11,14 +11,14 @@ ottermate.controller("CameraCtrl", function($scope, $http, apiSettings, $statePa
     $cordovaCamera.getPicture(cameraOptions).then(function(imageURI) {
       $scope.uri = imageURI;
       $scope.progress = "uploading now";
-      // var fileOptions = {
-      //   fileKey: 'file',
-      //   fileName: 'image.jpg',
-      //   mimeType: 'image/jpeg'
-      // };
-      $cordovaFileTransfer.upload(apiSettings.baseUrl+"uploadImage", imageURI, {}) // probably need to pass authorization header in here
+
+      var fileOptions = new FileUploadOptions();
+      fileOptions.fileName = imageURI.split('/').pop();
+      fileOptions.mimeType = 'image/jpeg';
+      fileOptions.headers = {'AUTHORIZATION': 'Bearer ' + $window.sessionStorage.token};
+      $cordovaFileTransfer.upload(apiSettings.baseUrl+"uploadImage", imageURI, fileOptions) // probably need to pass authorization header in here
         .then(function(result) {
-          $scope.progress = "done!";
+          $scope.progress = result;
           // Success!
         }, function(err) {
           $scope.progress = JSON.stringify(err);

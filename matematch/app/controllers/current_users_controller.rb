@@ -23,6 +23,19 @@ class CurrentUsersController < ApplicationController
     render json: {:appended => true}
   end
 
+  def putroom
+    room = Room.find_by(owner_id: currentUserId)
+    roomparams = params[:room]
+    room.update({neighborhood: roomparams[:neighborhood], price: roomparams[:price], description: roomparams[:description], petfriendly: roomparams[:petfriendly]})
+    render json: room
+  end
+
+  def getroom
+    room = Room.find_by(owner_id: currentUserId)
+    render json: room
+    # render json: {test: 'hi'}
+  end
+
   private
   def user_params
       params.require(:user).permit(:name, :budget, :gender, :hasRoom, :personality, :occupation, :email, :phone, :description)

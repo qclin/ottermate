@@ -26,7 +26,7 @@ end
 
 response = HTTParty.get("http://api.randomuser.me/?results=100")
 response["results"].each_with_index do |x,i|
-  User.create({username: x["user"]["username"],name: x["user"]["name"]["first"], gender: x["user"]["gender"], hasRoom: bool.sample, email: x["user"]["email"], phone: x["user"]["phone"], occupation: x["user"]["password"], password: "word#{i}", description: words.sample[21..73], watsonfeed: words[i]})
+  User.create({username: x["user"]["username"],name: x["user"]["name"]["first"], gender: x["user"]["gender"], hasRoom: bool.sample, email: x["user"]["email"], phone: x["user"]["phone"], occupation: x["user"]["password"], password: "word#{i}", description: words.sample[21..73], watsonfeed: words[i], budget: rand(1500)+500})
 end
 
 ##### ROOMS 

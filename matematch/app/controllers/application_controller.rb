@@ -6,6 +6,7 @@ class ApplicationController < ActionController::API
 
   before_action :authenticate
 
+
   def setCurrentUserId(id)
     @currentUserId=id
   end

@@ -7,10 +7,12 @@ Rails.application.routes.draw do
 
   resource :current_user, only: [:show, :update] do
     post '/watsonfeed', to: 'current_users#watsonfeed'
+    put '/room', to: 'current_users#putroom'
+    get '/room', to: 'current_users#getroom'
   end
 
-  get '/viewimage', to: 'rooms#viewimage'
-  get '/upload', to: 'rooms#upload'
+  # get '/viewimage', to: 'rooms#viewimage'
+  # get '/upload', to: 'rooms#upload'
   post '/uploadImage', to: 'rooms#uploadImage'
 
   get '/watson/:id', to: 'watson#show'

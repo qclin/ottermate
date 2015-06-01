@@ -85,22 +85,42 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
     $scope.user = {}
     $http.get(apiSettings.baseUrl+"current_user")
       .success(function(resp){
-        $scope.user = resp
+        console.log(resp);
+        $scope.user = resp;
       })
       .error(function(err){
         console.error('ERR', err);
       });
-      $scope.updateProfile = function(){
-        console.log($scope.user)
-         $http.put(apiSettings.baseUrl+"current_user", {user: $scope.user})
-          .success(function (data,status) {
-            console.log(data);
-           $state.go("menu.profile");
-          })
-          .error(function (data,status) {
-            alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
-          });
-      }
+    $scope.updateProfile = function(){
+       $http.put(apiSettings.baseUrl+"current_user", {user: $scope.user})
+        .success(function (data,status) {
+          $state.go("menu.profile");
+        })
+        .error(function (data,status) {
+          alert("bad post! "+ JSON.stringify(data) + " status: "+ status);
+        });
+    };
+  })
+  .controller("EditRoomCtrl", function($scope, $http, apiSettings, $state){
+    $scope.room = {}
+    $http.get(apiSettings.baseUrl+"current_user/room")
+    .success(function(resp){
+      $scope.room = resp
+    })
+    .error(function(err){
+      console.error('ERR', err);
+    });
+    $scope.updateRoom = function(){
+      $http.put(apiSettings.baseUrl+"current_user/room", {room: $scope.room})
+        .success(function (data,status) {
+          console.log(data);
+          $state.go("menu.oneRoom", {id:data.id});
+        })
+        .error(function (data,status){
+          // our post got rejected
+          console.log("bad post! "+ JSON.stringify(data) + " status: "+ status);
+        });
+    };
   })
 
   .controller("ConversationsCtrl", function($scope, $state, $http, apiSettings) {
@@ -171,6 +191,7 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
       console.log(resp.data);
       $scope.room = resp.data.room;
       $scope.user = resp.data.user;
+      $scope.baseUrl = apiSettings.baseUrl.slice(0,-1); // remove the trailing slash from baseUrl so it concatenates nicely with the image url
     }, function(err){
       console.error("ERR", err);
     });
@@ -181,6 +202,7 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
       console.log("ERR", err); 
     });
   })
+
 
   .controller("SearchMatesCtrl", function($scope, $state, $http, apiSettings){
     $scope.search = {};
@@ -263,14 +285,13 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
   .controller("PostReviewCtrl", function($scope, $state, $http, apiSettings, $stateParams){
     $scope.review= {};
     $scope.postReview = function(){
-      console.log($stateParams.id);
-      console.log($scope.review.content);
       $http.post(apiSettings.baseUrl+"reviews", {comment: $scope.review.content, room_id: $stateParams.id})
         .success(function(data, status){
           $state.go("menu.oneRoom", {id: $stateParams.id}); 
         })
         .error(function(data, status){
-          console.log("bad post! "+ JSON.stringify(data) + " status: "+ status); 
+          alert("You already have a review posted for this room");
+          $state.go("menu.oneRoom", {id: $stateParams.id});
         });
     };
   })
@@ -308,7 +329,6 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
         return config;
       },
       responseError: function(response) {
-        console.log(response);
         if (response.status === 401) {
           delete $window.sessionStorage.token;
           $location.path('/login');
@@ -370,6 +390,14 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
         views: {
           "menuContent": {
             templateUrl: "templates/editProfile.html"
+          }
+        }
+      })
+      .state("menu.editRoom", {
+        url: "/editRoom",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/editRoom.html"
           }
         }
       })
