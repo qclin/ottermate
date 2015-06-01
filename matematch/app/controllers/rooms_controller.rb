@@ -7,13 +7,12 @@ class RoomsController < ApplicationController
   end
 
   def uploadImage
-    binding.pry
     room = Room.find_by(owner_id: currentUserId)
     if room == nil
       room = Room.create({owner_id: currentUserId})
     end
     room.update({image: params[:file]})
-    room.update({photo_url: env['HTTP_HOST'] + room.image.url(:medium)})
+    room.update({photo_url: "http://" + env['HTTP_HOST'] + room.image.url(:medium)})
     render json: {filename: room.image_file_name}
   end
 
