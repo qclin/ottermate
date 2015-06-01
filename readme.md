@@ -1,5 +1,5 @@
 #OtterMate 
-produced by ESTAQ 
+*produced by*  **ESTAQ** 
 [Evan](https://github.com/sleepylemur)
 [Sebastian](https://github.com/Wiick3dLabs)
 [Tom](https://github.com/TShea124)
