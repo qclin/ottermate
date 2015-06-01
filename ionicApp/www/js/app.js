@@ -1,5 +1,5 @@
 var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
-  .controller('MainCtrl', function($rootScope, $ionicModal, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
+  .controller('MainCtrl', function($rootScope, $ionicModal, $ionicPopover, $state, $scope, $ionicSideMenuDelegate, $window, $location) {
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       // when we switch state, check if we have a valid token
       if (typeof $window.sessionStorage.token === 'undefined') {
@@ -37,6 +37,20 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
       $location.path('/login');
     };
   })
+
+    $ionicPopover.fromTemplateUrl('templates/personalityResults.html', {
+      scope: $scope
+    }). then(function(popover) {
+      $scope.popover = popover;
+    });
+
+    $scope.openPopover = function($event) {
+      $scope.popover.show($event);
+    };
+    $scope.closePopover = function() {
+      $scope.popover.hide();
+    };
+
 
   .controller("LoginCtrl", function($scope,$state,$window,$http,apiSettings) {
     $scope.user = {}

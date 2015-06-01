@@ -4,4 +4,43 @@
     <div id="personalityResultsDiv">
     </div>
   </ion-content>
+  <ion-popover-view>
+  <p>
+  <button ng-click="openPopover($event)">Explanations</button>
+</p>
+
+<script id="my-popover.html" type="text/ng-template">
+  <ion-popover-view>
+    <ion-header-bar>
+      <h1 class="title">My Popover Title</h1>
+    </ion-header-bar>
+    <ion-content>
+      <p>"Cooperation:
+People scoring high on cooperation are more likely to avoid confrontation. They are perfectly willing to compromise or to deny their own needs to get along with others.
+
+Orderliness:
+The higher this score, the more tidy, neat, organized the person is.
+
+Dutifulness:
+Those scoring higher on dutifulness are more likely to pay their bills on time, and have a higher sense of moral obligation in general.
+
+Energy Level:
+Less active people, scoring lower on this scale, tend to appreciate more relaxed pace in life. The higher scorers would enjoy a fast-paced busy schedule.
+
+Gregariousness:
+This is  an individual’s measure of desire to be around people. The lower-scorers would be perfectly ok alone, while higher-scorers will seek out frequent communication on a regular basis.
+
+Anger/Fiery:
+It takes a lot to make a person angry if they score low on this scale. On the opposite side of the spectrum, it takes little to make a high-scorer angry
+
+Depression Susceptibility:
+Low-scorers are more content with their surroundings, while high-scorers tend to be more melancholic.
+
+Liberalism-Conservatism:
+On this continuum, extreme liberalism is represented at 0, while extreme conservatism is equivalent to 100. Lower scorers would have readiness to challenge authority, convention, and traditional values."
+      </p>
+    </ion-content>
+  </ion-popover-view>
+</script>
+  </ion-popover-view>
 </ion-view>
