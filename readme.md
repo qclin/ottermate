@@ -1,4 +1,11 @@
 #OtterMate 
+produced by ESTAQ 
+[Evan](https://github.com/sleepylemur)
+[Sebastian](https://github.com/Wiick3dLabs)
+[Tom](https://github.com/TShea124)
+[Anna](https://github.com/AnnaShnir)
+[Qiao](https://github.com/qclin)
+
 ![Otter Mate](http://36.media.tumblr.com/07d3550b444968dbb38e2687afd361d7/tumblr_np9srtfIpC1tsvscbo1_400.png)
 
 **a_social_mobile (currently ios) app for finding THE roomate**
