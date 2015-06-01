@@ -1,4 +1,4 @@
-<ion-view view-title="personalityAppend" ng-controller="PersonalityAppendCtrl">
+<ion-view view-title="personality" ng-controller="PersonalityAppendCtrl">
 <link href="css/style.css" rel="stylesheet">
   <ion-content class="has-header padding">
     <ion-list>
@@ -9,7 +9,7 @@
       
 
  	<label class="item item-input">
-    <textarea type="text" placeholder="Add Emails or Text" cols="15" rows="15" ng-model="user.emails"></textarea>
+    <textarea type="text" placeholder="Add Emails or Text written ONLY by you. For statistically significant result, enter at least 3500 words." cols="15" rows="15" ng-model="user.emails"></textarea>
     </label>
     <button class="button button-block button-positive" on-tap="analyze()">Analyze Me</button>
     </div>
