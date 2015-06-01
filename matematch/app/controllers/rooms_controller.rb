@@ -7,8 +7,9 @@ class RoomsController < ApplicationController
   end
 
   def uploadImage
-    @room = Room.find(1)
-    @room.update({image: params[:file]})
+    room = Room.find(1)
+    room.update({image: params[:file]})
+    room.update({photo_url: room.image.url(:medium)})
     render json: {msg: "image received"}
   end
 
