@@ -1,0 +1,41 @@
+<ion-view view-title="editroom" ng-controller="EditRoomCtrl">
+  <ion-content class="has-header padding">
+
+    <div class="list">
+    	<label class="item item-input">
+    		<input type="text" ng-model="room.neighborhood" placeholder="neighborhood" value="{{room.neighborhood}}">
+    	</label>
+<!--        <br/>-->
+        <label class="item item-input">
+            <input type="number" ng-model="room.price" placeholder="price" value="{{room.price}}">
+        </label>
+<!--        <br/>-->
+        <label class="item item-input">
+            <input type="text" ng-model="room.photo" placeholder="photo" value="{{room.photo}}">
+        </label>
+<!--        <br/>-->
+        <label class="item item-input item-select">
+            <div class ="input-label">Pet-friendly:</div>
+            <select ng-model="room.pet_friendly">
+                <option value ="nil">doesn't matter</option>
+                <option value ="true">all welcome</option>
+                <option value ="false">not allowed</option>
+            </select>
+        </label>
+<!--        <br/>-->
+        <label class="item item-input">
+            <textarea type="text" ng-model="room.description" value="{{room.desciption}}" placeholder="description" cols="15" rows="3"></textarea>
+        </label>
+<!--    	<br>-->
+        
+    <!--     <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" ui-sref = "menu.uploadPhoto">
+            <i class="icon ion-ios-cloud-upload-outline" on-tap="uploadModal()"></i>
+            upload photos
+        </a>
+        </div> -->
+
+    	<button class="button button-block button-positive" on-tap="editRoom()">Submit Changes</button>
+    </ion-list>
+  </ion-content>
+</ion-view>
