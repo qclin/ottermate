@@ -33,7 +33,13 @@ class CurrentUsersController < ApplicationController
   def getroom
     room = Room.find_by(owner_id: currentUserId)
     render json: room
-    # render json: {test: 'hi'}
+  end
+
+  def destroyroom
+    room = Room.find_by(owner_id: currentUserId)
+    room.destroy()
+    User.find(currentUserId).update({hasRoom: false})
+    render json: {deleted: true}
   end
 
   private
