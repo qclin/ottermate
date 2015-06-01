@@ -1,5 +1,4 @@
 $secrets = JSON.parse(File.read("../secrets.json"))
-$exampletext = File.read("../exampletext.txt")
 
 class WatsonController < ApplicationController
 	def test
@@ -12,6 +11,7 @@ class WatsonController < ApplicationController
 	end
 
   def show
+    binding.pry
     updateWatsonCache(currentUserId)
     updateWatsonCache(params[:id]) if params[:id] != "undefined"
 
