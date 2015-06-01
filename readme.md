@@ -1,7 +1,7 @@
 #OtterMate 
 ![Otter Mate](http://36.media.tumblr.com/07d3550b444968dbb38e2687afd361d7/tumblr_np9srtfIpC1tsvscbo1_400.png)
 
-**a social app for finding THE roomate**
+**a_social_mobile (currently ios) app for finding THE roomate**
 
 for both those looking for a room 
 & those with a room looking for a mate 
@@ -20,7 +20,6 @@ for both those looking for a room
     only those without a room will return in mate search
 * search rooms by neighborhood, price range and pet-friendliness
     upon listing room results user can proceed to chat with owner 
-
 
 
 ####each User will have
