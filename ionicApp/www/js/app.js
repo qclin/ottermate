@@ -283,14 +283,15 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
   .controller("PostRoomCtrl", function($scope, $state, $http, apiSettings, $cordovaCamera, $cordovaFileTransfer, $ionicPlatform, $window) {
     $scope.room = {petfriendly: null};
     $scope.imageStatus = null;
-
     $scope.takePicture = function() {
       $scope.imageStatus = "loading";
       $ionicPlatform.ready(function() {
+        $scope.imageStatus = "ready";
         var cameraOptions = {
           destinationType: Camera.DestinationType.FILE_URI,
           sourceType: Camera.PictureSourceType.CAMERA
         };
+        $scope.imageStatus = "after cameraOptions";
 
         $cordovaCamera.getPicture(cameraOptions).then(function(imageURI) {
           var uri = imageURI;
