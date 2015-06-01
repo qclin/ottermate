@@ -23,6 +23,14 @@ class CurrentUsersController < ApplicationController
     render json: {:appended => true}
   end
 
+  def putroom
+  end
+
+  def getroom
+    room = Room.find_by(owner_id: currentUserId)
+    render json: room
+  end
+
   private
   def user_params
       params.require(:user).permit(:name, :budget, :gender, :hasRoom, :personality, :occupation, :email, :phone, :description)

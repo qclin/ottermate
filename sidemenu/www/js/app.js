@@ -105,8 +105,9 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
   })
     .controller("EditRoomCtrl", function($scope, $http, apiSettings, $state){
       $scope.room = {}
-      $http.get(apiSettings.baseUrl+"rooms/") //+$stateParams.id).then(function(resp){
+      $http.get(apiSettings.baseUrl+"current_user/getroom")
       .success(function(resp){
+        console.log(resp)
         $scope.room = resp
       })
       .error(function(err){
