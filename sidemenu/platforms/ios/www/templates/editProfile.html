@@ -1,0 +1,41 @@
+<ion-view view-title="editprofile" ng-controller="EditProfileCtrl">
+  <ion-content contenteditable class="has-header padding">
+
+  <div class="list">
+      <label class="item item-input">
+        <input type="text" value="{{user.name}}" placeholder = "name" ng-model="user.name">
+      </label>
+
+			<label class="item item-input item-select">
+     <div class="input-label">Gender</div>
+      <select ng-model="user.gender">
+          <option value="male">male</option>
+          <option value="female">female</option>
+      </select>
+			</label>
+
+		  <div class="input-label">Have A Room?</div>
+     <input type="checkbox" value="{{user.hasRoom}}">
+
+      <label class="item item-input">
+        <input type="number" value="{{user.budget}}" placeholder = "budget" ng-model="user.budget">
+      </label>
+
+      <label class="item item-input">
+        <input type="email" value="{{user.email}}" placeholder = "email" ng-model="user.email">
+      </label>
+      <label class="item item-input">
+        <input type="text" value="{{user.phone}}" placeholder = "phone" ng-model="user.phone">
+      </label>
+      <label class="item item-input">
+        <input type="text" value="{{user.occupation}}" placeholder = "occupation" ng-model="user.occupation">
+      </label>
+     
+      <label class="item item-input">
+        <input type="text" value="{{user.description}}" placeholder = "description" ng-model="user.description">
+      </label>
+
+
+		<button class="button button-full button-positive" on-tap="updateProfile()">Submit Changes</button>
+  </ion-content>
+</ion-view>

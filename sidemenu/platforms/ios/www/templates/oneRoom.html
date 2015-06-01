@@ -1,0 +1,32 @@
+<ion-view view-title="oneRoom" ng-controller="GetRoomCtrl">
+  <ion-content class="has-header padding">
+    <div class="list card">
+    
+    <div class="item item-header">
+    	<h2>{{room.neighborhood}}</h2>
+    	<p>{{room.price | currency}}</p>
+    </div>
+     <div class="item item-body">
+     <p>
+      {{room.description}}
+     </p>
+      Pet friendly ? 
+      {{room.petfriendly}}
+      <div>
+      <img ng-if="room.photo_url" src="{{room.photo_url}}">
+      </div>
+      </div>
+      <div class="item tabs tabs-secondary tabs-icon-left">
+      	<a class="tab-item" ui-sref="menu.postReview({id: room.id})">
+      		<i class="icon ion-star" on-tap="reviewModal()"></i>
+      		review
+      	</a>
+      </div>
+      <ion-item ui-sref="menu.oneMate({ id: review.reviewer_id})" ng-repeat="review in reviews">
+          {{review.username}}
+          {{review.comment}}
+      </ion-item>
+      <ion-item ui-sref="menu.chat({ username: user.username })">Chat with {{ user.username }}</ion-item>
+    </div>
+  </ion-content>
+</ion-view>

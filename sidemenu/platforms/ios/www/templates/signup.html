@@ -1,0 +1,54 @@
+   <ion-header-bar class="bar bar-header bar-positive">
+   	<button side="right" class="button button-clear button-primary" on-tap="logout()">Back</button>
+   </ion-header-bar>
+<ion-view view-title="Sign Up" ng-controller="SignUpCtrl">
+  <ion-content class="padding">
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Name" ng-model="user.name">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Username" ng-model="user.username">
+      </label>
+      <label class="item item-input">
+        <input type="number" placeholder="budget" ng-model="user.budget">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Password" ng-model="user.password">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Confirm Password" ng-model="user.confirm_password">
+      </label>
+      <label class="item item-input">
+        <input type="email" placeholder="Email" ng-model="user.email">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Phone Number" ng-model="user.phone">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Occupation" ng-model="user.occupation">
+      </label>
+
+      <label class="item item-input">
+        <input type="text" placeholder="description" ng-model="user.description">
+      </label>
+     	<label class="item item-input item-select">
+     	<div class="input-label">Gender</div>
+      <select ng-model="user.gender">
+          <option value="male">male</option>
+          <option value="female">female</option>
+      </select>
+      </label>
+      
+			<label class="item item-input item-select">
+        <div class="input-label">Have A Room?</div>
+        <select ng-model="user.hasRoom">
+        	<option value="hasRoom">yes</option>
+        </select>
+			</label>
+     
+      <button class="button button-block button-positive" on-tap="signup()">
+        Sign Up
+      </button>
+  </ion-content>
+</ion-view>

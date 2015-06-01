@@ -1,0 +1,24 @@
+<ion-view view-title="profile" ng-controller="ProfileCtrl">
+<link href="css/style.css" rel="stylesheet">
+  <ion-content class="has-header padding">
+    <ion-list>
+    <div class="homepage"
+      <ion-item>
+      <h1>{{user.username}}</h1>
+      </ion-item>
+      {{user.name}}
+      <br/>
+      {{user.email}}
+      <br/>
+      {{user.phone}}
+      <br/>
+      {{user.description}}
+      <br/>
+      Room For Rent: {{user.hasRoom}}
+    <a class="button button-block button-positive" ui-sref="menu.personalityAppend">Add Personality Data</a>
+    </ion-list>
+    </div>
+    <a class="button button-block button-positive" ui-sref = "menu.editRoom"> Edit your room details</a>
+
+  </ion-content>
+</ion-view>
