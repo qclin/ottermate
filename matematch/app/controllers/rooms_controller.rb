@@ -13,6 +13,7 @@ class RoomsController < ApplicationController
     end
     room.update({image: params[:file]})
     room.update({photo_url: "http://" + env['HTTP_HOST'] + room.image.url(:medium)})
+    binding.pry
     render json: {filename: room.image_file_name}
   end
 
