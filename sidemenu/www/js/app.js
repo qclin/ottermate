@@ -103,6 +103,27 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
         });
     };
   })
+    .controller("EditRoomCtrl", function($scope, $http, apiSettings, $state){
+      $scope.room = {}
+      $http.get(apiSettings.baseUrl+"rooms/") //+$stateParams.id).then(function(resp){
+      .success(function(resp){
+        $scope.room = resp
+      })
+      .error(function(err){
+        console.error('ERR', err);
+      });
+      $scope.editRoom = function(){
+      $http.put(apiSettings.baseUrl+"rooms", {room: $scope.room})
+        .success(function (data,status) {
+          console.log(data);
+          $state.go("menu.oneRoom", {id:data.id});
+        })
+        .error(function (data,status){
+          // our post got rejected
+          console.log("bad post! "+ JSON.stringify(data) + " status: "+ status);
+        });
+    }
+  })
 
   .controller("ConversationsCtrl", function($scope, $state, $http, apiSettings) {
     // get list of usernames that we've chatted with
@@ -183,6 +204,7 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
       console.log("ERR", err); 
     });
   })
+
 
   .controller("SearchMatesCtrl", function($scope, $state, $http, apiSettings){
     $scope.search = {};
@@ -371,6 +393,14 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
         views: {
           "menuContent": {
             templateUrl: "templates/editProfile.html"
+          }
+        }
+      })
+      .state("menu.editRoom", {
+        url: "/editRoom",
+        views: {
+          "menuContent": {
+            templateUrl: "templates/editRoom.html"
           }
         }
       })
