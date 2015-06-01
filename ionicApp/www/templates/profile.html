@@ -14,11 +14,11 @@
       <br/>
       {{user.description}}
       <br/>
-      Room For Rent: {{user.hasRoom}}
+      <!-- Room For Rent: {{user.hasRoom}} -->
     <a class="button button-block button-positive" ui-sref="menu.personalityAppend">Add Personality Data</a>
     </ion-list>
     </div>
-    <a class="button button-block button-positive" ui-sref = "menu.editRoom"> Edit your room details</a>
-
+    <a ng-if="user.hasRoom" class="button button-block button-positive" ui-sref = "menu.editRoom">Edit your room details</a>
+    <a ng-if="!user.hasRoom" class="button button-block button-positive" ui-sref = "menu.postRoom">Post a room for rent</a>
   </ion-content>
 </ion-view>

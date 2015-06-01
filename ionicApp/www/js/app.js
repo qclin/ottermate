@@ -61,7 +61,7 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
       $http.post(apiSettings.baseUrl+"users", {user: $scope.user})
         .success(function (data,status) {
          $window.sessionStorage.token = data.token;
-         $state.go("menu.login");
+         $state.go("menu.profile");
         })
         .error(function (data,status) {
           // our post got rejected
@@ -115,6 +115,16 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
         .success(function (data,status) {
           console.log(data);
           $state.go("menu.oneRoom", {id:data.id});
+        })
+        .error(function (data,status){
+          // our post got rejected
+          console.log("bad post! "+ JSON.stringify(data) + " status: "+ status);
+        });
+    };
+    $scope.deleteRoom = function(){
+      $http.post(apiSettings.baseUrl+"current_user/roomdelete")
+        .success(function (data,status) {
+          $state.go("menu.profile");
         })
         .error(function (data,status){
           // our post got rejected
@@ -188,10 +198,11 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
 
   .controller("GetRoomCtrl",function($scope, $state, $http, apiSettings, $stateParams){
     $http.get(apiSettings.baseUrl+"rooms/"+$stateParams.id).then(function(resp){
+      console.log("i'm here");
       console.log(resp.data);
       $scope.room = resp.data.room;
       $scope.user = resp.data.user;
-      $scope.baseUrl = apiSettings.baseUrl.slice(0,-1); // remove the trailing slash from baseUrl so it concatenates nicely with the image url
+      // $scope.baseUrl = apiSettings.baseUrl.slice(0,-1); // remove the trailing slash from baseUrl so it concatenates nicely with the image url
     }, function(err){
       console.error("ERR", err);
     });
@@ -269,8 +280,47 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
 
   })
 
-  .controller("PostRoomCtrl", function($scope, $state, $http, apiSettings) {
-    $scope.room = {};
+  .controller("PostRoomCtrl", function($scope, $state, $http, apiSettings, $cordovaCamera, $cordovaFileTransfer, $ionicPlatform, $window) {
+    $scope.room = {petfriendly: null};
+    $scope.imageStatus = null;
+
+    $scope.takePicture = function() {
+      $scope.imageStatus = "loading";
+      $ionicPlatform.ready(function() {
+        var cameraOptions = {
+          destinationType: Camera.DestinationType.FILE_URI,
+          sourceType: Camera.PictureSourceType.CAMERA
+        };
+
+        $cordovaCamera.getPicture(cameraOptions).then(function(imageURI) {
+          var uri = imageURI;
+          $scope.imageStatus = "uploading now";
+
+          var fileOptions = new FileUploadOptions();
+          fileOptions.fileName = imageURI.split('/').pop();
+          fileOptions.mimeType = 'image/jpeg';
+          fileOptions.headers = {'AUTHORIZATION': 'Bearer ' + $window.sessionStorage.token};
+          $cordovaFileTransfer.upload(apiSettings.baseUrl+"uploadImage", imageURI, fileOptions) // probably need to pass authorization header in here
+            .then(function(result) {
+              $scope.imageStatus = result;
+              // Success!
+            }, function(err) {
+              $scope.imageStatus = JSON.stringify(err);
+              // Error
+            }, function (progress) {
+              // constant progress updates
+              if (progress.lengthComputable) {
+                $scope.imageStatus = "Uploading "+Math.round((progress.loaded / progress.total)*100) + " %";
+              } else {
+                $scope.imageStatus += ".";
+              }
+            });
+        }, function(err) {
+          console.log(err);
+        });
+      });
+    };
+
     $scope.postRoom = function(){
       $http.post(apiSettings.baseUrl+"rooms", {room: $scope.room})
         .success(function (data,status) {
