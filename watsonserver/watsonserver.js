@@ -5,7 +5,6 @@ var watson = require('watson-developer-cloud');
 var cors = require('cors');
 
 var secrets = require('../secrets.json');
-var exampletext = fs.readFileSync('../exampletext.txt');
 
 var corsOptions = {
   // origin: "http://localhost"
