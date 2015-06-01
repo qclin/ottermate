@@ -18,7 +18,6 @@ class ReviewsController < ApplicationController
   # POST /reviews
   # POST /reviews.json
   def create
-    binding.pry
     @review = Review.new({reviewer_id: @currentUserId, comment: params[:comment], room_id: params[:room_id]})
 
     if @review.save
