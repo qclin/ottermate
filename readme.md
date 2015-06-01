@@ -41,8 +41,10 @@ for both those looking for a room
       Watson's sampling errors depends on the length of provided descriptions 
 
   * a chat log to multiple parties of interest 
-      their words compiled on top of self-description for further Personality insights 
+      their words compiled on top of self-description for further Personality insights
 
+  * access to personality comparison that logs their chat history, and self-description to render a personality insight as percentages of the "Big 5" qualities. Openness, Extraversion, Agreeableness, Conscientiousness, and Emotional Range are determined as a percentage from 0 - 100%, showing a user which side of the spectrum he/she falls on as well as their potential roommate.
+   
 
 ![splash screen](http://41.media.tumblr.com/88d3d66ff10bb120d2b24324106566f8/tumblr_np9sulDM5C1tsvscbo1_1280.png)
 
