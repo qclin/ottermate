@@ -194,6 +194,7 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
       console.log(resp.data);
       $scope.room = resp.data.room;
       $scope.user = resp.data.user;
+      $scope.baseUrl = apiSettings.baseUrl.slice(0,-1); // remove the trailing slash from baseUrl so it concatenates nicely with the image url
     }, function(err){
       console.error("ERR", err);
     });
