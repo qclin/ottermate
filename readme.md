@@ -6,8 +6,9 @@
 [Anna](https://github.com/AnnaShnir)
 [Qiao](https://github.com/qclin)
 
-![Otter Mate](https://github.com/qclin/ottermate/blob/master/ionicApp/resources/ios/icon/icon-60@2x.png)
-![splash screen](https://github.com/qclin/ottermate/blob/master/ionicApp/resources/ios/splash/Default~iphone.png?)
+![splash screen](https://github.com/qclin/ottermate/blob/master/ionicApp/resources/ios/splash/markdown.png)
+
+
 **a_social_mobile (currently ios) app for finding THE roomate**
 
 for both those looking for a room 
