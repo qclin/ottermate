@@ -7,7 +7,7 @@
 [Qiao](https://github.com/qclin)
 
 ![Otter Mate](https://github.com/qclin/ottermate/blob/master/ionicApp/resources/ios/icon/icon-60@2x.png)
-
+![splash screen](https://github.com/qclin/ottermate/blob/master/ionicApp/resources/ios/splash/Default~iphone.png?)
 **a_social_mobile (currently ios) app for finding THE roomate**
 
 for both those looking for a room 
@@ -46,7 +46,7 @@ for both those looking for a room
   * access to personality comparison that logs their chat history, and self-description to render a personality insight as percentages of the "Big 5" qualities. Openness, Extraversion, Agreeableness, Conscientiousness, and Emotional Range are determined as a percentage from 0 - 100%, showing a user which side of the spectrum he/she falls on as well as their potential roommate.
    
 
-![splash screen](https://github.com/qclin/ottermate/blob/master/ionicApp/resources/ios/splash/Default~iphone.png?)
+![wireframe](https://github.com/qclin/ottermate/blob/master/ionicApp/resources/wireframe.jpg)
 
 
 ###Stack 
@@ -61,3 +61,6 @@ for both those looking for a room
 * Hipster IPSUM >> User description
 * IBM Watson Personality Insights >> user Personality accessments
 * StreetEasy >> most recent rental listings of NYC
+
+![views-Controller](https://github.com/qclin/ottermate/blob/master/ionicApp/resources/viewsController.png)
+
