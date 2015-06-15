@@ -6,7 +6,7 @@
 [Anna](https://github.com/AnnaShnir)
 [Qiao](https://github.com/qclin)
 
-![Otter Mate](http://36.media.tumblr.com/07d3550b444968dbb38e2687afd361d7/tumblr_np9srtfIpC1tsvscbo1_400.png)
+![Otter Mate](ionicApp/resources/ios/icon-60@2x.png)
 
 **a_social_mobile (currently ios) app for finding THE roomate**
 
@@ -46,7 +46,7 @@ for both those looking for a room
   * access to personality comparison that logs their chat history, and self-description to render a personality insight as percentages of the "Big 5" qualities. Openness, Extraversion, Agreeableness, Conscientiousness, and Emotional Range are determined as a percentage from 0 - 100%, showing a user which side of the spectrum he/she falls on as well as their potential roommate.
    
 
-![splash screen](http://41.media.tumblr.com/88d3d66ff10bb120d2b24324106566f8/tumblr_np9sulDM5C1tsvscbo1_1280.png)
+![splash screen](ionicApp/resources/splash/Default~iphone.png)
 
 
 ###Stack 
