@@ -18,7 +18,7 @@ bool = [true, false]
 words = []
 
 100.times do 
-  get_hipster = HTTParty.get("http://hipsterjesus.com/api/?paras=1")
+  get_hipster = HTTParty.get("http://hipsterjesus.com/api/?paras=2&type=hipster-centric")
   hipster_data = get_hipster["text"]
   words << hipster_data
 end 
