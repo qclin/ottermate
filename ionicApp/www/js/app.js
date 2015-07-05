@@ -38,18 +38,18 @@ var ottermate = angular.module('ionicApp', ['ionic','apiSettings','ngCordova'])
     };
   })
 
-    $ionicPopover.fromTemplateUrl('templates/personalityResults.html', {
-      scope: $scope
-    }). then(function(popover) {
-      $scope.popover = popover;
-    });
+    // $ionicPopover.fromTemplateUrl('templates/personalityResults.html', {
+    //   scope: $scope
+    // }). then(function(popover) {
+    //   $scope.popover = popover;
+    // });
 
-    $scope.openPopover = function($event) {
-      $scope.popover.show($event);
-    };
-    $scope.closePopover = function() {
-      $scope.popover.hide();
-    };
+    // $scope.openPopover = function($event) {
+    //   $scope.popover.show($event);
+    // };
+    // $scope.closePopover = function() {
+    //   $scope.popover.hide();
+    // };
 
 
   .controller("LoginCtrl", function($scope,$state,$window,$http,apiSettings) {
